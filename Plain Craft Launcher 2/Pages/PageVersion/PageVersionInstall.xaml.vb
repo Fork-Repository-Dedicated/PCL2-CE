@@ -1,22 +1,27 @@
 Public Class PageVersionInstall
 
     Private Sub LoaderInit() Handles Me.Initialized
+        DisabledPageAnimControls.Add(BtnSelectStart)
         'PageLoaderInit(LoadMinecraft, PanLoad, PanBack, Nothing, DlClientListLoader, AddressOf LoadMinecraft_OnFinish)
-        PageLoaderInit(LoadMinecraft, PanLoad, PanBack, Nothing, DlClientListLoader, AddressOf GetCurrentInfo)
+        PageLoaderInit(LoadMinecraft, PanLoad, PanAllBack, Nothing, DlClientListLoader, AddressOf GetCurrentInfo)
     End Sub
 
     Private IsLoad As Boolean = False
+    Private LastVersionName As String = Nothing
     Private Sub Init() Handles Me.Loaded
         PanBack.ScrollToHome()
 
         GetCurrentInfo()
 
-        DlOptiFineListLoader.Start()
-        DlLiteLoaderListLoader.Start()
-        DlFabricListLoader.Start()
-        DlQuiltListLoader.Start()
-        DlNeoForgeListLoader.Start()
-        DlCleanroomListLoader.Start()
+        Dim NeedRefresh = LastVersionName Is Nothing OrElse LastVersionName <> SelectedMinecraftId
+        LastVersionName = SelectedMinecraftId
+
+        DlOptiFineListLoader.Start(IsForceRestart:=NeedRefresh)
+        DlLiteLoaderListLoader.Start(IsForceRestart:=NeedRefresh)
+        DlFabricListLoader.Start(IsForceRestart:=NeedRefresh)
+        DlQuiltListLoader.Start(IsForceRestart:=NeedRefresh)
+        DlNeoForgeListLoader.Start(IsForceRestart:=NeedRefresh)
+        DlCleanroomListLoader.Start(IsForceRestart:=NeedRefresh)
 
         '重载预览
         SelectReload()
@@ -44,20 +49,11 @@ Public Class PageVersionInstall
     Public IsInSelectPage As Boolean = False
     Private IsFirstLoaded As Boolean = False
     Private Sub EnterSelectPage()
-        '重置加载状态避免修改核心时加载器不刷新 #173
-        DlOptiFineListLoader.State = LoadState.Waiting
-        DlLiteLoaderListLoader.State = LoadState.Waiting
-        DlFabricListLoader.State = LoadState.Waiting
-        DlFabricApiLoader.State = LoadState.Waiting
-        DlQuiltListLoader.State = LoadState.Waiting
-        DlQSLLoader.State = LoadState.Waiting
-        DlNeoForgeListLoader.State = LoadState.Waiting
-        DlCleanroomListLoader.State = LoadState.Waiting
-        DlOptiFabricLoader.State = LoadState.Waiting
-
         If IsInSelectPage Then Exit Sub
         IsInSelectPage = True
 
+        DisabledPageAnimControls.Remove(BtnSelectStart)
+        BtnSelectStart.Show = True
         AutoSelectedFabricApi = False
         AutoSelectedQSL = False
         AutoSelectedOptiFabric = False
@@ -146,6 +142,9 @@ Public Class PageVersionInstall
         IsInSelectPage = False
 
         LoadMinecraft_OnFinish()
+
+        DisabledPageAnimControls.Add(BtnSelectStart)
+        BtnSelectStart.Show = False
 
         SelectClear() '清除已选择项
         PanMinecraft.Visibility = Visibility.Visible

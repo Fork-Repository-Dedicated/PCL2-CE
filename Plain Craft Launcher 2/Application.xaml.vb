@@ -1,4 +1,4 @@
-﻿Imports System.Net
+﻿Imports System.Drawing
 Imports System.Reflection
 Imports System.Windows.Threading
 
@@ -26,7 +26,15 @@ Public Class Application
                 If e.Args(0) = "--update" Then
                     '自动更新
                     UpdateReplace(e.Args(1), e.Args(2).Trim(""""), e.Args(3).Trim(""""), e.Args(4))
-                    Environment.Exit(Result.Cancel)
+                    Environment.Exit(ProcessReturnValues.TaskDone)
+                ElseIf e.Args(0) = "--gpu" Then
+                    '调整显卡设置
+                    Try
+                        SetGPUPreference(e.Args(1).Trim(""""))
+                        Environment.Exit(ProcessReturnValues.TaskDone)
+                    Catch ex As Exception
+                        Environment.Exit(ProcessReturnValues.Fail)
+                    End Try
                 ElseIf e.Args(0).StartsWithF("--memory") Then
                     '内存优化
                     Dim Ram = My.Computer.Info.AvailablePhysicalMemory
@@ -45,10 +53,10 @@ Public Class Application
                     '制作更新包
                 ElseIf e.Args(0) = "--edit1" Then
                     ExeEdit(e.Args(1), True)
-                    Environment.Exit(Result.Cancel)
+                    Environment.Exit(ProcessReturnValues.TaskDone)
                 ElseIf e.Args(0) = "--edit2" Then
                     ExeEdit(e.Args(1), False)
-                    Environment.Exit(Result.Cancel)
+                    Environment.Exit(ProcessReturnValues.TaskDone)
 #End If
                 End If
             End If
@@ -87,7 +95,7 @@ WaitRetry:
                 ShowWindowToTop(WindowHwnd)
                 '播放提示音并退出
                 Beep()
-                Environment.[Exit](Result.Cancel)
+                Environment.[Exit](ProcessReturnValues.Cancel)
             End If
 #End If
             '设置 ToolTipService 默认值
@@ -118,6 +126,9 @@ WaitRetry:
             If Is32BitSystem Then
                 MyMsgBox("PCL 和新版 Minecraft 均不再支持 32 位系统，部分功能将无法使用。" & vbCrLf & "非常建议重装为 64 位系统后再进行游戏！", "环境警告", "我知道了", IsWarn:=True)
             End If
+            If Not Val(Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full", "Release", "528049").ToString.AfterFirst("(").BeforeFirst(")")) >= 533320 Then
+                MyMsgBox($"PCL CE 不再支持你当前使用的系统，部分功能将无法使用。{vbCrLf}PCL CE 要求系统版本至少为 Windows 10 20H2 且安装有 .NET Framework 4.8.1。{vbCrLf}非常建议升级到最新版本的 Windows 10 或 Windows 11！", "环境警告", "我知道了", IsWarn:=True)
+            End If
             '设置初始化
             Setup.Load("SystemDebugMode")
             Setup.Load("SystemDebugAnim")
@@ -131,6 +142,21 @@ WaitRetry:
             ServicePointManager.Expect100Continue = True
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 Or SecurityProtocolType.Tls Or SecurityProtocolType.Tls11 Or SecurityProtocolType.Tls12
             ServicePointManager.DefaultConnectionLimit = 1024
+            '设置字体
+            Dim TargetFont As String = Setup.Get("UiFont")
+            If Not String.IsNullOrEmpty(TargetFont) Then
+                Try
+                    Dim Font = Fonts.SystemFontFamilies.FirstOrDefault(Function(x) x.FamilyNames.Values.Contains(TargetFont))
+                    If Font Is Nothing Then
+                        Setup.Reset("UiFont")
+                    Else
+                        SetLaunchFont(TargetFont)
+                    End If
+                Catch ex As Exception
+                    Log(ex, "字体加载失败", LogLevel.Hint)
+                    Setup.Reset("UiFont")
+                End Try
+            End If
             '计时
             Log("[Start] 第一阶段加载用时：" & GetTimeTick() - ApplicationStartTick & " ms")
             ApplicationStartTick = GetTimeTick()
@@ -146,7 +172,7 @@ WaitRetry:
             Catch
             End Try
             MsgBox(GetExceptionDetail(ex, True) & vbCrLf & "PCL 所在路径：" & If(String.IsNullOrEmpty(FilePath), "获取失败", FilePath), MsgBoxStyle.Critical, "PCL 初始化错误")
-            FormMain.EndProgramForce(Result.Exception)
+            FormMain.EndProgramForce(ProcessReturnValues.Exception)
         End Try
     End Sub
 
@@ -163,7 +189,7 @@ WaitRetry:
         If IsProgramEnded Then Exit Sub
         If IsCritErrored Then
             '在汇报错误后继续引发错误，知道这次压不住了
-            FormMain.EndProgramForce(Result.Exception)
+            FormMain.EndProgramForce(ProcessReturnValues.Exception)
             Exit Sub
         End If
         IsCritErrored = True
@@ -174,7 +200,7 @@ WaitRetry:
            ExceptionString.Contains("未能加载文件或程序集") Then
             OpenWebsite("https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/thank-you/net481-offline-installer")
             MsgBox("你的 .NET Framework 版本过低或损坏，请下载并重新安装 .NET Framework 4.8.1！", MsgBoxStyle.Information, "运行环境错误")
-            FormMain.EndProgramForce(Result.Cancel)
+            FormMain.EndProgramForce(ProcessReturnValues.Cancel)
         Else
             FeedbackInfo()
             Log(e.Exception, "程序出现未知错误", LogLevel.Assert, "锟斤拷烫烫烫")

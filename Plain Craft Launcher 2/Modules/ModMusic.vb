@@ -1,5 +1,6 @@
-﻿Imports Windows.Media
+Imports Windows.Media
 Imports Windows.Storage
+Imports Windows.Storage.Streams
 Public Module ModMusic
 
 #Region "播放列表"
@@ -313,11 +314,51 @@ Public Module ModMusic
         Log($"[SMTC] 更新 SMTC 媒体信息，文件路径: {MusicCurrent}")
         Dim Updater = _smtc.DisplayUpdater
 
-        Updater.AppMediaId = "Plain Craft Launcher 2 CE" '媒体来源信息
-        Updater.Type = MediaPlaybackType.Music '指定媒体类型
+        Try
+            Dim File = TagLib.File.Create(MusicCurrent)
 
-        Dim sf = Await StorageFile.GetFileFromPathAsync(MusicCurrent)
-        Await Updater.CopyFromFileAsync(MediaPlaybackType.Music, sf) '从文件获取媒体信息
+            Updater.AppMediaId = "Plain Craft Launcher 2 CE" '媒体来源信息
+            Updater.Type = MediaPlaybackType.Music '指定媒体类型
+
+            Dim Artist As String = File.Tag.FirstPerformer
+            Dim AlbumArtist As String = File.Tag.FirstAlbumArtist
+            Dim AlbumTitle As String = File.Tag.Album
+            Dim Title As String = File.Tag.Title
+            Dim Thumbnail = File.Tag.Pictures.FirstOrDefault()
+
+            If String.IsNullOrEmpty(Artist) Then
+                Artist = ""
+            End If
+            If String.IsNullOrEmpty(AlbumArtist) Then
+                AlbumArtist = Artist
+            End If
+            If String.IsNullOrEmpty(AlbumTitle) Then
+                AlbumTitle = ""
+            End If
+            If String.IsNullOrEmpty(Title) Then
+                Title = ""
+            End If
+
+            Updater.MusicProperties.Artist = Artist
+            Updater.MusicProperties.AlbumArtist = AlbumArtist
+            Updater.MusicProperties.AlbumTitle = AlbumTitle
+            Updater.MusicProperties.Title = Title
+
+            If Thumbnail IsNot Nothing Then
+                Dim MemStream As InMemoryRandomAccessStream = New InMemoryRandomAccessStream()
+                Using Writer As New DataWriter(MemStream)
+                    Writer.WriteBytes(Thumbnail.Data.Data)
+                    Await Writer.StoreAsync()
+                    Writer.DetachStream()
+                End Using
+                Dim ThumbailStream = RandomAccessStreamReference.CreateFromStream(MemStream)
+
+                Updater.Thumbnail = ThumbailStream
+            Else
+                Updater.Thumbnail = Nothing
+            End If
+        Catch
+        End Try
 
         '生效设置
         Updater.Update()
@@ -381,7 +422,7 @@ Public Module ModMusic
     ''' <summary>
     ''' 以 700 ms 为刷新间隔的 SMTC 时间线更新
     ''' </summary>
-    Public Sub SMTCTimelineUpdater(CurrentWave As NAudio.Wave.WaveOut, Reader As NAudio.Wave.WaveStream)
+    Public Sub SMTCTimelineUpdater(CurrentWave As NAudio.Wave.WaveOutEvent, Reader As NAudio.Wave.WaveStream)
         If _smtc Is Nothing Then Exit Sub
         RunInNewThread(Sub()
                            While CurrentWave.Equals(MusicNAudio) AndAlso CurrentWave.PlaybackState = NAudio.Wave.PlaybackState.Playing AndAlso _smtc IsNot Nothing
@@ -398,7 +439,7 @@ Public Module ModMusic
 #End Region
 
     ''' <summary>
-    ''' 当前正在播放的 NAudio.Wave.WaveOut。
+    ''' 当前正在播放的 NAudio.Wave.WaveOutEvent。
     ''' </summary>
     Public MusicNAudio = Nothing
     ''' <summary>
@@ -409,11 +450,11 @@ Public Module ModMusic
     ''' 在 MusicUuid 不变的前提下，持续播放某地址的音乐，且在播放结束后随机播放下一曲。
     ''' </summary>
     Private Sub MusicLoop(Optional IsFirstLoad As Boolean = False)
-        Dim CurrentWave As NAudio.Wave.WaveOut = Nothing
+        Dim CurrentWave As NAudio.Wave.WaveOutEvent = Nothing
         Dim Reader As NAudio.Wave.WaveStream = Nothing
         Try
             '开始播放
-            CurrentWave = New NAudio.Wave.WaveOut()
+            CurrentWave = New NAudio.Wave.WaveOutEvent()
             MusicNAudio = CurrentWave
             Reader = New NAudio.Wave.AudioFileReader(MusicCurrent)
             CurrentWave.Init(Reader)
@@ -452,6 +493,10 @@ Public Module ModMusic
             If CurrentWave.PlaybackState = NAudio.Wave.PlaybackState.Stopped AndAlso MusicAllList.Any Then MusicStartPlay(DequeueNextMusicAddress)
         Catch ex As Exception
             Log(ex, "播放音乐出现内部错误（" & MusicCurrent & "）", LogLevel.Developer)
+            If TypeOf ex Is NAudio.MmException AndAlso ex.Message.Contains("AlreadyAllocated") Then
+                Hint("你的音频设备正被其他程序占用。请在关闭占用的程序后重启 PCL，才能恢复音乐播放功能！", HintType.Critical)
+                Thread.Sleep(1000000000)
+            End If
             If TypeOf ex Is NAudio.MmException AndAlso (ex.Message.Contains("NoDriver") OrElse ex.Message.Contains("BadDeviceId")) Then
                 Hint("由于音频设备变更，音乐播放功能在重启 PCL 后才能恢复！", HintType.Critical)
                 Thread.Sleep(1000000000)

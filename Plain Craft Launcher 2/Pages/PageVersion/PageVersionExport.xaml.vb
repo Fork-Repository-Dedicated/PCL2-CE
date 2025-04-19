@@ -22,7 +22,7 @@ Public Class PageVersionExport
     Private Sub PageVersionExport_Loaded() Handles Me.Loaded
         AniControlEnabled += 1
         If CurrentVersion <> PageVersionLeft.Version.Path Then RefreshAll() '切换到了另一个版本，重置页面
-        BtnAdvancedHelp.EventData = If(VersionBranchName = "Release", "指南/整合包制作 - Public.json", "指南/整合包制作 - Snapshot.json")
+        BtnAdvancedHelp.EventData = "指南/整合包制作.json"
         AniControlEnabled -= 1
     End Sub
     Public Sub RefreshAll() Implements IRefreshable.Refresh
@@ -33,6 +33,8 @@ Public Class PageVersionExport
         TextExportName.HintText = PageVersionLeft.Version.Name
         TextExportVersion.Text = ""
         TextExportVersion.HintText = "1.0.0"
+        CheckAdvancedInclude.Checked = False
+        CheckAdvancedModrinth.Checked = False
         GetExportOption(CheckOptionsBasic).Description = PageVersionLeft.Version.GetDefaultDescription()
         ResetConfigOverrides()
         ReloadAllSubOptions()
@@ -449,7 +451,7 @@ Public Class PageVersionExport
             Loaders.Add(New LoaderTask(Of Integer, Integer)("下载 PCL 正式版",
             Sub(Loader As LoaderTask(Of Integer, Integer))
                 DownloadLatestPCL(Loader)
-                CopyFile(PathTemp & "Latest.exe", CacheFolder & "Plain Craft Launcher.exe")
+                CopyFile(PathTemp & "CE-Latest.exe", CacheFolder & "Plain Craft Launcher.exe")
             End Sub) With {.ProgressWeight = 0.5, .Block = False})
         End If
 #End If
