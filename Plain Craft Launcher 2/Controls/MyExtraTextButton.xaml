@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    x:Name="PanBack" mc:Ignorable="d" x:Class="MyExtraTextButton"
+    x:Name="PanBack" mc:Ignorable="d" x:Class="PCL.MyExtraTextButton"
     RenderTransformOrigin="0.5,0.5" ToolTipService.Placement="Left" Height="52" Margin="20">
     <Grid.RenderTransform>
         <ScaleTransform ScaleX="0" ScaleY="0" />
