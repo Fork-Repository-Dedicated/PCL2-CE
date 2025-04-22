@@ -1,0 +1,88 @@
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.VisualBasic.CompilerServices;
+
+namespace PCL
+{
+    public partial class PageLoginAuthSkin
+    {
+
+        public PageLoginAuthSkin()
+        {
+            this.InitializeComponent();
+            this.Skin.Loader = PageLaunchLeft.SkinAuth;
+            this.Loaded += (_, __) => PageLoginLegacy_Loaded();
+        }
+        private void PageLoginLegacy_Loaded()
+        {
+            this.Skin.Loader.Start();
+        }
+
+        /// <summary>
+    /// 刷新页面显示的所有信息。
+    /// </summary>
+        public void Reload(bool KeepInput)
+        {
+            this.TextName.Text = Conversions.ToString(ModBase.Setup.Get("CacheAuthName"));
+            this.TextEmail.Text = Conversions.ToString(ModBase.Setup.Get("CacheAuthUsername"));
+            this.TextEmail.Visibility = Conversions.ToBoolean(ModBase.Setup.Get("UiLauncherEmail")) ? Visibility.Collapsed : Visibility.Visible;
+            PageLoginLegacy_Loaded();
+        }
+        /// <summary>
+    /// 获取当前页面的登录信息。
+    /// </summary>
+        public static ModLaunch.McLoginServer GetLoginData()
+        {
+            string Server = Conversions.ToString(Operators.ConcatenateObject(ModMinecraft.McVersionCurrent == null ? ModBase.Setup.Get("CacheAuthServerServer") : ModBase.Setup.Get("VersionServerAuthServer", Version: ModMinecraft.McVersionCurrent), "/authserver"));
+            return new ModLaunch.McLoginServer(ModLaunch.McLoginType.Auth) { Token = "Auth", BaseUrl = Server, UserName = Conversions.ToString(ModBase.Setup.Get("CacheAuthUsername")), Password = Conversions.ToString(ModBase.Setup.Get("CacheAuthPass")), Description = "Authlib-Injector", Type = ModLaunch.McLoginType.Auth };
+        }
+
+        private void PageLoginAuthSkin_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ModAnimation.AniStart(new[] { ModAnimation.AaOpacity(this.BtnEdit, 1d - this.BtnEdit.Opacity, 80), ModAnimation.AaHeight(this.BtnEdit, 25.5d - this.BtnEdit.Height, 140, Ease: new ModAnimation.AniEaseOutFluent()), ModAnimation.AaHeight(this.BtnEdit, -1.5d, 50, 140, new ModAnimation.AniEaseInFluent()), ModAnimation.AaOpacity(this.BtnExit, 1d - this.BtnExit.Opacity, 80), ModAnimation.AaHeight(this.BtnExit, 25.5d - this.BtnExit.Height, 140, Ease: new ModAnimation.AniEaseOutFluent()), ModAnimation.AaHeight(this.BtnExit, -1.5d, 50, 140, new ModAnimation.AniEaseInFluent()) }, "PageLoginAuthSkin Button");
+        }
+        private void PageLoginAuthSkin_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ModAnimation.AniStart(new[] { ModAnimation.AaOpacity(this.BtnEdit, -this.BtnEdit.Opacity, 120, Ease: new ModAnimation.AniEaseOutFluent()), ModAnimation.AaHeight(this.BtnEdit, 14d - this.BtnEdit.Height, 120, Ease: new ModAnimation.AniEaseInFluent()), ModAnimation.AaOpacity(this.BtnExit, -this.BtnExit.Opacity, 120, Ease: new ModAnimation.AniEaseOutFluent()), ModAnimation.AaHeight(this.BtnExit, 14d - this.BtnExit.Height, 120, Ease: new ModAnimation.AniEaseInFluent()) }, "PageLoginAuthSkin Button");
+        }
+
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            if (ModLaunch.McLoginLoader.State == ModBase.LoadState.Loading)
+            {
+                ModBase.Log("[Launch] 要求更换角色，但登录加载器繁忙", ModBase.LogLevel.Debug);
+                if (((ModLaunch.McLoginServer)ModLaunch.McLoginLoader.Input).ForceReselectProfile)
+                {
+                    ModMain.Hint("正在尝试更换，请稍候！");
+                    return;
+                }
+                else
+                {
+                    ModMain.Hint("正在登录中，请稍后再更换角色！", ModMain.HintType.Critical);
+                    return;
+                }
+            }
+            ModMain.Hint("正在尝试更换，请稍候！");
+            ModBase.Setup.Set("CacheAuthUuid", ""); // 清空选择缓存
+            ModBase.Setup.Set("CacheAuthName", "");
+            ModBase.RunInThread(() => { try { var Data = GetLoginData(); Data.ForceReselectProfile = true; ModLaunch.McLoginLoader.WaitForExit(Data, IsForceRestart: true); ModBase.RunInUi(() => Reload(true)); } catch (Exception ex) { ModBase.Log(ex, "更换角色失败", ModBase.LogLevel.Hint); } });
+        }
+        public static void ExitLogin()
+        {
+            ModBase.Setup.Set("CacheAuthAccess", "");
+            ModBase.Setup.Set("CacheAuthUuid", "");
+            ModBase.Setup.Set("CacheAuthName", "");
+            ModLaunch.McLoginAuthLoader.Input = null; // 防止因为输入的用户名密码相同，直接使用了上次登录的加载器结果
+            ModMain.FrmLaunchLeft.RefreshPage(false, true);
+        }
+
+        private void Skin_Click(object sender, MouseButtonEventArgs e)
+        {
+            string Address = Conversions.ToString(ModMinecraft.McVersionCurrent is not null ? ModBase.Setup.Get("VersionServerAuthRegister", Version: ModMinecraft.McVersionCurrent) : ModBase.Setup.Get("CacheAuthServerRegister"));
+            if (string.IsNullOrEmpty(new ValidateHttp().Validate(Address)))
+                ModBase.OpenWebsite(Address.Replace("/auth/register", "/user/closet"));
+        }
+
+    }
+}

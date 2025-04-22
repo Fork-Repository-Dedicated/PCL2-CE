@@ -1,0 +1,1157 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{F6BD73B9-D4B7-0DC9-33A8-B1AB2538CD85}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PCL</RootNamespace>
+    <AssemblyName>Plain Craft Launcher 2</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>zh-CN</TargetCulture>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <IncrementalBuild>true</IncrementalBuild>
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile>.\bin\Plain Craft Launcher 2.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>false</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <IncrementalBuild>false</IncrementalBuild>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile>.\bin\Plain Craft Launcher 2.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>1</WarningLevel>
+    <DefineConstants>RELEASE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>CE7A815CD81401B559C8649A3EEA43B75ECB8FC5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Plain Craft Launcher 2_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Snapshot|AnyCPU' ">
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile>.\bin\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>SNAPSHOT</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'BETA|AnyCPU' ">
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile>.\bin\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>BETA</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseUpdate|AnyCPU' ">
+    <OutputPath>.\bin\</OutputPath>
+    <DefineConstants>RELEASE;BY_UPDATE</DefineConstants>
+    <DocumentationFile>.\bin\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DocumentationFile>bin\ARM64\Debug\Plain Craft Launcher 2.xml</DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>RELEASE</DefineConstants>
+    <DocumentationFile>bin\ARM64\Release\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Snapshot|ARM64'">
+    <OutputPath>bin\ARM64\Snapshot\</OutputPath>
+    <DefineConstants>SNAPSHOT</DefineConstants>
+    <DocumentationFile>bin\ARM64\Snapshot\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BETA|ARM64'">
+    <OutputPath>bin\ARM64\BETA\</OutputPath>
+    <DefineConstants>BETA</DefineConstants>
+    <DocumentationFile>bin\ARM64\BETA\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseUpdate|ARM64'">
+    <OutputPath>bin\ARM64\ReleaseUpdate\</OutputPath>
+    <DefineConstants>RELEASE;BY_UPDATE</DefineConstants>
+    <DocumentationFile>bin\ARM64\ReleaseUpdate\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>bin\x64\Debug\Plain Craft Launcher 2.xml</DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>RELEASE</DefineConstants>
+    <DocumentationFile>bin\x64\Release\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Snapshot|x64'">
+    <OutputPath>bin\x64\Snapshot\</OutputPath>
+    <DefineConstants>SNAPSHOT</DefineConstants>
+    <DocumentationFile>bin\x64\Snapshot\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BETA|x64'">
+    <OutputPath>bin\x64\BETA\</OutputPath>
+    <DefineConstants>BETA</DefineConstants>
+    <DocumentationFile>bin\x64\BETA\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseUpdate|x64'">
+    <OutputPath>bin\x64\ReleaseUpdate\</OutputPath>
+    <DefineConstants>RELEASE;BY_UPDATE</DefineConstants>
+    <DocumentationFile>bin\x64\ReleaseUpdate\Plain Craft Launcher 2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Application.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="My Project\MyNamespace.Static.1.Designer.cs" />
+    <Compile Include="My Project\MyNamespace.Static.2.Designer.cs" />
+    <Compile Include="My Project\MyNamespace.Static.3.Designer.cs" />
+    <Compile Include="Controls\IMyRadio.cs" />
+    <Compile Include="Controls\MyComboBox.cs" />
+    <Compile Include="Controls\MyComboBoxItem.cs" />
+    <Compile Include="Controls\MyCard.cs" />
+    <Compile Include="Controls\MyExtraTextButton.xaml.cs">
+      <DependentUpon>MyExtraTextButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyImage.cs" />
+    <Compile Include="Controls\MyPageRight.cs" />
+    <Compile Include="Controls\MyPageLeft.cs" />
+    <Compile Include="Controls\MyIconTextButton.xaml.cs">
+      <DependentUpon>MyIconTextButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Minecraft\ModComp.cs" />
+    <Compile Include="Modules\Minecraft\ModJava.cs" />
+    <Compile Include="Modules\Minecraft\ModLocalComp.cs" />
+    <Compile Include="Modules\Minecraft\ModModpack.cs" />
+    <Compile Include="Modules\Minecraft\MyLocalCompItem.xaml.cs">
+      <DependentUpon>MyLocalCompItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ModEvent.cs" />
+    <Compile Include="Controls\MyExtraButton.xaml.cs">
+      <DependentUpon>MyExtraButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyHint.xaml.cs">
+      <DependentUpon>MyHint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyLoading.xaml.cs">
+      <DependentUpon>MyLoading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyMenuItem.cs" />
+    <Compile Include="Controls\MyMsg\MyMsgInput.xaml.cs">
+      <DependentUpon>MyMsgInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyMsg\MyMsgSelect.xaml.cs">
+      <DependentUpon>MyMsgSelect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyScrollBar.cs" />
+    <Compile Include="Controls\MyScrollViewer.cs" />
+    <Compile Include="Controls\MySearchBox.xaml.cs">
+      <DependentUpon>MySearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyTextBox.cs" />
+    <Compile Include="Controls\MyTextButton.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Modules\Minecraft\ModCrash.cs" />
+    <Compile Include="Modules\ModLink.cs" />
+    <Compile Include="Modules\ModMusic.cs" />
+    <Compile Include="Modules\ModDevelop.cs" />
+    <Compile Include="Modules\Minecraft\ModWatcher.cs" />
+    <Compile Include="Modules\ModSecret.cs" />
+    <Compile Include="Modules\Reference\CookieWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pages\PageDownload\ModDownloadLib.cs" />
+    <Compile Include="Modules\Minecraft\MyCompItem.xaml.cs">
+      <DependentUpon>MyCompItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadCleanroom.xaml.cs">
+      <DependentUpon>PageDownloadCleanroom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadResourcePack.xaml.cs">
+      <DependentUpon>PageDownloadResourcePack.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadQuilt.xaml.cs">
+      <DependentUpon>PageDownloadQuilt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadCompFavorites.xaml.cs">
+      <DependentUpon>PageDownloadCompFavorites.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadMod.xaml.cs">
+      <DependentUpon>PageDownloadMod.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadFabric.xaml.cs">
+      <DependentUpon>PageDownloadFabric.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadInstall.xaml.cs">
+      <DependentUpon>PageDownloadInstall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadCompDetail.xaml.cs">
+      <DependentUpon>PageDownloadCompDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadNeoForge.xaml.cs">
+      <DependentUpon>PageDownloadNeoForge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadPack.xaml.cs">
+      <DependentUpon>PageDownloadPack.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadShader.xaml.cs">
+      <DependentUpon>PageDownloadShader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\MyMsgLogin.xaml.cs">
+      <DependentUpon>MyMsgLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginAuth.xaml.cs">
+      <DependentUpon>PageLoginAuth.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginAuthSkin.xaml.cs">
+      <DependentUpon>PageLoginAuthSkin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginMs.xaml.cs">
+      <DependentUpon>PageLoginMs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginMsSkin.xaml.cs">
+      <DependentUpon>PageLoginMsSkin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginNideSkin.xaml.cs">
+      <DependentUpon>PageLoginNideSkin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLink\PageLinkFeedback.xaml.cs">
+      <DependentUpon>PageLinkFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLink\PageLinkIoi.xaml.cs">
+      <DependentUpon>PageLinkIoi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLink\PageLinkNetStatus.xaml.cs">
+      <DependentUpon>PageLinkNetStatus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLink\PageLinkLobby.xaml.cs">
+      <DependentUpon>PageLinkLobby.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLogLeft.xaml.cs">
+      <DependentUpon>PageLogLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherVote.xaml.cs">
+      <DependentUpon>PageOtherVote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherHelpDetail.xaml.cs">
+      <DependentUpon>PageOtherHelpDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLink\PageLinkLeft.xaml.cs">
+      <DependentUpon>PageLinkLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherFeedback.xaml.cs">
+      <DependentUpon>PageOtherFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLogRight.xaml.cs">
+      <DependentUpon>PageLogRight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionInstall.xaml.cs">
+      <DependentUpon>PageVersionInstall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionExport.xaml.cs">
+      <DependentUpon>PageVersionExport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionLeft.xaml.cs">
+      <DependentUpon>PageVersionLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionCompResource.xaml.cs">
+      <DependentUpon>PageVersionCompResource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionModDisabled.xaml.cs">
+      <DependentUpon>PageVersionModDisabled.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionWorld.xaml.cs">
+      <DependentUpon>PageVersionWorld.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionScreenshot.xaml.cs">
+      <DependentUpon>PageVersionScreenshot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionOverall.xaml.cs">
+      <DependentUpon>PageVersionOverall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageVersion\PageVersionSetup.xaml.cs">
+      <DependentUpon>PageVersionSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Reference\SystemDropShadowChrome.cs" />
+    <Compile Include="Modules\Base\ModLoader.cs" />
+    <Compile Include="Modules\Base\ModNet.cs" />
+    <Compile Include="Modules\Base\ModValidate.cs" />
+    <Compile Include="Modules\Minecraft\ModDownload.cs" />
+    <Compile Include="Modules\Minecraft\ModLaunch.cs" />
+    <Compile Include="Modules\Minecraft\ModMinecraft.cs" />
+    <Compile Include="Pages\PageDownload\PageDownloadForge.xaml.cs">
+      <DependentUpon>PageDownloadForge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadLiteLoader.xaml.cs">
+      <DependentUpon>PageDownloadLiteLoader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadOptiFine.xaml.cs">
+      <DependentUpon>PageDownloadOptiFine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherTest.xaml.cs">
+      <DependentUpon>PageOtherTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\MySkin.xaml.cs">
+      <DependentUpon>MySkin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginNide.xaml.cs">
+      <DependentUpon>PageLoginNide.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLoginLegacy.xaml.cs">
+      <DependentUpon>PageLoginLegacy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSelectRight.xaml.cs">
+      <DependentUpon>PageSelectRight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSelectLeft.xaml.cs">
+      <DependentUpon>PageSelectLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLaunchLeft.xaml.cs">
+      <DependentUpon>PageLaunchLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageLaunch\PageLaunchRight.xaml.cs">
+      <DependentUpon>PageLaunchRight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherAbout.xaml.cs">
+      <DependentUpon>PageOtherAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherHelp.xaml.cs">
+      <DependentUpon>PageOtherHelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadLeft.xaml.cs">
+      <DependentUpon>PageDownloadLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDownload\PageDownloadClient.xaml.cs">
+      <DependentUpon>PageDownloadClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageOther\PageOtherLeft.xaml.cs">
+      <DependentUpon>PageOtherLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSetup\PageSetupLeft.xaml.cs">
+      <DependentUpon>PageSetupLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSetup\ModSetup.cs" />
+    <Compile Include="Pages\PageSetup\PageSetupLaunch.xaml.cs">
+      <DependentUpon>PageSetupLaunch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSetup\PageSetupSystem.xaml.cs">
+      <DependentUpon>PageSetupSystem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSetup\PageSetupLink.xaml.cs">
+      <DependentUpon>PageSetupLink.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSetup\PageSetupUI.xaml.cs">
+      <DependentUpon>PageSetupUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSpeedLeft.xaml.cs">
+      <DependentUpon>PageSpeedLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageSpeedRight.xaml.cs">
+      <DependentUpon>PageSpeedRight.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\MyExtraTextButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MyExtraButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyHint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyCheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyIconButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyMsg\MyMsgInput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MyMsg\MyMsgSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyMsg\MyMsgText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyRadioBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyIconTextButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MySearchBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MySlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MyRadioButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Application.xaml.cs">
+      <DependentUpon>Application.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\MyListItem.xaml.cs">
+      <DependentUpon>MyListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyButton.xaml.cs">
+      <DependentUpon>MyButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyCheckBox.xaml.cs">
+      <DependentUpon>MyCheckBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyIconButton.xaml.cs">
+      <DependentUpon>MyIconButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyMsg\MyMsgText.xaml.cs">
+      <DependentUpon>MyMsgText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyRadioBox.xaml.cs">
+      <DependentUpon>MyRadioBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyResizer.cs" />
+    <Compile Include="Controls\MySlider.xaml.cs">
+      <DependentUpon>MySlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyRadioButton.xaml.cs">
+      <DependentUpon>MyRadioButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.xaml.cs">
+      <DependentUpon>FormMain.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Modules\Minecraft\MyLocalCompItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Minecraft\MyCompItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadCleanroom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadResourcePack.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadQuilt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadCompFavorites.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadMod.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadFabric.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadInstall.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadCompDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadNeoForge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadPack.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadShader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLaunch\MyMsgLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginAuth.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginAuthSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginMs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginMsSkin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginNideSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <None Include="app.manifest" />
+    <None Include="Resources\Custom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <Page Include="Pages\PageLink\PageLinkFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLink\PageLinkIoi.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLink\PageLinkNetStatus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLink\PageLinkLobby.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLogLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherVote.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherHelpDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLink\PageLinkLeft.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLogRight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionInstall.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionWorld.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionScreenshot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionExport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Language\en_US.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Language\zh_CN.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadForge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadLiteLoader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadOptiFine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLaunch\MySkin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginNide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLoginLegacy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSelectRight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageSelectLeft.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLaunchLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageLaunch\PageLaunchRight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherAbout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherHelp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDownload\PageDownloadClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageOther\PageOtherLeft.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageSetup\PageSetupLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSetup\PageSetupLaunch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PageSetup\PageSetupSystem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSetup\PageSetupLink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSetup\PageSetupUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSpeedLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageSpeedRight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionCompResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionModDisabled.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionOverall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageVersion\PageVersionSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Newtonsoft.Json.Linq" />
+    <Import Include="System" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.IO" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Net" />
+    <Import Include="System.Text" />
+    <Import Include="System.Threading" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Windows.Data" />
+    <Import Include="System.Windows.Documents" />
+    <Import Include="System.Windows.Input" />
+    <Import Include="System.Windows.Shapes" />
+    <Import Include="System.Windows.Media" />
+    <Import Include="System.Windows.Media.Imaging" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Modules\Base\ModAnimation.cs" />
+    <Compile Include="Modules\Base\MyBitmap.cs" />
+    <Compile Include="Modules\ModMain.cs" />
+    <Compile Include="Modules\Base\ModBase.cs" />
+    <Compile Include="My Project\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWpfExtension.cs">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.WPF.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PCL.My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <!--<ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>-->
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8.1 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Font.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\LTCat.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\Anvil.png" />
+    <Resource Include="Images\Blocks\CobbleStone.png" />
+    <Resource Include="Images\Blocks\CommandBlock.png" />
+    <Resource Include="Images\Blocks\Grass.png" />
+    <Resource Include="Images\Blocks\RedstoneBlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\GrassPath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\Egg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\Hao_Tian.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Skins\Steve.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Skins\Alex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Newtonsoft.Json">
+      <Visible>False</Visible>
+      <Group></Group>
+      <TargetPath></TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\Patrick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\GoldBlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\42.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\RedstoneLampOff.png" />
+    <Resource Include="Images\Blocks\RedstoneLampOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\Fabric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forge-installer.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Help.zip" />
+    <None Include="Resources\transformer.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\A.png" />
+    <Resource Include="Images\Icons\B.png" />
+    <Resource Include="Images\Icons\R.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\NoIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\PCL2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\00ll00.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\bangbang93.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\wiki.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\OptiFabric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\java-wrapper.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ModData.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Skins\Ari.png" />
+    <Resource Include="Images\Skins\Efe.png" />
+    <Resource Include="Images\Skins\Kai.png" />
+    <Resource Include="Images\Skins\Makena.png" />
+    <Resource Include="Images\Skins\Noor.png" />
+    <Resource Include="Images\Skins\Sunny.png" />
+    <Resource Include="Images\Skins\Zuri.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\Disabled.png" />
+    <Resource Include="Images\Icons\Unavailable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\MCBBS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\Quilt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\NeoForge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\z0z0r4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\libwebp64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody">
+      <Version>6.0.0</Version>
+      <IncludeAssets>runtime; compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Fody">
+      <Version>6.9.2</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Imazen.WebP">
+      <Version>10.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
+      <Version>10.0.19041.2</Version>
+    </PackageReference>
+    <PackageReference Include="IPNetwork2">
+      <Version>3.1.743</Version>
+    </PackageReference>
+    <PackageReference Include="Makaretu.Nat">
+      <Version>0.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Win32.Registry">
+      <Version>5.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="NAudio">
+      <Version>2.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Ookii.Dialogs.Wpf">
+      <Version>5.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Open.NAT">
+      <Version>2.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="STUN">
+      <Version>0.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.AccessControl">
+      <Version>6.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="TagLibSharp">
+      <Version>2.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blocks\Cleanroom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\PCL-Community.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\Logo-CE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heads\Pysio.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
