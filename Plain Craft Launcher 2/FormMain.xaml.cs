@@ -470,8 +470,8 @@ namespace PCL
             ModAnimation.AniStart(new[] {
             ModAnimation.AaCode(() => ModAnimation.AniControlEnabled -= 1, 50),
             ModAnimation.AaOpacity(this, Conversions.ToDouble(Operators.AddObject(Operators.DivideObject(ModBase.Setup.Get("UiLauncherTransparent"), 1000), 0.4d)), 250, 100),
-            ModAnimation.AaDouble(i => this.TransformPos.Y = Conversions.ToDouble(this.TransformPos.Y + i), -this.TransformPos.Y, 600, 100, new ModAnimation.AniEaseOutBack(ModAnimation.AniEasePower.Weak)),
-            ModAnimation.AaDouble(i => this.TransformRotate.Angle = Conversions.ToDouble(this.TransformRotate.Angle + i), -this.TransformRotate.Angle, 500, 100, new ModAnimation.AniEaseOutBack(ModAnimation.AniEasePower.Weak)),
+            ModAnimation.AaDouble(i => this.TransformPos.Y = Conversions.ToDouble(this.TransformPos.Y + (double)i), -this.TransformPos.Y, 600, 100, new ModAnimation.AniEaseOutBack(ModAnimation.AniEasePower.Weak)),
+            ModAnimation.AaDouble(i => this.TransformRotate.Angle = Conversions.ToDouble(this.TransformRotate.Angle + (double)i), -this.TransformRotate.Angle, 500, 100, new ModAnimation.AniEaseOutBack(ModAnimation.AniEasePower.Weak)),
                         ModAnimation.AaCode(() =>
                 {
                 this.PanBack.RenderTransform = (Transform)null;
@@ -622,7 +622,7 @@ namespace PCL
                 ModBase.Log("[Start] 已解除帮助页面的隐藏");
             }
             // 单向迁移微软登录结果（#4836）
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("CacheMsV2Migrated")))
+            if (Conversions.ToBoolean((bool)ModBase.Setup.Get("CacheMsV2Migrated")))
             {
                 ModBase.Setup.Set("CacheMsV2Migrated", true);
                 ModBase.Setup.Set("CacheMsV2OAuthRefresh", ModBase.Setup.Get("CacheMsOAuthRefresh"));
@@ -639,7 +639,7 @@ namespace PCL
                 ModBase.Log("[Start] 已从老版本迁移 Mod 命名设置");
             }
             // 社区版提示
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("UiLauncherCEHint")))
+            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("UiLauncherCEHint")))
                 ModSecret.ShowCEAnnounce(true);
             // 输出更新日志
             if (LastVersionCode <= 0)
@@ -679,9 +679,9 @@ namespace PCL
             e.Cancel = true;
         }
         /// <summary>
-    /// 正常关闭程序。程序将在执行此方法后约 0.3s 退出。
-    /// </summary>
-    /// <param name="SendWarning">是否在还有下载任务未完成时发出警告。</param>
+        /// 正常关闭程序。程序将在执行此方法后约 0.3s 退出。
+        /// </summary>
+        /// <param name="SendWarning">是否在还有下载任务未完成时发出警告。</param>
         public void EndProgram(bool SendWarning)
         {
             // 发出警告
@@ -743,16 +743,6 @@ namespace PCL
         private static bool IsLogShown = false;
         public static void EndProgramForce(ModBase.ProcessReturnValues ReturnCode = ModBase.ProcessReturnValues.Success)
         {
-            ;
-            // 关闭 EasyTier 联机
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 39968
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             if (ModLink.IsETRunning)
                 ModLink.ExitEasyTier();
             ModBase.IsProgramEnded = true;
@@ -790,23 +780,14 @@ namespace PCL
         // 移动
         private void FormDragMove(object sender, MouseButtonEventArgs e)
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 41732
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             if (Conversions.ToBoolean(((dynamic)sender).IsMouseDirectlyOver))
                 this.DragMove();
         }
 
         // 改变大小
         /// <summary>
-    /// 是否可以向注册表储存尺寸改变信息。以此避免初始化时误储存。
-    /// </summary>
+        /// 是否可以向注册表储存尺寸改变信息。以此避免初始化时误储存。
+        /// </summary>
         public bool IsSizeSaveable = false;
         private void FormMain_SizeChanged()
         {
@@ -1119,10 +1100,10 @@ namespace PCL
                 ModBase.CopyFile(FilePath, ModBase.Path + @"PCL\Custom.xaml");
                 ModBase.RunInUi(() =>
         {
-                    ModBase.Setup.Set("UiCustomType", 1);
-                    ModMain.FrmLaunchRight.ForceRefresh();
-                    ModMain.Hint("已加载主页自定义文件！", ModMain.HintType.Finish);
-                });
+            ModBase.Setup.Set("UiCustomType", 1);
+            ModMain.FrmLaunchRight.ForceRefresh();
+            ModMain.Hint("已加载主页自定义文件！", ModMain.HintType.Finish);
+        });
                 return;
             }
             // 安装 Mod
@@ -1302,8 +1283,8 @@ namespace PCL
             }
         }
         /// <summary>
-    /// 把当前窗口拖到最前面。
-    /// </summary>
+        /// 把当前窗口拖到最前面。
+        /// </summary>
         public void ShowWindowToTop()
         {
             ModBase.RunInUi(() =>
@@ -1328,58 +1309,58 @@ namespace PCL
         // 页面种类与属性
         // 注意，这一枚举在 “切换页面” EventType 中调用，应视作公开 API 的一部分
         /// <summary>
-    /// 页面种类。
-    /// </summary>
+        /// 页面种类。
+        /// </summary>
         public enum PageType
         {
             /// <summary>
-        /// 启动。
-        /// </summary>
+            /// 启动。
+            /// </summary>
             Launch = 0,
             /// <summary>
-        /// 下载。
-        /// </summary>
+            /// 下载。
+            /// </summary>
             Download = 1,
             /// <summary>
-        /// 联机。
-        /// </summary>
+            /// 联机。
+            /// </summary>
             Link = 2,
             /// <summary>
-        /// 设置。
-        /// </summary>
+            /// 设置。
+            /// </summary>
             Setup = 3,
             /// <summary>
-        /// 更多。
-        /// </summary>
+            /// 更多。
+            /// </summary>
             Other = 4,
             /// <summary>
-        /// 版本选择。这是一个副页面。
-        /// </summary>
+            /// 版本选择。这是一个副页面。
+            /// </summary>
             VersionSelect = 5,
             /// <summary>
-        /// 下载管理。这是一个副页面。
-        /// </summary>
+            /// 下载管理。这是一个副页面。
+            /// </summary>
             DownloadManager = 6,
             /// <summary>
-        /// 版本设置。这是一个副页面。
-        /// </summary>
+            /// 版本设置。这是一个副页面。
+            /// </summary>
             VersionSetup = 7,
             /// <summary>
-        /// 资源工程详情。这是一个副页面。
-        /// </summary>
+            /// 资源工程详情。这是一个副页面。
+            /// </summary>
             CompDetail = 8,
             /// <summary>
-        /// 帮助详情。这是一个副页面。
-        /// </summary>
+            /// 帮助详情。这是一个副页面。
+            /// </summary>
             HelpDetail = 9,
             /// <summary>
-        /// 游戏实时日志。这是一个副页面。
-        /// </summary>
+            /// 游戏实时日志。这是一个副页面。
+            /// </summary>
             GameLog = 10
         }
         /// <summary>
-    /// 次要页面种类。其数值必须与 StackPanel 中的下标一致。
-    /// </summary>
+        /// 次要页面种类。其数值必须与 StackPanel 中的下标一致。
+        /// </summary>
         public enum PageSubType
         {
             Default = 0,
@@ -1424,8 +1405,8 @@ namespace PCL
             VersionInstall = 9
         }
         /// <summary>
-    /// 获取次级页面的名称。若并非次级页面则返回空字符串，故可以以此判断是否为次级页面。
-    /// </summary>
+        /// 获取次级页面的名称。若并非次级页面则返回空字符串，故可以以此判断是否为次级页面。
+        /// </summary>
         private string PageNameGet(PageStackData Stack)
         {
             switch (Stack.Page)
@@ -1489,15 +1470,15 @@ namespace PCL
             }
         }
         /// <summary>
-    /// 刷新次级页面的名称。
-    /// </summary>
+        /// 刷新次级页面的名称。
+        /// </summary>
         public void PageNameRefresh(PageStackData Type)
         {
             this.LabTitleInner.Text = PageNameGet(Type);
         }
         /// <summary>
-    /// 刷新次级页面的名称。
-    /// </summary>
+        /// 刷新次级页面的名称。
+        /// </summary>
         public void PageNameRefresh()
         {
             PageNameRefresh(PageCurrent);
@@ -1505,21 +1486,21 @@ namespace PCL
 
         // 页面状态存储
         /// <summary>
-    /// 当前的主页面。
-    /// </summary>
+        /// 当前的主页面。
+        /// </summary>
         public PageStackData PageCurrent = (PageStackData)PageType.Launch;
         /// <summary>
-    /// 上一个主页面。
-    /// </summary>
+        /// 上一个主页面。
+        /// </summary>
         public PageStackData PageLast = (PageStackData)PageType.Launch;
         /// <summary>
-    /// 当前的子页面。
-    /// </summary>
+        /// 当前的子页面。
+        /// </summary>
         public PageSubType PageCurrentSub
         {
             get
             {
-                switch (PageCurrent)
+                switch ((int)(PageType)PageCurrent)
                 {
                     case 1:
                         {
@@ -1557,8 +1538,8 @@ namespace PCL
             }
         }
         /// <summary>
-    /// 上层页面的编号堆栈，用于返回。
-    /// </summary>
+        /// 上层页面的编号堆栈，用于返回。
+        /// </summary>
         public List<PageStackData> PageStack = new List<PageStackData>();
         public class PageStackData
         {
@@ -1618,8 +1599,8 @@ namespace PCL
         // 引发实际页面切换的入口
         private bool IsChangingPage = false;
         /// <summary>
-    /// 切换页面，并引起对应选择 UI 的改变。
-    /// </summary>
+        /// 切换页面，并引起对应选择 UI 的改变。
+        /// </summary>
         public void PageChange(PageStackData Stack, PageSubType SubType = PageSubType.Default)
         {
             if (string.IsNullOrEmpty(PageNameGet(Stack)))
@@ -1688,8 +1669,8 @@ namespace PCL
             }
         }
         /// <summary>
-    /// 通过点击导航栏改变页面。
-    /// </summary>
+        /// 通过点击导航栏改变页面。
+        /// </summary>
         private void BtnTitleSelect_Click(MyRadioButton sender, bool raiseByMouse)
         {
             if (IsChangingPage)
@@ -1697,8 +1678,8 @@ namespace PCL
             PageChangeActual((PageStackData)ModBase.Val(sender.Tag));
         }
         /// <summary>
-    /// 通过点击返回按钮或手动触发返回来改变页面。
-    /// </summary>
+        /// 通过点击返回按钮或手动触发返回来改变页面。
+        /// </summary>
         public void PageBack()
         {
             if (PageStack.Any())
@@ -1713,8 +1694,8 @@ namespace PCL
 
         // 实际处理页面切换
         /// <summary>
-    /// 切换现有页面的实际方法。
-    /// </summary>
+        /// 切换现有页面的实际方法。
+        /// </summary>
         private void PageChangeActual(PageStackData Stack, PageSubType SubType = -1)
         {
             if (PageCurrent == Stack && (PageCurrentSub == SubType || (int)SubType == -1))
@@ -1919,8 +1900,8 @@ namespace PCL
             }, "FrmMain PageChangeRight");
         }
         /// <summary>
-    /// 退出子界面。
-    /// </summary>
+        /// 退出子界面。
+        /// </summary>
         private void PageChangeExit()
         {
             if (PageStack.Any())
@@ -2087,8 +2068,8 @@ namespace PCL
         }
 
         /// <summary>
-    /// 返回顶部。
-    /// </summary>
+        /// 返回顶部。
+        /// </summary>
         public void BackToTop()
         {
             var RealScroll = BtnExtraBack_GetRealChild();

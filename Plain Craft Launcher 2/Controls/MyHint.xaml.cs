@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Xml.Linq;
+using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json.Linq;
 
@@ -72,7 +75,7 @@ namespace PCL
                 this.SetValue(TextProperty, value);
             }
         }
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(MyHint), new PropertyMetadata("", (d, e) => d.LabText.Text = Conversions.ToString(e.NewValue)));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(MyHint), new PropertyMetadata("", (d, e) => ((MyHint)d).LabText.Text = Conversions.ToString(e.NewValue)));
 
         public bool CanClose
         {
@@ -89,7 +92,7 @@ namespace PCL
         public string RelativeSetup { get; set; } = "";
         private void MyHint_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Conversions.ToBoolean(CanClose && ModBase.Setup.Get(RelativeSetup)))
+            if (Conversions.ToBoolean(CanClose && (bool)ModBase.Setup.Get(RelativeSetup)))
             {
                 this.Visibility = Visibility.Collapsed;
             }
@@ -241,13 +244,14 @@ namespace PCL
                      AaOpacity(Control, -1, 200, Ease: new AniEaseOutFluent()),
                      ModAnimation.AaHeight(Control, -Control.ActualHeight, 150, 100, new AniEaseOutFluent()),
                      ModAnimation.AaCode(() =>
-                {
-                                if (RemoveFromChildren)
-                    {
-                                    ((object)Control.Parent).Children.Remove(Control);
-                    }
+                        {
+                                if (RemoveFromChildren && Control.Parent.GetType().IsSubclassOf(typeof(Panel)))
+                                {
+                                
+                                    ((Panel)Control.Parent).Children.Remove(Control);
+                                }
                                 else
-                    {
+                                {
                                     Control.Visibility = Visibility.Collapsed;
                                 }
                                 if (CallBack is not null)

@@ -71,7 +71,7 @@ namespace PCL
             Red = 2
         }
         // 属性穿透
-        public static new readonly DependencyProperty PaddingProperty = DependencyProperty.Register("Padding", typeof(Thickness), typeof(MyButton), new PropertyMetadata(new PropertyChangedCallback((sender, e) => { if (sender is not null) sender.PanFore.Padding = (Thickness)e.NewValue; })));
+        public static new readonly DependencyProperty PaddingProperty = DependencyProperty.Register("Padding", typeof(Thickness), typeof(MyButton), new PropertyMetadata(new PropertyChangedCallback((sender, e) => { if (sender is not null) ((MyButton)sender).PanFore.Padding = (Thickness)e.NewValue; })));
         public new Thickness Padding
         {
             get
@@ -104,7 +104,7 @@ namespace PCL
             this.MouseEnter += RefreshColor;
             this.MouseLeave += RefreshColor;
             this.Loaded += RefreshColor;
-            this.IsEnabledChanged += RefreshColor;
+            this.IsEnabledChanged += (obj,e) => RefreshColor(obj,e);
             this.MouseLeftButtonUp += Button_MouseUp;
             this.MouseLeftButtonDown += Button_MouseDown;
             this.MouseEnter += (_, __) => Button_MouseEnter();

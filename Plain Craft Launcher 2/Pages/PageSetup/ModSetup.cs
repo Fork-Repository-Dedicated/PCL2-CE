@@ -125,7 +125,7 @@ namespace PCL
             public byte State = 0;
             public Type Type;
 
-            public SetupEntry(object Value, object Source = SetupSource.Normal, object Encoded = false)
+            public SetupEntry(object Value, SetupSource Source = SetupSource.Normal, bool Encoded = false)
             {
                 try
                 {

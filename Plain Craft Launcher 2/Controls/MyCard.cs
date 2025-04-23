@@ -393,9 +393,9 @@ namespace PCL
                     {
                     if (RemoveFromChildren)
                         {
-                        if (Control.Parent is null)
+                        if (Control.Parent is null && Control.Parent.GetType().IsSubclassOf(typeof(Panel)))
                                 return;
-                        ((object)Control.Parent).Children.Remove(Control);
+                        ((Panel)Control.Parent).Children.Remove(Control);
                         }
                     else
                         {
@@ -410,9 +410,9 @@ namespace PCL
             {
                 if (RemoveFromChildren)
                 {
-                    if (Control.Parent is null)
+                    if (Control.Parent is null && Control.Parent.GetType().IsSubclassOf(typeof(Panel)))
                         return;
-                    ((object)Control.Parent).Children.Remove(Control);
+                    ((Panel)Control.Parent).Children.Remove(Control);
                 }
                 else
                 {

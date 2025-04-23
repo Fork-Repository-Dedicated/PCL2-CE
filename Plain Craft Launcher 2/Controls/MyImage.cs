@@ -171,7 +171,6 @@ namespace PCL
             try
             {
             RetryStart:
-                ;
 
                 // 下载
                 ActualSource = LoadingSource; // 显示加载中图片

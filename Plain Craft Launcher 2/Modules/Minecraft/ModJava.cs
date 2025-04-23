@@ -462,7 +462,7 @@ namespace PCL
                     Requirement = "需要 Java " + ((Left ?? "") == (Right ?? "") ? Left : Left + " ~ " + Right);
                 }
                 string JavaCurrent = UserJava.VersionCode + (ShowRevision ? "." + UserJava.Version.MajorRevision + "." + UserJava.Version.MinorRevision : "");
-                if (Conversions.ToBoolean(RelatedVersion is not null && ModBase.Setup.Get("VersionAdvanceJava", RelatedVersion)))
+                if (Conversions.ToBoolean(RelatedVersion is not null && (bool)ModBase.Setup.Get("VersionAdvanceJava", RelatedVersion)))
                 {
                     // 直接跳过弹窗
                     ModBase.Log("[Java] 设置中指定了使用 Java " + JavaCurrent + "，但当前版本" + Requirement + "，这可能会导致游戏崩溃！", ModBase.LogLevel.Debug);

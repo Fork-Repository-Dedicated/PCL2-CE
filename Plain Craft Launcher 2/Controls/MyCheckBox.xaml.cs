@@ -29,12 +29,12 @@ namespace PCL
 
         public MyCheckBox()
         {
-            this.MouseLeftButtonUp += (_, __) => Checkbox_MouseUp();
-            this.MouseLeftButtonDown += (_, __) => Checkbox_MouseDown();
-            this.MouseLeave += (_, __) => Checkbox_MouseLeave();
-            this.IsEnabledChanged += (_, __) => Checkbox_IsEnabledChanged();
-            this.MouseEnter += (_, __) => Checkbox_MouseEnterAnimation();
-            this.MouseLeave += (_, __) => Checkbox_MouseLeaveAnimation();
+            this.MouseLeftButtonUp += (_, _) => Checkbox_MouseUp();
+            this.MouseLeftButtonDown += (_, _) => Checkbox_MouseDown();
+            this.MouseLeave += (_, _) => Checkbox_MouseLeave();
+            this.IsEnabledChanged += (_, _) => Checkbox_IsEnabledChanged();
+            this.MouseEnter += (_, _) => Checkbox_MouseEnterAnimation();
+            this.MouseLeave += (_, _) => Checkbox_MouseLeaveAnimation();
         }
         public void RaiseChange()
         {
@@ -54,7 +54,7 @@ namespace PCL
             }
         }
         // 在使用 XAML 设置 Checked 属性时，不会触发 Checked_Set 方法，所以需要在这里手动触发 UI 改变
-        public static readonly DependencyProperty CheckedProperty = DependencyProperty.Register("Checked", typeof(bool), typeof(MyCheckBox), new PropertyMetadata(false, (d, e) => { if (!d.IsLoaded) d.SyncUI(); }));
+        public static readonly DependencyProperty CheckedProperty = DependencyProperty.Register("Checked", typeof(bool), typeof(MyCheckBox), new PropertyMetadata(false, (d, e) => { if (!((MyCheckBox)d).IsLoaded) ((MyCheckBox)d).SyncUI(); }));
 
         private const int AnimationTimeOfCheck = 150; // 勾选状态变更动画长度
                                                       /// <summary>

@@ -24,7 +24,6 @@ namespace PCL
         static PageLinkLobby()
         {
 
-            #endregion
 
             #region 加载步骤
 
@@ -61,7 +60,7 @@ namespace PCL
 
         private static ModLoader.LoaderCombo<int> _InitLoader;
 
-        public static virtual ModLoader.LoaderCombo<int> InitLoader
+        public static ModLoader.LoaderCombo<int> InitLoader
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
             get

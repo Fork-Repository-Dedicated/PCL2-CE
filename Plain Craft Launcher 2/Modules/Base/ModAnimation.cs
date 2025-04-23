@@ -460,9 +460,9 @@ namespace PCL
     /// <param name="After">是否等到以前的动画完成后才继续本动画。</param>
     /// <returns></returns>
     /// <remarks></remarks>
-        public static AniData AaDouble(object Obj, DependencyProperty Prop, double Value, int Time = 400, int Delay = 0, AniEase Ease = null, bool After = false)
+        public static AniData AaDouble(ParameterizedThreadStart Obj, DependencyProperty Prop, double Value, int Time = 400, int Delay = 0, AniEase Ease = null, bool After = false)
         {
-            return new AniData() { TypeMain = AniType.Number, TypeSub = AniTypeSub.Double, TimeTotal = Time, Ease = Ease ?? new AniEaseLinear(), Obj = new[] { Obj, Prop, "" }, Value = Value, IsAfter = After, TimeFinished = -Delay };
+            return new AniData() { TypeMain = AniType.Number, TypeSub = AniTypeSub.Double, TimeTotal = Time, Ease = Ease ?? new AniEaseLinear(), Obj = new List<object> { Obj, Prop, "" }, Value = Value, IsAfter = After, TimeFinished = -Delay };
         }
         /// <summary>
     /// 获取数字动画值。
@@ -495,7 +495,7 @@ namespace PCL
     /// <remarks></remarks>
         public static AniData AaColor(FrameworkElement Obj, DependencyProperty Prop, ModBase.MyColor Value, int Time = 400, int Delay = 0, AniEase Ease = null, bool After = false)
         {
-            return new AniData() { TypeMain = AniType.Color, TimeTotal = Time, Ease = Ease ?? new AniEaseLinear(), Obj = new[] { Obj, Prop, "" }, Value = Value, IsAfter = After, TimeFinished = -Delay, ValueLast = new ModBase.MyColor(0d, 0d, 0d, 0d) };
+            return new AniData() { TypeMain = AniType.Color, TimeTotal = Time, Ease = Ease ?? new AniEaseLinear(), Obj = new List<object> { Obj, Prop, "" }, Value = Value, IsAfter = After, TimeFinished = -Delay, ValueLast = new ModBase.MyColor(0d, 0d, 0d, 0d) };
         }
         /// <summary>
     /// 改变颜色属性为一个资源的动画。
@@ -511,7 +511,7 @@ namespace PCL
     /// <remarks></remarks>
         public static AniData AaColor(FrameworkElement Obj, DependencyProperty Prop, string Res, int Time = 400, int Delay = 0, AniEase Ease = null, bool After = false)
         {
-            return new AniData() { TypeMain = AniType.Color, TimeTotal = Time, Ease = Ease ?? new AniEaseLinear(), Obj = new[] { Obj, Prop, Res }, Value = new ModBase.MyColor(System.Windows.Application.Current.FindResource(Res)) - new ModBase.MyColor(Obj.GetValue(Prop)), IsAfter = After, TimeFinished = -Delay, ValueLast = new ModBase.MyColor(0d, 0d, 0d, 0d) };
+            return new AniData() { TypeMain = AniType.Color, TimeTotal = Time, Ease = Ease ?? new AniEaseLinear(), Obj = new List<object> { Obj, Prop, Res }, Value = new ModBase.MyColor(System.Windows.Application.Current.FindResource(Res)) - new ModBase.MyColor(Obj.GetValue(Prop)), IsAfter = After, TimeFinished = -Delay, ValueLast = new ModBase.MyColor(0d, 0d, 0d, 0d) };
         }
 
         // Scale

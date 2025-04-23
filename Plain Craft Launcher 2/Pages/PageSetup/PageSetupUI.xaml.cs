@@ -727,7 +727,7 @@ namespace PCL
             try
             {
                 // 顶部栏
-                if (Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenPageDownload") && ModBase.Setup.Get("UiHiddenPageLink") && ModBase.Setup.Get("UiHiddenPageSetup") && ModBase.Setup.Get("UiHiddenPageOther")))
+                if (!HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenPageDownload") && (bool)ModBase.Setup.Get("UiHiddenPageLink") && (bool)ModBase.Setup.Get("UiHiddenPageSetup") && (bool)ModBase.Setup.Get("UiHiddenPageOther"))
                 {
                     // 顶部栏已被全部隐藏
                     ModMain.FrmMain.PanTitleSelect.Visibility = Visibility.Collapsed;
@@ -736,65 +736,65 @@ namespace PCL
                 {
                     // 顶部栏未被全部隐藏
                     ModMain.FrmMain.PanTitleSelect.Visibility = Visibility.Visible;
-                    ModMain.FrmMain.BtnTitleSelect1.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenPageDownload")) ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmMain.BtnTitleSelect1.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenPageDownload") ? Visibility.Collapsed : Visibility.Visible;
                     ModMain.FrmMain.BtnTitleSelect2.Visibility = !(ModBase.VersionBranchName == "Debug") ? Visibility.Collapsed : Visibility.Visible; // If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenPageLink"), Visibility.Collapsed, Visibility.Visible)
-                    ModMain.FrmMain.BtnTitleSelect3.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenPageSetup")) ? Visibility.Collapsed : Visibility.Visible;
-                    ModMain.FrmMain.BtnTitleSelect4.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenPageOther")) ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmMain.BtnTitleSelect3.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenPageSetup") ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmMain.BtnTitleSelect4.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenPageOther") ? Visibility.Collapsed : Visibility.Visible;
                 }
                 // 功能
                 ModMain.FrmLaunchLeft.RefreshButtonsUI();
                 if (ModMain.FrmSetupUI is not null)
                 {
-                    ModMain.FrmSetupUI.CardSwitch.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenFunctionHidden")) ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmSetupUI.CardSwitch.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenFunctionHidden") ? Visibility.Collapsed : Visibility.Visible;
                 }
                 // 设置子页面
                 if (ModMain.FrmSetupLeft is not null)
                 {
-                    ModMain.FrmSetupLeft.ItemLaunch.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenSetupLaunch")) ? Visibility.Collapsed : Visibility.Visible;
-                    ModMain.FrmSetupLeft.ItemUI.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenSetupUi")) ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmSetupLeft.ItemLaunch.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenSetupLaunch") ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmSetupLeft.ItemUI.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenSetupUi") ? Visibility.Collapsed : Visibility.Visible;
                     ModMain.FrmSetupLeft.ItemLink.Visibility = Visibility.Collapsed; // If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenSetupLink"), Visibility.Collapsed, Visibility.Visible)
-                    ModMain.FrmSetupLeft.ItemSystem.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenSetupSystem")) ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmSetupLeft.ItemSystem.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenSetupSystem") ? Visibility.Collapsed : Visibility.Visible;
                     // 隐藏左边选择卡
                     int AvaliableCount = 0;
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupLaunch")))
+                    if (!(bool)ModBase.Setup.Get("UiHiddenSetupLaunch"))
                         AvaliableCount += 1;
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupUi")))
+                    if (!(bool)ModBase.Setup.Get("UiHiddenSetupUi"))
                         AvaliableCount += 1;
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupLink")))
+                    if (!(bool)ModBase.Setup.Get("UiHiddenSetupLink"))
                         AvaliableCount += 1;
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupSystem")))
+                    if (!(bool)ModBase.Setup.Get("UiHiddenSetupSystem"))
                         AvaliableCount += 1;
                     ModMain.FrmSetupLeft.PanItem.Visibility = AvaliableCount < 2 && !HiddenForceShow ? Visibility.Collapsed : Visibility.Visible;
                 }
                 // 更多子页面
                 int OtherAvaliableCount = 0;
-                if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherHelp")))
+                if (!(bool)ModBase.Setup.Get("UiHiddenOtherHelp"))
                     OtherAvaliableCount += 1;
-                if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherAbout")))
+                if (!(bool)ModBase.Setup.Get("UiHiddenOtherAbout"))
                     OtherAvaliableCount += 1;
-                if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherTest")))
+                if (!(bool)ModBase.Setup.Get("UiHiddenOtherTest"))
                     OtherAvaliableCount += 1;
-                if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherFeedback")))
+                if (!(bool)ModBase.Setup.Get("UiHiddenOtherFeedback"))
                     OtherAvaliableCount += 1;
-                if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherVote")))
+                if (!(bool)ModBase.Setup.Get("UiHiddenOtherVote"))
                     OtherAvaliableCount += 1;
                 if (ModMain.FrmOtherLeft is not null)
                 {
-                    ModMain.FrmOtherLeft.ItemHelp.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenOtherHelp")) ? Visibility.Collapsed : Visibility.Visible;
-                    ModMain.FrmOtherLeft.ItemFeedback.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenOtherFeedback")) ? Visibility.Collapsed : Visibility.Visible;
-                    ModMain.FrmOtherLeft.ItemVote.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenOtherVote")) ? Visibility.Collapsed : Visibility.Visible;
-                    ModMain.FrmOtherLeft.ItemAbout.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenOtherAbout")) ? Visibility.Collapsed : Visibility.Visible;
-                    ModMain.FrmOtherLeft.ItemTest.Visibility = Conversions.ToBoolean(!HiddenForceShow && ModBase.Setup.Get("UiHiddenOtherTest")) ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmOtherLeft.ItemHelp.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenOtherHelp") ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmOtherLeft.ItemFeedback.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenOtherFeedback") ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmOtherLeft.ItemVote.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenOtherVote") ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmOtherLeft.ItemAbout.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenOtherAbout") ? Visibility.Collapsed : Visibility.Visible;
+                    ModMain.FrmOtherLeft.ItemTest.Visibility = !HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenOtherTest") ? Visibility.Collapsed : Visibility.Visible;
                     // 隐藏左边选择卡
                     ModMain.FrmOtherLeft.PanItem.Visibility = OtherAvaliableCount < 2 && !HiddenForceShow ? Visibility.Collapsed : Visibility.Visible;
                 }
                 if (OtherAvaliableCount == 1 && !HiddenForceShow)
                 {
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherHelp")))
+                    if (!(bool)ModBase.Setup.Get("UiHiddenOtherHelp"))
                     {
                         ModMain.FrmMain.BtnTitleSelect4.Text = "帮助";
                     }
-                    else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherAbout")))
+                    else if (!(bool)ModBase.Setup.Get("UiHiddenOtherAbout"))
                     {
                         ModMain.FrmMain.BtnTitleSelect4.Text = "关于";
                     }
@@ -837,7 +837,7 @@ namespace PCL
                 this.CheckHiddenSetupUI.Checked = true;
             }
             // 关闭
-            else if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenSetupLaunch") && ModBase.Setup.Get("UiHiddenSetupUi") && ModBase.Setup.Get("UiHiddenSetupSystem") && ModBase.Setup.Get("UiHiddenSetupLink")))
+            else if ((bool)ModBase.Setup.Get("UiHiddenSetupLaunch") && (bool)ModBase.Setup.Get("UiHiddenSetupUi") && (bool)ModBase.Setup.Get("UiHiddenSetupSystem") && (bool)ModBase.Setup.Get("UiHiddenSetupLink"))
             {
                 this.CheckHiddenSetupLaunch.Checked = false;
                 this.CheckHiddenSetupSystem.Checked = false;
@@ -848,7 +848,7 @@ namespace PCL
         private void HiddenSetupSub()
         {
             // 设置子页面
-            if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenSetupLaunch") && ModBase.Setup.Get("UiHiddenSetupUi") && ModBase.Setup.Get("UiHiddenSetupSystem") && ModBase.Setup.Get("UiHiddenSetupLink")))
+            if ((bool)ModBase.Setup.Get("UiHiddenSetupLaunch") && (bool)ModBase.Setup.Get("UiHiddenSetupUi") && (bool)ModBase.Setup.Get("UiHiddenSetupSystem") && (bool)ModBase.Setup.Get("UiHiddenSetupLink"))
             {
                 // 已被全部隐藏
                 this.CheckHiddenPageSetup.Checked = true;
@@ -872,7 +872,7 @@ namespace PCL
                 this.CheckHiddenOtherHelp.Checked = true;
             }
             // 关闭
-            else if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenOtherHelp") && ModBase.Setup.Get("UiHiddenOtherAbout") && ModBase.Setup.Get("UiHiddenOtherTest") && ModBase.Setup.Get("UiHiddenOtherVote") && ModBase.Setup.Get("UiHiddenOtherFeedback")))
+            else if ((bool)ModBase.Setup.Get("UiHiddenOtherHelp") && (bool)ModBase.Setup.Get("UiHiddenOtherAbout") && (bool)ModBase.Setup.Get("UiHiddenOtherTest") && (bool)ModBase.Setup.Get("UiHiddenOtherVote") && (bool)ModBase.Setup.Get("UiHiddenOtherFeedback"))
             {
                 this.CheckHiddenOtherAbout.Checked = false;
                 this.CheckHiddenOtherTest.Checked = false;
@@ -884,7 +884,7 @@ namespace PCL
         private void HiddenOtherSub(object sender, bool user)
         {
             // 更多子页面（有具体内容的）
-            if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenOtherHelp") && ModBase.Setup.Get("UiHiddenOtherAbout") && ModBase.Setup.Get("UiHiddenOtherTest")))
+            if ((bool)ModBase.Setup.Get("UiHiddenOtherHelp") && (bool)ModBase.Setup.Get("UiHiddenOtherAbout") && (bool)ModBase.Setup.Get("UiHiddenOtherTest"))
             {
                 // 已被全部隐藏
                 this.CheckHiddenPageOther.Checked = true;
@@ -897,7 +897,7 @@ namespace PCL
             // 修改无具体内容的项
             if (!user)
                 return;
-            if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenOtherHelp") && ModBase.Setup.Get("UiHiddenOtherAbout") && ModBase.Setup.Get("UiHiddenOtherTest")))
+            if ((bool)ModBase.Setup.Get("UiHiddenOtherHelp") && (bool)ModBase.Setup.Get("UiHiddenOtherAbout") && (bool)ModBase.Setup.Get("UiHiddenOtherTest"))
             {
                 this.CheckHiddenOtherFeedback.Checked = true;
                 this.CheckHiddenOtherVote.Checked = true;
@@ -908,7 +908,7 @@ namespace PCL
             // 更多子页面（无具体内容的）
             if (!user)
                 return;
-            if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenOtherHelp") && ModBase.Setup.Get("UiHiddenOtherAbout") && ModBase.Setup.Get("UiHiddenOtherTest") && (!ModBase.Setup.Get("UiHiddenOtherFeedback") || !ModBase.Setup.Get("UiHiddenOtherVote"))))
+            if ((bool)ModBase.Setup.Get("UiHiddenOtherHelp") && (bool)ModBase.Setup.Get("UiHiddenOtherAbout") && (bool)ModBase.Setup.Get("UiHiddenOtherTest") && (!(bool)ModBase.Setup.Get("UiHiddenOtherFeedback") || !(bool)ModBase.Setup.Get("UiHiddenOtherVote")))
             {
                 this.CheckHiddenOtherAbout.Checked = false;
                 this.CheckHiddenOtherTest.Checked = false;
@@ -934,13 +934,13 @@ namespace PCL
         // 滑动条
         private void SliderLoad()
         {
-            this.SliderMusicVolume.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(Math.Ceiling(Operators.MultiplyObject(v, 0.1d)), "%"));
-            this.SliderLauncherOpacity.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(Math.Round(Operators.AddObject(40, Operators.MultiplyObject(v, 0.1d))), "%"));
+            this.SliderMusicVolume.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(Math.Ceiling((decimal)Operators.MultiplyObject(v, 0.1d)), "%"));
+            this.SliderLauncherOpacity.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(Math.Round((decimal)Operators.AddObject(40, Operators.MultiplyObject(v, 0.1d))), "%"));
             this.SliderLauncherHue.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(v, "°"));
             this.SliderLauncherSat.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(v, "%"));
             this.SliderLauncherDelta.GetHintText = new Func<int, object>((Value) => { if (Value > 90) { return "+" + (Value - 90); } else if (Value == 90) { return 0; } else { return Value - 90; } });
             this.SliderLauncherLight.GetHintText = new Func<int, object>((Value) => { if (Value > 20) { return "+" + (Value - 20); } else if (Value == 20) { return 0; } else { return Value - 20; } });
-            this.SliderBackgroundOpacity.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(Math.Round(Operators.MultiplyObject(v, 0.1d)), "%"));
+            this.SliderBackgroundOpacity.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(Math.Round((decimal)Operators.MultiplyObject(v, 0.1d)), "%"));
             this.SliderBackgroundBlur.GetHintText = new Func<object, object>(v => Operators.ConcatenateObject(v, " 像素"));
         }
 

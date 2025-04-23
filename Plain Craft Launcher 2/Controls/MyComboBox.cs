@@ -19,7 +19,7 @@ namespace PCL
 
         public MyComboBox()
         {
-            _Text = SelectedItem;
+            _Text = SelectedItem.ToString();
             PreviewMouseLeftButtonDown += MyComboBox_PreviewMouseLeftButtonDown;
             PreviewMouseLeftButtonUp += MyComboBox_PreviewMouseLeftButtonUp;
             MouseLeave += MyComboBox_PreviewMouseLeftButtonUp;
