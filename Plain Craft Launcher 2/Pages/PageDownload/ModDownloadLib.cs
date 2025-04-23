@@ -287,12 +287,12 @@ namespace PCL
             ToolTipService.SetPlacement(BtnInfo, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnInfo, 30d);
             ToolTipService.SetHorizontalOffset(BtnInfo, 2d);
-            BtnInfo.Click += (_, __) => ModDownloadLib.McDownloadMenuLog();
+            BtnInfo.Click += ModDownloadLib.McDownloadMenuLog;
             var BtnServer = new MyIconButton() { LogoScale = 1d, Logo = ModBase.Logo.IconButtonServer, ToolTip = "下载服务端" };
             ToolTipService.SetPlacement(BtnServer, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnServer, 30d);
             ToolTipService.SetHorizontalOffset(BtnServer, 2d);
-            BtnServer.Click += (_, __) => ModDownloadLib.McDownloadMenuSaveServer();
+            BtnServer.Click += ModDownloadLib.McDownloadMenuSaveServer;
             ((dynamic)sender).Buttons = new[] { BtnServer, BtnInfo };
         }
         private static void McDownloadMenuBuild(object sender, EventArgs e)
@@ -301,20 +301,20 @@ namespace PCL
             ToolTipService.SetPlacement(BtnSave, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnSave, 30d);
             ToolTipService.SetHorizontalOffset(BtnSave, 2d);
-            BtnSave.Click += (_, __) => ModDownloadLib.McDownloadMenuSave();
+            BtnSave.Click +=  ModDownloadLib.McDownloadMenuSave;
             var BtnInfo = new MyIconButton() { LogoScale = 1.05d, Logo = ModBase.Logo.IconButtonInfo, ToolTip = "更新日志" };
             ToolTipService.SetPlacement(BtnInfo, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnInfo, 30d);
             ToolTipService.SetHorizontalOffset(BtnInfo, 2d);
-            BtnInfo.Click += (_, __) => ModDownloadLib.McDownloadMenuLog();
+            BtnInfo.Click += ModDownloadLib.McDownloadMenuLog;
             var BtnServer = new MyIconButton() { LogoScale = 1d, Logo = ModBase.Logo.IconButtonServer, ToolTip = "下载服务端" };
             ToolTipService.SetPlacement(BtnServer, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnServer, 30d);
             ToolTipService.SetHorizontalOffset(BtnServer, 2d);
-            BtnServer.Click += (_, __) => ModDownloadLib.McDownloadMenuSaveServer();
+            BtnServer.Click += ModDownloadLib.McDownloadMenuSaveServer;
             ((dynamic)sender).Buttons = new[] { BtnSave, BtnInfo, BtnServer };
         }
-        private static void McDownloadMenuLog(object sender, RoutedEventArgs e)
+        private static void McDownloadMenuLog(object sender, EventArgs e)
         {
             JToken Version;
             if (((dynamic)sender).Tag is not null)
@@ -331,7 +331,7 @@ namespace PCL
             }
             McUpdateLogShow(Version);
         }
-        private static void McDownloadMenuSaveServer(object sender, RoutedEventArgs e)
+        private static void McDownloadMenuSaveServer(object sender, EventArgs e)
         {
             MyListItem Version;
             if (sender is MyListItem)
@@ -349,7 +349,7 @@ namespace PCL
             try
             {
                 string Id = Version.Title;
-                string JsonUrl = Version.Tag("url").ToString();
+                string JsonUrl = ((JObject)Version.Tag)["url"].ToString();
                 string VersionFolder = ModBase.SelectFolder();
                 if (!VersionFolder.Contains(@"\"))
                     return;
@@ -421,7 +421,7 @@ pause";
                 ModBase.Log(ex, "开始 Minecraft 服务端下载失败", ModBase.LogLevel.Feedback);
             }
         }
-        public static void McDownloadMenuSave(object sender, RoutedEventArgs e)
+        public static void McDownloadMenuSave(object sender, EventArgs e)
         {
             MyListItem Version;
             if (sender is MyListItem)
@@ -439,7 +439,7 @@ pause";
             try
             {
                 string Id = Version.Title;
-                string JsonUrl = Version.Tag("url").ToString();
+                string JsonUrl = ((JObject)Version.Tag)["url"].ToString();
                 string VersionFolder = ModBase.SelectFolder();
                 if (!VersionFolder.Contains(@"\"))
                     return;
@@ -778,7 +778,7 @@ pause";
             }
             // 添加 Java Wrapper 作为主 Jar
             string Arguments;
-            if (Conversions.ToBoolean(UseJavaWrapper && !ModBase.Setup.Get("LaunchAdvanceDisableJLW")))
+            if (UseJavaWrapper && !(bool)ModBase.Setup.Get("LaunchAdvanceDisableJLW"))
             {
                 Arguments = $"-Doolloo.jlw.tmpdir=\"{ModBase.PathPure.TrimEnd('\\')}\" -Duser.home=\"{BaseMcFolderHome.TrimEnd('\\')}\" -cp \"{Target}\" -jar \"{ModLaunch.ExtractJavaWrapper()}\" optifine.Installer";
             }
@@ -852,7 +852,6 @@ pause";
             catch
             {
             }
-            return (object)null;
         };
                         process.ErrorDataReceived += (sender, e) =>
         {
@@ -889,7 +888,6 @@ pause";
             catch
             {
             }
-            return (object)null;
         };
                         process.Start();
                         process.BeginOutputReadLine();
@@ -1201,7 +1199,7 @@ pause";
             ToolTipService.SetPlacement(BtnInfo, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnInfo, 30d);
             ToolTipService.SetHorizontalOffset(BtnInfo, 2d);
-            BtnInfo.Click += (_, __) => ModDownloadLib.OptiFineLog_Click();
+            BtnInfo.Click += ModDownloadLib.OptiFineLog_Click;
             ((dynamic)sender).Buttons = new[] { BtnInfo };
         }
         private static void OptiFineContMenuBuild(object sender, EventArgs e)
@@ -1210,15 +1208,15 @@ pause";
             ToolTipService.SetPlacement(BtnSave, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnSave, 30d);
             ToolTipService.SetHorizontalOffset(BtnSave, 2d);
-            BtnSave.Click += (_, __) => ModDownloadLib.OptiFineSave_Click();
+            BtnSave.Click += ModDownloadLib.OptiFineSave_Click;
             var BtnInfo = new MyIconButton() { LogoScale = 1.05d, Logo = ModBase.Logo.IconButtonInfo, ToolTip = "更新日志" };
             ToolTipService.SetPlacement(BtnInfo, System.Windows.Controls.Primitives.PlacementMode.Center);
             ToolTipService.SetVerticalOffset(BtnInfo, 30d);
             ToolTipService.SetHorizontalOffset(BtnInfo, 2d);
-            BtnInfo.Click += (_, __) => ModDownloadLib.OptiFineLog_Click();
+            BtnInfo.Click += ModDownloadLib.OptiFineLog_Click;
             ((dynamic)sender).Buttons = new[] { BtnSave, BtnInfo };
         }
-        private static void OptiFineLog_Click(object sender, RoutedEventArgs e)
+        private static void OptiFineLog_Click(object sender, EventArgs e)
         {
             ModDownload.DlOptiFineListEntry Version;
             if (((dynamic)sender).Tag is not null)
@@ -1235,7 +1233,7 @@ pause";
             }
             ModBase.OpenWebsite("https://optifine.net/changelog?f=" + Version.NameFile);
         }
-        public static void OptiFineSave_Click(object sender, RoutedEventArgs e)
+        public static void OptiFineSave_Click(object sender, EventArgs e)
         {
             ModDownload.DlOptiFineListEntry Version;
             if (((dynamic)sender).Tag is not null)
@@ -1610,7 +1608,7 @@ pause";
             }
             // 添加 Java Wrapper 作为主 Jar
             string Arguments;
-            if (Conversions.ToBoolean(UseJavaWrapper && !ModBase.Setup.Get("LaunchAdvanceDisableJLW")))
+            if (UseJavaWrapper && !(bool)ModBase.Setup.Get("LaunchAdvanceDisableJLW"))
             {
                 Arguments = $@"-Doolloo.jlw.tmpdir=""{ModBase.PathPure.TrimEnd('\\')}"" -cp ""{ModBase.PathTemp}Cache\forge_installer.jar;{Target}"" -jar ""{ModLaunch.ExtractJavaWrapper()}"" com.bangbang93.ForgeInstaller ""{McFolder}";
             }
@@ -2061,54 +2059,11 @@ pause";
             {
                 // 记录当前文件夹列表（在新建目标文件夹之前）
                 ModBase.Log($"[Download] 开始进行 Forgelike 安装：" + InstallerAddress);
-                ;
                 // 解压并获取信息
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-                                                            '记录当前文件夹列表（在新建目标文件夹之前）
-                                                            Dim OldList = New DirectoryInfo(McFolder & "versions\").EnumerateDirectories.Select(Function(i) i.FullName).ToList()
-
-                                         */
-                Installer = new ZipArchive(new FileStream(InstallerAddress, FileMode.Open));
-                ;
+                var OldList = new DirectoryInfo(McFolder + "versions\\").EnumerateDirectories().Select(i => i.FullName).ToList();
+                var Installer = new ZipArchive(new FileStream(InstallerAddress, FileMode.Open));
                 // 新建目标版本文件夹
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-                                                            Dim Json As Global.Newtonsoft.Json.Linq.JObject = Global.PCL.ModBase.GetJson(Global.PCL.ModBase.ReadFile(Installer.GetEntry("install_profile.json").Open))
-
-                                         */
+                var Json = (JObject)ModBase.GetJson(ModBase.ReadFile(Installer.GetEntry("install_profile.json").Open()));
                 Directory.CreateDirectory(VersionFolder);
                 Task.Progress = 0.04d;
                 // 释放 launcher_installer.json
@@ -2142,36 +2097,12 @@ pause";
                     }
                     // 拷贝新增的版本 Json
                 }
-
-                            ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-                                                            '拷贝新增的版本 Json
-                                                            Dim DeltaList = New DirectoryInfo(McFolder & "versions\").EnumerateDirectories.
-                                                                SkipWhile(Function(i) OldList.Contains(i.FullName)).ToList()
-
-                                         */
+                var DeltaList = new DirectoryInfo(McFolder + "versions\\").EnumerateDirectories().SkipWhile(i => OldList.Contains(i.FullName)).ToList();
                 if (DeltaList.Count > 1)
                 {
                     // 它可能和 OptiFine 安装同时运行，导致增加的文件不止一个（这导致了 #151）
                     // 也可能是因为 Forge 安装器的 Bug，生成了一个名字错误的文件夹，所以需要检查文件夹是否为空
-                    DeltaList = DeltaList.Where(l => l.Name.ContainsF("forge", true) && l.EnumerateFiles.Any).ToList;
+                    DeltaList = DeltaList.Where(l => l.Name.ContainsF("forge", true) && l.EnumerateFiles().Any()).ToList();
                 }
                 // 如果没有新增文件夹，那么预测的文件夹名就是正确的
                 // 如果只新增 1 个文件夹，那么拷贝 Json 文件

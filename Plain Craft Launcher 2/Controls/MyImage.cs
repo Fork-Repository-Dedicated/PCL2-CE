@@ -168,87 +168,91 @@ namespace PCL
             ModBase.RunInNewThread(() =>
         {
             string TempDownloadingPath = null;
-            try
-            {
-            RetryStart:
-
-                // 下载
-                ActualSource = LoadingSource; // 显示加载中图片
-                TempDownloadingPath = TempPath + ModBase.RandomInteger(0, 10000000);
-                Directory.CreateDirectory(ModBase.GetPathFromFullPath(TempPath)); // 重新实现下载，以避免携带 Header（#5072）
-                using (var Client = new WebClient())
-                {
-                    Client.Proxy = (IWebProxy)ModNet.GetProxy();
-                    Client.DownloadFile(Url, TempDownloadingPath);
-                }
-                if ((Url ?? "") != (Source ?? "") && (Url ?? "") != (FallbackSource ?? ""))
-                {
-                    // 已经更换了地址
-                    File.Delete(TempDownloadingPath);
-                }
-                else if (EnableCache)
-                {
-                    // 保存缓存并显示
-                    if (File.Exists(TempPath))
-                        File.Delete(TempPath);
-                    FileSystem.Rename(TempDownloadingPath, TempPath);
-                    ModBase.RunInUi(() => ActualSource = TempPath);
-                }
-                else
-                {
-                    // 直接显示
-                    ModBase.RunInUiWait(() => ActualSource = TempDownloadingPath);
-                    File.Delete(TempDownloadingPath);
-                }
-            }
-            catch (Exception ex)
+            bool TryDownload = true;
+            while (TryDownload)
             {
                 try
                 {
-                    if (TempPath is not null)
-                        File.Delete(TempPath);
-                    if (TempDownloadingPath is not null)
-                        File.Delete(TempDownloadingPath);
-                }
-                catch
-                {
-                }
-                if (!Retried)
-                {
-                    // 更换备用地址
-                    ModBase.Log(ex, $"下载图片可重试地失败（{Url}）", ModBase.LogLevel.Developer);
-                    Retried = true;
-                    Url = FallbackSource ?? Source;
-                    // 空
-                    if (Url is null)
-                    {
-                        ActualSource = null;
-                        return;
-                    }
-                    // 本地图片
-                    if (!Url.StartsWithF("http"))
-                    {
-                        ActualSource = Url;
-                        return;
-                    }
-                    // 从缓存加载网络图片
-                    TempPath = GetTempPath(Url);
-                    TempFile = new FileInfo(TempPath);
-                    if (EnableCache && TempFile.Exists)
-                    {
-                        ActualSource = TempPath;
-                        if (DateTime.Now - TempFile.CreationTime < FileCacheExpiredTime)
-                            return; // 无需刷新缓存
-                    }
                     // 下载
-                    if ((Source ?? "") == (Url ?? ""))
-                        Thread.Sleep(1000); // 延迟 1s 重试
-                    goto RetryStart;
+                    ActualSource = LoadingSource; // 显示加载中图片
+                    TempDownloadingPath = TempPath + ModBase.RandomInteger(0, 10000000);
+                    Directory.CreateDirectory(ModBase.GetPathFromFullPath(TempPath)); // 重新实现下载，以避免携带 Header（#5072）
+                    using (var Client = new WebClient())
+                    {
+                        Client.Proxy = (IWebProxy)ModNet.GetProxy();
+                        Client.DownloadFile(Url, TempDownloadingPath);
+                    }
+                    if ((Url ?? "") != (Source ?? "") && (Url ?? "") != (FallbackSource ?? ""))
+                    {
+                        // 已经更换了地址
+                        File.Delete(TempDownloadingPath);
+                    }
+                    else if (EnableCache)
+                    {
+                        // 保存缓存并显示
+                        if (File.Exists(TempPath))
+                            File.Delete(TempPath);
+                        FileSystem.Rename(TempDownloadingPath, TempPath);
+                        ModBase.RunInUi(() => ActualSource = TempPath);
+                    }
+                    else
+                    {
+                        // 直接显示
+                        ModBase.RunInUiWait(() => ActualSource = TempDownloadingPath);
+                        File.Delete(TempDownloadingPath);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ModBase.Log(ex, $"下载图片失败（{Url}）", ModBase.LogLevel.Hint);
+                    try
+                    {
+                        if (TempPath is not null)
+                            File.Delete(TempPath);
+                        if (TempDownloadingPath is not null)
+                            File.Delete(TempDownloadingPath);
+                    }
+                    catch
+                    {
+                    }
+                    if (!Retried)
+                    {
+                        // 更换备用地址
+                        ModBase.Log(ex, $"下载图片可重试地失败（{Url}）", ModBase.LogLevel.Developer);
+                        Retried = true;
+                        Url = FallbackSource ?? Source;
+                        // 空
+                        if (Url is null)
+                        {
+                            ActualSource = null;
+                            return;
+                        }
+                        // 本地图片
+                        if (!Url.StartsWithF("http"))
+                        {
+                            ActualSource = Url;
+                            return;
+                        }
+                        // 从缓存加载网络图片
+                        TempPath = GetTempPath(Url);
+                        TempFile = new FileInfo(TempPath);
+                        if (EnableCache && TempFile.Exists)
+                        {
+                            ActualSource = TempPath;
+                            if (DateTime.Now - TempFile.CreationTime < FileCacheExpiredTime)
+                                return; // 无需刷新缓存
+                        }
+                        // 下载
+                        if ((Source ?? "") == (Url ?? ""))
+                            Thread.Sleep(1000); // 延迟 1s 重试
+                        TryDownload = true;
+                        continue;
+                    }
+                    else
+                    {
+                        ModBase.Log(ex, $"下载图片失败（{Url}）", ModBase.LogLevel.Hint);
+                    }
                 }
+                TryDownload = false;
             }
         }, "MyImage PicLoader " + ModBase.GetUuid() + "#", ThreadPriority.BelowNormal);
         }

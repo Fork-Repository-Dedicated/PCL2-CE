@@ -17,9 +17,9 @@ namespace PCL
 
         private static WebProxy _Proxy { get; set; }
         /// <summary>
-    /// 获取 Proxy 代理
-    /// </summary>
-    /// <returns>返回 WebProxy 或者 Nothing</returns>
+        /// 获取 Proxy 代理
+        /// </summary>
+        /// <returns>返回 WebProxy 或者 Nothing</returns>
         public static object GetProxy()
         {
             string proxy = Conversions.ToString(ModBase.Setup.Get("SystemHttpProxy"));
@@ -49,8 +49,8 @@ namespace PCL
         }
 
         /// <summary>
-    /// 测试 Ping。失败则返回 -1。
-    /// </summary>
+        /// 测试 Ping。失败则返回 -1。
+        /// </summary>
         public static int Ping(string Ip, int Timeout = 10000, bool MakeLog = true)
         {
             System.Net.NetworkInformation.PingReply PingResult;
@@ -79,10 +79,10 @@ namespace PCL
         }
 
         /// <summary>
-    /// 以 WebClient 获取网页源代码。会进行至多 45 秒 3 次的尝试，允许最长 30s 的超时。
-    /// </summary>
-    /// <param name="Url">网页的 Url。</param>
-    /// <param name="Encoding">网页的编码，通常为 UTF-8。</param>
+        /// 以 WebClient 获取网页源代码。会进行至多 45 秒 3 次的尝试，允许最长 30s 的超时。
+        /// </summary>
+        /// <param name="Url">网页的 Url。</param>
+        /// <param name="Encoding">网页的编码，通常为 UTF-8。</param>
         public static string NetGetCodeByClient(string Url, Encoding Encoding, string Accept = "application/json, text/javascript, */*; q=0.01", bool UseBrowserUserAgent = false)
         {
             int RetryCount = 0;
@@ -91,7 +91,6 @@ namespace PCL
             try
             {
             Retry:
-                ;
 
                 switch (RetryCount)
                 {
@@ -144,6 +143,7 @@ namespace PCL
                         }
                 }
             }
+            return string.Empty;
         }
         public static string NetGetCodeByClient(string Url, Encoding Encoding, int Timeout, string Accept, bool UseBrowserUserAgent = false)
         {
@@ -188,11 +188,11 @@ namespace PCL
         }
 
         /// <summary>
-    /// 以 WebRequest 获取网页源代码或 Json。会进行至多 45 秒 3 次的尝试，允许最长 30s 的超时。
-    /// </summary>
-    /// <param name="Url">网页的 Url。</param>
-    /// <param name="Encode">网页的编码，通常为 UTF-8。</param>
-    /// <param name="BackupUrl">如果第一次尝试失败，换用的备用 URL。</param>
+        /// 以 WebRequest 获取网页源代码或 Json。会进行至多 45 秒 3 次的尝试，允许最长 30s 的超时。
+        /// </summary>
+        /// <param name="Url">网页的 Url。</param>
+        /// <param name="Encode">网页的编码，通常为 UTF-8。</param>
+        /// <param name="BackupUrl">如果第一次尝试失败，换用的备用 URL。</param>
         public static object NetGetCodeByRequestRetry(string Url, Encoding Encode = null, string Accept = "", bool IsJson = false, string BackupUrl = null, bool UseBrowserUserAgent = false)
         {
             int RetryCount = 0;
@@ -258,12 +258,13 @@ namespace PCL
                         }
                 }
             }
+            return string.Empty;
         }
         /// <summary>
-    /// 以 WebRequest 获取网页源代码或 Json。会逐渐生成 4 个尝试线程，并在 60s 后超时。
-    /// </summary>
-    /// <param name="Url">网页的 Url。</param>
-    /// <param name="Encode">网页的编码，通常为 UTF-8。</param>
+        /// 以 WebRequest 获取网页源代码或 Json。会逐渐生成 4 个尝试线程，并在 60s 后超时。
+        /// </summary>
+        /// <param name="Url">网页的 Url。</param>
+        /// <param name="Encode">网页的编码，通常为 UTF-8。</param>
         public static object NetGetCodeByRequestMultiple(string Url, Encoding Encode = null, string Accept = "", bool IsJson = false)
         {
             var Threads = new List<Thread>();
@@ -369,9 +370,9 @@ namespace PCL
         }
 
         /// <summary>
-    /// 以多线程下载网页文件的方式获取网页源代码。
-    /// </summary>
-    /// <param name="Url">网页的 Url。</param>
+        /// 以多线程下载网页文件的方式获取网页源代码。
+        /// </summary>
+        /// <param name="Url">网页的 Url。</param>
         public static string NetGetCodeByLoader(string Url, int Timeout = 45000, bool IsJson = false, bool UseBrowserUserAgent = false)
         {
             string NetGetCodeByLoaderRet = default;
@@ -391,9 +392,9 @@ namespace PCL
             return NetGetCodeByLoaderRet;
         }
         /// <summary>
-    /// 以多线程下载网页文件的方式获取网页源代码。
-    /// </summary>
-    /// <param name="Urls">网页的 Url 列表。</param>
+        /// 以多线程下载网页文件的方式获取网页源代码。
+        /// </summary>
+        /// <param name="Urls">网页的 Url 列表。</param>
         public static string NetGetCodeByLoader(IEnumerable<string> Urls, int Timeout = 45000, bool IsJson = false, bool UseBrowserUserAgent = false)
         {
             string NetGetCodeByLoaderRet = default;
@@ -414,10 +415,10 @@ namespace PCL
         }
 
         /// <summary>
-    /// 使用 WebClient 从网络中下载文件。这不能下载 CDN 中的文件。
-    /// </summary>
-    /// <param name="Url">网络 Url。</param>
-    /// <param name="LocalFile">下载的本地地址。</param>
+        /// 使用 WebClient 从网络中下载文件。这不能下载 CDN 中的文件。
+        /// </summary>
+        /// <param name="Url">网络 Url。</param>
+        /// <param name="LocalFile">下载的本地地址。</param>
         public static void NetDownloadByClient(string Url, string LocalFile, bool UseBrowserUserAgent = false)
         {
             ModBase.Log("[Net] 直接下载文件：" + Url);
@@ -451,10 +452,10 @@ namespace PCL
         }
 
         /// <summary>
-    /// 简单的多线程下载文件。可以下载 CDN 中的文件。
-    /// </summary>
-    /// <param name="Url">文件的 Url。</param>
-    /// <param name="LocalFile">下载的本地地址。</param>
+        /// 简单的多线程下载文件。可以下载 CDN 中的文件。
+        /// </summary>
+        /// <param name="Url">文件的 Url。</param>
+        /// <param name="LocalFile">下载的本地地址。</param>
         public static void NetDownloadByLoader(string Url, string LocalFile, ModLoader.LoaderBase LoaderToSyncProgress = null, ModBase.FileChecker Check = null, bool UseBrowserUserAgent = false)
         {
             var NewTask = new LoaderDownload("文件下载 " + ModBase.GetUuid() + "#", new List<NetFile>() { new NetFile(new[] { Url }, LocalFile, Check, UseBrowserUserAgent) });
@@ -473,10 +474,10 @@ namespace PCL
         }
 
         /// <summary>
-    /// 简单的多线程下载文件。可以下载 CDN 中的文件。
-    /// </summary>
-    /// <param name="Urls">文件的 Url 列表。</param>
-    /// <param name="LocalFile">下载的本地地址。</param>
+        /// 简单的多线程下载文件。可以下载 CDN 中的文件。
+        /// </summary>
+        /// <param name="Urls">文件的 Url 列表。</param>
+        /// <param name="LocalFile">下载的本地地址。</param>
         public static void NetDownloadByLoader(IEnumerable<string> Urls, string LocalFile, ModLoader.LoaderBase LoaderToSyncProgress = null, ModBase.FileChecker Check = null, bool UseBrowserUserAgent = false)
         {
             var NewTask = new LoaderDownload("文件下载 " + ModBase.GetUuid() + "#", new List<NetFile>() { new NetFile(Urls, LocalFile, Check, UseBrowserUserAgent) });
@@ -495,13 +496,13 @@ namespace PCL
         }
 
         /// <summary>
-    /// 发送一个网络请求并获取返回内容，会重试三次并在最长 45s 后超时。
-    /// </summary>
-    /// <param name="Url">请求的服务器地址。</param>
-    /// <param name="Method">请求方式（POST 或 GET）。</param>
-    /// <param name="Data">请求的内容。</param>
-    /// <param name="ContentType">请求的套接字类型。</param>
-    /// <param name="DontRetryOnRefused">当返回 40x 时不重试。</param>
+        /// 发送一个网络请求并获取返回内容，会重试三次并在最长 45s 后超时。
+        /// </summary>
+        /// <param name="Url">请求的服务器地址。</param>
+        /// <param name="Method">请求方式（POST 或 GET）。</param>
+        /// <param name="Data">请求的内容。</param>
+        /// <param name="ContentType">请求的套接字类型。</param>
+        /// <param name="DontRetryOnRefused">当返回 40x 时不重试。</param>
         public static string NetRequestRetry(string Url, string Method, object Data, string ContentType, bool DontRetryOnRefused = true, Dictionary<string, string> Headers = null)
         {
             int RetryCount = 0;
@@ -575,8 +576,8 @@ namespace PCL
             }
         }
         /// <summary>
-    /// 同时发送多个网络请求并要求返回内容。
-    /// </summary>
+        /// 同时发送多个网络请求并要求返回内容。
+        /// </summary>
         public static object NetRequestMultiple(string Url, string Method, object Data, string ContentType, int RequestCount = 4, Dictionary<string, string> Headers = null, bool MakeLog = true)
         {
             var Threads = new List<Thread>();
@@ -620,8 +621,8 @@ namespace PCL
             throw new Exception("未知错误");
         }
         /// <summary>
-    /// 发送一次网络请求并获取返回内容。
-    /// </summary>
+        /// 发送一次网络请求并获取返回内容。
+        /// </summary>
         public static string NetRequestOnce(string Url, string Method, object Data, string ContentType, int Timeout = 25000, Dictionary<string, string> Headers = null, bool MakeLog = true, bool UseBrowserUserAgent = false)
         {
             if (ModBase.RunInUi() && !Url.Contains("//127."))
@@ -745,8 +746,8 @@ namespace PCL
         public class ResponsedWebException : WebException
         {
             /// <summary>
-        /// 远程服务器给予的回复。
-        /// </summary>
+            /// 远程服务器给予的回复。
+            /// </summary>
             public new string Response { get; set; }
             public ResponsedWebException(string Message, string Response, Exception InnerException) : base(Message, InnerException)
             {
@@ -755,32 +756,32 @@ namespace PCL
         }
 
         /// <summary>
-    /// 最大线程数。
-    /// </summary>
+        /// 最大线程数。
+        /// </summary>
         public static int NetTaskThreadLimit;
         /// <summary>
-    /// 速度下限。
-    /// </summary>
+        /// 速度下限。
+        /// </summary>
         public static long NetTaskSpeedLimitLow = 256L * 1024L; // 256K/s
-                                                                /// <summary>
-    /// 速度上限。若无限制则为 -1。
-    /// </summary>
+        /// <summary>
+        /// 速度上限。若无限制则为 -1。
+        /// </summary>
         public static long NetTaskSpeedLimitHigh = -1;
         /// <summary>
-    /// 基于限速，当前可以下载的剩余量。
-    /// </summary>
+        /// 基于限速，当前可以下载的剩余量。
+        /// </summary>
         public static long NetTaskSpeedLimitLeft = -1;
         private readonly static object NetTaskSpeedLimitLeftLock = new object();
         private static long NetTaskSpeedLimitLeftLast;
         /// <summary>
-    /// 正在运行中的线程数。
-    /// </summary>
+        /// 正在运行中的线程数。
+        /// </summary>
         public static int NetTaskThreadCount = 0;
         private readonly static object NetTaskThreadCountLock = new object();
 
         /// <summary>
-    /// 下载源。
-    /// </summary>
+        /// 下载源。
+        /// </summary>
         public class NetSource
         {
             public int Id;
@@ -795,83 +796,83 @@ namespace PCL
             }
         }
         /// <summary>
-    /// 下载进度标示。
-    /// </summary>
+        /// 下载进度标示。
+        /// </summary>
         public enum NetState
         {
             /// <summary>
-        /// 尚未进行已存在检查。
-        /// </summary>
+            /// 尚未进行已存在检查。
+            /// </summary>
             WaitForCheck = -1,
             /// <summary>
-        /// 尚未开始。
-        /// </summary>
+            /// 尚未开始。
+            /// </summary>
             WaitForDownload = 0,
             /// <summary>
-        /// 正在连接，尚未获取文件大小。
-        /// </summary>
+            /// 正在连接，尚未获取文件大小。
+            /// </summary>
             Connect = 1,
             /// <summary>
-        /// 已获取文件大小，尚未有有效下载。
-        /// </summary>
+            /// 已获取文件大小，尚未有有效下载。
+            /// </summary>
             Get = 2,
             /// <summary>
-        /// 正在下载。
-        /// </summary>
+            /// 正在下载。
+            /// </summary>
             Download = 3,
             /// <summary>
-        /// 正在合并文件。
-        /// </summary>
+            /// 正在合并文件。
+            /// </summary>
             Merge = 4,
             /// <summary>
-        /// 不进行下载，因为已发现现存的文件。
-        /// </summary>
+            /// 不进行下载，因为已发现现存的文件。
+            /// </summary>
             WaitForCopy = 5,
             /// <summary>
-        /// 已完成。
-        /// </summary>
+            /// 已完成。
+            /// </summary>
             Finish = 6,
             /// <summary>
-        /// 已失败或中断。
-        /// </summary>
+            /// 已失败或中断。
+            /// </summary>
             Error = 7
         }
         /// <summary>
-    /// 预下载检查行为。
-    /// </summary>
+        /// 预下载检查行为。
+        /// </summary>
         public enum NetPreDownloadBehaviour
         {
             /// <summary>
-        /// 当文件已存在时，显示提示以提醒用户是否继续下载。
-        /// </summary>
+            /// 当文件已存在时，显示提示以提醒用户是否继续下载。
+            /// </summary>
             HintWhileExists,
             /// <summary>
-        /// 当文件已存在或正在下载时，直接退出下载函数执行，不对用户进行提示。
-        /// </summary>
+            /// 当文件已存在或正在下载时，直接退出下载函数执行，不对用户进行提示。
+            /// </summary>
             ExitWhileExistsOrDownloading,
             /// <summary>
-        /// 不进行已存在检查。
-        /// </summary>
+            /// 不进行已存在检查。
+            /// </summary>
             IgnoreCheck
         }
 
         /// <summary>
-    /// 下载线程。
-    /// </summary>
+        /// 下载线程。
+        /// </summary>
         public class NetThread : IEnumerable<NetThread>
         {
 
             /// <summary>
-        /// 对应的下载任务。
-        /// </summary>
+            /// 对应的下载任务。
+            /// </summary>
             public NetFile Task;
             /// <summary>
-        /// 对应的线程。
-        /// </summary>
+            /// 对应的线程。
+            /// </summary>
             public Thread Thread;
             /// <summary>
-        /// 链表中的下一个线程。
-        /// </summary>
+            /// 链表中的下一个线程。
+            /// </summary>
             public NetThread NextThread;
             private IEnumerable<NetThread> Next
             {
@@ -897,12 +898,12 @@ namespace PCL
             IEnumerator IEnumerable.GetEnumerator() => IEnumerable_GetEnumerator();
 
             /// <summary>
-        /// 分配给任务中每个线程（无论其是否失败）的编号。
-        /// </summary>
+            /// 分配给任务中每个线程（无论其是否失败）的编号。
+            /// </summary>
             public int Uuid;
             /// <summary>
-        /// 是否为第一个线程。
-        /// </summary>
+            /// 是否为第一个线程。
+            /// </summary>
             public bool IsFirstThread
             {
                 get
@@ -911,17 +912,17 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 该线程的缓存文件。
-        /// </summary>
+            /// 该线程的缓存文件。
+            /// </summary>
             public string Temp;
 
             /// <summary>
-        /// 线程下载起始位置。
-        /// </summary>
+            /// 线程下载起始位置。
+            /// </summary>
             public long DownloadStart;
             /// <summary>
-        /// 线程下载结束位置。
-        /// </summary>
+            /// 线程下载结束位置。
+            /// </summary>
             public long DownloadEnd
             {
                 get
@@ -947,8 +948,8 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 线程未下载的文件大小。
-        /// </summary>
+            /// 线程未下载的文件大小。
+            /// </summary>
             public long DownloadUndone
             {
                 get
@@ -957,21 +958,21 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 线程已下载的文件大小。
-        /// </summary>
+            /// 线程已下载的文件大小。
+            /// </summary>
             public long DownloadDone = 0L;
 
             /// <summary>
-        /// 上次记速时的时间。
-        /// </summary>
+            /// 上次记速时的时间。
+            /// </summary>
             private long SpeedLastTime = ModBase.GetTimeTick();
             /// <summary>
-        /// 上次记速时的已下载大小。
-        /// </summary>
+            /// 上次记速时的已下载大小。
+            /// </summary>
             private long SpeedLastDone = 0L;
             /// <summary>
-        /// 当前的下载速度，单位为 Byte / 秒。
-        /// </summary>
+            /// 当前的下载速度，单位为 Byte / 秒。
+            /// </summary>
             public long Speed
             {
                 get
@@ -989,21 +990,21 @@ namespace PCL
             private long _Speed = 0L;
 
             /// <summary>
-        /// 线程初始化时的时间。
-        /// </summary>
+            /// 线程初始化时的时间。
+            /// </summary>
             public long InitTime = ModBase.GetTimeTick();
             /// <summary>
-        /// 上次接受到有效数据的时间，-1 表示尚未有有效数据。
-        /// </summary>
+            /// 上次接受到有效数据的时间，-1 表示尚未有有效数据。
+            /// </summary>
             public long LastReceiveTime = -1;
 
             /// <summary>
-        /// 当前线程的状态。
-        /// </summary>
+            /// 当前线程的状态。
+            /// </summary>
             public NetState State = NetState.WaitForDownload;
             /// <summary>
-        /// 是否已经结束。
-        /// </summary>
+            /// 是否已经结束。
+            /// </summary>
             public bool IsEnded
             {
                 get
@@ -1013,38 +1014,38 @@ namespace PCL
             }
 
             /// <summary>
-        /// 当前选取的是哪一个 Url。
-        /// </summary>
+            /// 当前选取的是哪一个 Url。
+            /// </summary>
             public NetSource Source;
 
         }
         /// <summary>
-    /// 下载单个文件。
-    /// </summary>
+        /// 下载单个文件。
+        /// </summary>
         public class NetFile
         {
 
             #region 属性
 
             /// <summary>
-        /// 所属的文件列表任务。
-        /// </summary>
+            /// 所属的文件列表任务。
+            /// </summary>
             public ModBase.SafeList<LoaderDownload> Tasks = new ModBase.SafeList<LoaderDownload>();
             /// <summary>
-        /// 所有下载源。
-        /// </summary>
+            /// 所有下载源。
+            /// </summary>
             public ModBase.SafeList<NetSource> Sources;
             /// <summary>
-        /// 用于在第一个线程出错时切换下载源。
-        /// </summary>
+            /// 用于在第一个线程出错时切换下载源。
+            /// </summary>
             private int FirstThreadSource = 0;
             /// <summary>
-        /// 所有已经被标记为失败的，但未完整尝试过的，不允许断点续传的下载源。
-        /// </summary>
+            /// 所有已经被标记为失败的，但未完整尝试过的，不允许断点续传的下载源。
+            /// </summary>
             public ModBase.SafeList<NetSource> SourcesOnce = new ModBase.SafeList<NetSource>();
             /// <summary>
-        /// 获取从某个源开始，第一个可用的源。
-        /// </summary>
+            /// 获取从某个源开始，第一个可用的源。
+            /// </summary>
             private NetSource GetSource(int Id = 0)
             {
                 if (Id >= Sources.Count || Id < 0)
@@ -1077,8 +1078,8 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 是否已经没有可用源了。
-        /// </summary>
+            /// 是否已经没有可用源了。
+            /// </summary>
             public bool IsSourceFailed(bool AllowOnceSource = true)
             {
                 if (AllowOnceSource && SourcesOnce.Any())
@@ -1095,40 +1096,40 @@ namespace PCL
             }
 
             /// <summary>
-        /// 存储在本地的带文件名的地址。
-        /// </summary>
+            /// 存储在本地的带文件名的地址。
+            /// </summary>
             public string LocalPath = null;
             /// <summary>
-        /// 存储在本地的文件名。
-        /// </summary>
+            /// 存储在本地的文件名。
+            /// </summary>
             public string LocalName = null;
 
             /// <summary>
-        /// 当前的下载状态。
-        /// </summary>
+            /// 当前的下载状态。
+            /// </summary>
             public NetState State = NetState.WaitForCheck;
             /// <summary>
-        /// 导致下载失败的原因。
-        /// </summary>
+            /// 导致下载失败的原因。
+            /// </summary>
             public List<Exception> Ex = new List<Exception>();
 
             /// <summary>
-        /// 作为文件组成部分的线程链表。
-        /// 如果没有线程，可以为 Nothing。
-        /// </summary>
+            /// 作为文件组成部分的线程链表。
+            /// 如果没有线程，可以为 Nothing。
+            /// </summary>
             public NetThread Threads;
 
             /// <summary>
-        /// 文件的总大小。若为 -2 则为未获取，若为 -1 则为无法获取准确大小。
-        /// </summary>
+            /// 文件的总大小。若为 -2 则为未获取，若为 -1 则为无法获取准确大小。
+            /// </summary>
             public long FileSize = -2;
             /// <summary>
-        /// 该文件是否无法获取准确大小。
-        /// </summary>
+            /// 该文件是否无法获取准确大小。
+            /// </summary>
             public bool IsUnknownSize = false;
             /// <summary>
-        /// 该文件是否不需要分割。
-        /// </summary>
+            /// 该文件是否不需要分割。
+            /// </summary>
             public bool IsNoSplit
             {
                 get
@@ -1137,35 +1138,35 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 为不需要分割的小文件进行临时存储。
-        /// </summary>
+            /// 为不需要分割的小文件进行临时存储。
+            /// </summary>
             private Queue<byte> SmailFileCache;
 
             /// <summary>
-        /// 文件的已下载大小。
-        /// </summary>
+            /// 文件的已下载大小。
+            /// </summary>
             public long DownloadDone = 0L;
             private readonly object LockDone = new object();
             /// <summary>
-        /// 文件的校验规则。
-        /// </summary>
+            /// 文件的校验规则。
+            /// </summary>
             public ModBase.FileChecker Check;
             /// <summary>
-        /// 下载时是否添加浏览器 UA。
-        /// </summary>
+            /// 下载时是否添加浏览器 UA。
+            /// </summary>
             public bool UseBrowserUserAgent;
 
             /// <summary>
-        /// 上次记速时的时间。
-        /// </summary>
+            /// 上次记速时的时间。
+            /// </summary>
             private long SpeedLastTime = ModBase.GetTimeTick();
             /// <summary>
-        /// 上次记速时的已下载大小。
-        /// </summary>
+            /// 上次记速时的已下载大小。
+            /// </summary>
             private long SpeedLastDone = 0L;
             /// <summary>
-        /// 当前的下载速度，单位为 Byte / 秒。
-        /// </summary>
+            /// 当前的下载速度，单位为 Byte / 秒。
+            /// </summary>
             public long Speed
             {
                 get
@@ -1183,12 +1184,12 @@ namespace PCL
             private long _Speed = 0L;
 
             /// <summary>
-        /// 该文件是否由本地文件直接拷贝完成。
-        /// </summary>
+            /// 该文件是否由本地文件直接拷贝完成。
+            /// </summary>
             public bool IsCopy = false;
             /// <summary>
-        /// 本文件的显示进度。
-        /// </summary>
+            /// 本文件的显示进度。
+            /// </summary>
             public double Progress
             {
                 get
@@ -1241,16 +1242,16 @@ namespace PCL
             }
 
             /// <summary>
-        /// 各个线程建立连接成功的总次数。
-        /// </summary>
+            /// 各个线程建立连接成功的总次数。
+            /// </summary>
             private int ConnectCount = 0;
             /// <summary>
-        /// 各个线程建立连接成功的总时间。
-        /// </summary>
+            /// 各个线程建立连接成功的总时间。
+            /// </summary>
             private long ConnectTime = 0L;
             /// <summary>
-        /// 各个线程建立连接成功的平均时间，单位为毫秒，-1 代表尚未有成功连接。
-        /// </summary>
+            /// 各个线程建立连接成功的平均时间，单位为毫秒，-1 代表尚未有成功连接。
+            /// </summary>
             private int ConnectAverage
             {
                 get
@@ -1276,9 +1277,9 @@ namespace PCL
             #endregion
 
             /// <summary>
-        /// 新建一个需要下载的文件。
-        /// </summary>
-        /// <param name="LocalPath">包含文件名的本地地址。</param>
+            /// 新建一个需要下载的文件。
+            /// </summary>
+            /// <param name="LocalPath">包含文件名的本地地址。</param>
             public NetFile(IEnumerable<string> Urls, string LocalPath, ModBase.FileChecker Check = null, bool UseBrowserUserAgent = false)
             {
                 var Sources = new List<NetSource>();
@@ -1297,9 +1298,9 @@ namespace PCL
             }
 
             /// <summary>
-        /// 尝试开始一个新的下载线程。
-        /// 如果失败，返回 Nothing。
-        /// </summary>
+            /// 尝试开始一个新的下载线程。
+            /// 如果失败，返回 Nothing。
+            /// </summary>
             public NetThread TryBeginThread()
             {
                 try
@@ -1425,8 +1426,8 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 每个下载线程执行的代码。
-        /// </summary>
+            /// 每个下载线程执行的代码。
+            /// </summary>
             private void Thread(NetThread Info)
             {
                 if (ModBase.ModeDebug || Info.DownloadStart == 0L)
@@ -1779,9 +1780,9 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 从 HTTP 响应头中获取文件名。
-        /// 如果没有，返回 Nothing。
-        /// </summary>
+            /// 从 HTTP 响应头中获取文件名。
+            /// 如果没有，返回 Nothing。
+            /// </summary>
             private string GetFileNameFromResponse(HttpWebResponse response)
             {
                 string header = response.Headers["Content-Disposition"];
@@ -1795,8 +1796,8 @@ namespace PCL
 
             // 下载文件的最终收束事件
             /// <summary>
-        /// 下载完成。合并文件。
-        /// </summary>
+            /// 下载完成。合并文件。
+            /// </summary>
             private void Merge()
             {
                 // 状态判断
@@ -1932,8 +1933,8 @@ namespace PCL
                 }
             }
             /// <summary>
-        /// 下载失败。
-        /// </summary>
+            /// 下载失败。
+            /// </summary>
             private void Fail(Exception RaiseEx = null)
             {
                 lock (LockState)
@@ -1950,8 +1951,8 @@ namespace PCL
                     Task.OnFileFail(this);
             }
             /// <summary>
-        /// 下载中断。
-        /// </summary>
+            /// 下载中断。
+            /// </summary>
             public void Abort(LoaderDownload CausedByTask)
             {
                 // 从特定任务中移除，如果它还属于其他任务，则继续下载
@@ -1969,15 +1970,6 @@ namespace PCL
             }
             private void InterruptAndDelete()
             {
-                ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-                /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 77201
-
-
-                                Input:
-                                            On Error Resume Next
-
-                                 */
                 if (File.Exists(LocalPath))
                     File.Delete(LocalPath);
                 lock (NetManager.LockRemain)
@@ -1989,8 +1981,8 @@ namespace PCL
 
             // 状态改变接口
             /// <summary>
-        /// 将该文件设置为已下载完成。
-        /// </summary>
+            /// 将该文件设置为已下载完成。
+            /// </summary>
             public void Finish(bool PrintLog = true)
             {
                 lock (LockState)
@@ -2011,26 +2003,26 @@ namespace PCL
 
         }
         /// <summary>
-    /// 下载一系列文件的加载器。
-    /// </summary>
+        /// 下载一系列文件的加载器。
+        /// </summary>
         public class LoaderDownload : ModLoader.LoaderBase
         {
 
             #region 属性
 
             /// <summary>
-        /// 需要下载的文件。
-        /// </summary>
+            /// 需要下载的文件。
+            /// </summary>
             public ModBase.SafeList<NetFile> Files;
             /// <summary>
-        /// 剩余未完成的文件数。（用于减轻 FilesLock 的占用）
-        /// </summary>
+            /// 剩余未完成的文件数。（用于减轻 FilesLock 的占用）
+            /// </summary>
             private int FileRemain;
             private readonly object FileRemainLock = new object();
 
             /// <summary>
-        /// 用于显示的百分比进度。
-        /// </summary>
+            /// 用于显示的百分比进度。
+            /// </summary>
             public override double Progress
             {
                 get
@@ -2049,8 +2041,8 @@ namespace PCL
             private double _Progress = 0d;
 
             /// <summary>
-        /// 任务中的文件的连续失败计数。
-        /// </summary>
+            /// 任务中的文件的连续失败计数。
+            /// </summary>
             public int FailCount
             {
                 get
@@ -2098,8 +2090,8 @@ namespace PCL
             #endregion
 
             /// <summary>
-        /// 刷新公开属性。由 NetManager 每 0.1 秒调用一次。
-        /// </summary>
+            /// 刷新公开属性。由 NetManager 每 0.1 秒调用一次。
+            /// </summary>
             public void RefreshStat()
             {
                 // 计算进度
@@ -2164,10 +2156,65 @@ namespace PCL
                 // 接入下载管理器
                 // 将文件分配给多个线程以进行已存在查找
                 // 最多 5 个线程，最少每个线程分配 10 个文件
-                ModBase.RunInNewThread(() => { try { if (!Files.Any()) { OnFinish(); return; } foreach (NetFile File in Files) { if (File is null) throw new ArgumentException("存在空文件请求！"); foreach (NetSource Source in File.Sources) { if (!(Source.Url.StartsWithF("https://", true) || Source.Url.StartsWithF("http://", true))) { Source.Ex = new ArgumentException("输入的下载链接不正确！"); Source.IsFailed = true; } } if (File.IsSourceFailed()) throw new ArgumentException("输入的下载链接不正确！"); if (!File.LocalPath.ToLower().Contains(@":\")) throw new ArgumentException("输入的本地文件地址不正确！"); if (File.LocalPath.EndsWithF(@"\")) throw new ArgumentException("请输入含文件名的完整文件路径！"); string DirPath = new FileInfo(File.LocalPath).Directory.FullName; if (!Directory.Exists(DirPath)) Directory.CreateDirectory(DirPath); } NetManager.Start(this); var Folders = new List<string>(); var FoldersFinal = new List<string>(); if (Conversions.ToBoolean(!ModBase.Setup.Get("SystemDebugSkipCopy"))) { Folders.Add(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.minecraft\"); foreach (var Folder in ModMinecraft.McFolderList) Folders.Add(Folder.Path); Folders = Folders.Distinct().ToList(); foreach (var Folder in Folders) { if ((Folder ?? "") != (ModMinecraft.PathMcFolder ?? "") && Directory.Exists(Folder)) FoldersFinal.Add(Folder); } } int FilesPerThread = (int)Math.Round(Math.Max(5d, Files.Count / 10d + 1d)); var FilesInThread = new List<NetFile>(); foreach (var File in Files) { FilesInThread.Add(File); if (FilesInThread.Count == FilesPerThread) { var FilesToRun = new List<NetFile>(); FilesToRun.AddRange(FilesInThread); ModBase.RunInNewThread(() => StartCopy(FilesToRun, FoldersFinal), "NetTask FileCopy " + Uuid); FilesInThread.Clear(); } } if (FilesInThread.Any()) { var FilesToRun = new List<NetFile>(); FilesToRun.AddRange(FilesInThread); ModBase.RunInNewThread(() => StartCopy(FilesToRun, FoldersFinal), "NetTask FileCopy " + Uuid); FilesInThread.Clear(); } } catch (Exception ex) { OnFail(new List<Exception>() { ex }); } }, "NetTask " + Uuid + " Main"); // 可能会用于已存在查找的文件夹列表
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       // 最终用于查找的列表
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       // 在设置中禁用复制
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       // 总是添加官启文件夹，因为 HMCL 会把所有文件存在这里
+                ModBase.RunInNewThread(() =>
+                {
+                    try
+                    {
+                        if (!Files.Any())
+                        { OnFinish(); return; }
+                        foreach (NetFile File in Files)
+                        {
+                            if (File is null) throw new ArgumentException("存在空文件请求！");
+                            foreach (NetSource Source in File.Sources)
+                            {
+                                if (!(Source.Url.StartsWithF("https://", true) || Source.Url.StartsWithF("http://", true)))
+                                {
+                                    Source.Ex = new ArgumentException("输入的下载链接不正确！");
+                                    Source.IsFailed = true;
+                                }
+                            }
+                            if (File.IsSourceFailed()) throw new ArgumentException("输入的下载链接不正确！");
+                            if (!File.LocalPath.ToLower().Contains(@":\")) throw new ArgumentException("输入的本地文件地址不正确！");
+                            if (File.LocalPath.EndsWithF(@"\")) throw new ArgumentException("请输入含文件名的完整文件路径！");
+                            string DirPath = new FileInfo(File.LocalPath).Directory.FullName;
+                            if (!Directory.Exists(DirPath)) Directory.CreateDirectory(DirPath);
+                        }
+                        NetManager.Start(this);
+                        var Folders = new List<string>();
+                        var FoldersFinal = new List<string>();
+                        if (!(bool)ModBase.Setup.Get("SystemDebugSkipCopy"))
+                        {
+                            Folders.Add(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.minecraft\");
+                            foreach (var Folder in ModMinecraft.McFolderList) Folders.Add(Folder.Path); Folders = Folders.Distinct().ToList();
+                            foreach (var Folder in Folders)
+                            {
+                                if ((Folder ?? "") != (ModMinecraft.PathMcFolder ?? "") && Directory.Exists(Folder)) FoldersFinal.Add(Folder);
+                            }
+                        }
+                        int FilesPerThread = (int)Math.Round(Math.Max(5d, Files.Count / 10d + 1d));
+                        var FilesInThread = new List<NetFile>(); foreach (var File in Files)
+                        {
+                            FilesInThread.Add(File);
+                            if (FilesInThread.Count == FilesPerThread)
+                            {
+                                var FilesToRun = new List<NetFile>();
+                                FilesToRun.AddRange(FilesInThread); ModBase.RunInNewThread(() => StartCopy(FilesToRun, FoldersFinal), "NetTask FileCopy " + Uuid);
+                                FilesInThread.Clear();
+                            }
+                        }
+                        if (FilesInThread.Any())
+                        {
+                            var FilesToRun = new List<NetFile>();
+                            FilesToRun.AddRange(FilesInThread);
+                            ModBase.RunInNewThread(() => StartCopy(FilesToRun, FoldersFinal), "NetTask FileCopy " + Uuid);
+                            FilesInThread.Clear();
+                        }
+                    }
+                    catch (Exception ex) { OnFail(new List<Exception>() { ex }); }
+                }, "NetTask " + Uuid + " Main"); // 可能会用于已存在查找的文件夹列表
+                                                 // 最终用于查找的列表
+                                                 // 在设置中禁用复制
+                                                 // 总是添加官启文件夹，因为 HMCL 会把所有文件存在这里
             }
             private void StartCopy(List<NetFile> Files, List<string> FolderList)
             {
@@ -2334,27 +2381,27 @@ namespace PCL
 
         public static NetManagerClass NetManager = new NetManagerClass();
         /// <summary>
-    /// 下载文件管理。
-    /// </summary>
+        /// 下载文件管理。
+        /// </summary>
         public class NetManagerClass
         {
 
             #region 属性
 
             /// <summary>
-        /// 需要下载的文件。为“本地地址 - 文件对象”键值对。
-        /// </summary>
+            /// 需要下载的文件。为“本地地址 - 文件对象”键值对。
+            /// </summary>
             public Dictionary<string, NetFile> Files = new Dictionary<string, NetFile>();
             public readonly object LockFiles = new object();
 
             /// <summary>
-        /// 当前的所有下载任务。
-        /// </summary>
+            /// 当前的所有下载任务。
+            /// </summary>
             public ModBase.SafeList<LoaderDownload> Tasks = new ModBase.SafeList<LoaderDownload>();
 
             /// <summary>
-        /// 已下载完成的大小。
-        /// </summary>
+            /// 已下载完成的大小。
+            /// </summary>
             public long DownloadDone
             {
                 get
@@ -2372,23 +2419,23 @@ namespace PCL
 
 
             /// <summary>
-        /// 尚未完成下载的文件数。
-        /// </summary>
+            /// 尚未完成下载的文件数。
+            /// </summary>
             public int FileRemain = 0;
             public readonly object LockRemain = new object();
 
             /// <summary>
-        /// 上次记速时的已下载大小。
-        /// </summary>
+            /// 上次记速时的已下载大小。
+            /// </summary>
             private long SpeedLastDone = 0L;
             /// <summary>
-        /// 至多最近 30 次下载速度的记录，较新的在前面。
-        /// </summary>
+            /// 至多最近 30 次下载速度的记录，较新的在前面。
+            /// </summary>
             private List<long> SpeedLast = new List<long>();
             // 这些属性由 RefreshStat 刷新
             /// <summary>
-        /// 当前的全局下载速度，单位为 Byte / 秒。
-        /// </summary>
+            /// 当前的全局下载速度，单位为 Byte / 秒。
+            /// </summary>
             public long Speed = 0L;
 
             public readonly int Uuid = ModBase.GetUuid();
@@ -2396,8 +2443,8 @@ namespace PCL
             #endregion
 
             /// <summary>
-        /// 进度与下载速度由下载管理线程每隔约 0.1 秒刷新一次。
-        /// </summary>
+            /// 进度与下载速度由下载管理线程每隔约 0.1 秒刷新一次。
+            /// </summary>
             private void RefreshStat()
             {
                 try
@@ -2447,8 +2494,8 @@ namespace PCL
             private long RefreshStatLast;
 
             /// <summary>
-        /// 启动监控线程，用于新增下载线程。
-        /// </summary>
+            /// 启动监控线程，用于新增下载线程。
+            /// </summary>
             private void StartManager()
             {
                 if (IsManagerStarted)
@@ -2459,14 +2506,15 @@ namespace PCL
                 // 为进行中的文件追加线程
                 // 线程种类计数
                 // 新增线程
-                void ThreadStarter(int Id) { try { while (true) { Thread.Sleep(20); List<NetFile> AllFiles; lock (LockFiles) { if (Id == 0 && FileRemain == 0 && Files.Any()) Files.Clear(); AllFiles = Files.Values.ToList(); } var WaitingFiles = new List<NetFile>(); var OngoingFiles = new List<NetFile>(); foreach (NetFile File in AllFiles) { if (File.Uuid % 2 == Id) continue; if (File.State == NetState.WaitForDownload) { WaitingFiles.Add(File); } else if (File.State < NetState.Merge) { OngoingFiles.Add(File); } } bool continueWhile = false; foreach (NetFile File in WaitingFiles) { if (NetTaskThreadCount >= NetTaskThreadLimit) { continueWhile = true; break; } var NewThread = File.TryBeginThread(); if (NewThread is not null && NewThread.Source.Url.Contains("bmclapi")) Thread.Sleep(30); } if (continueWhile) { continue; } if (Speed >= NetTaskSpeedLimitLow) continue; bool continueWhile1 = false; foreach (NetFile File in OngoingFiles) { if (NetTaskThreadCount >= NetTaskThreadLimit) { continueWhile1 = true; break; } int PreparingCount = 0; int DownloadingCount = 0; if (File.Threads is not null) { foreach (NetThread Thread in File.Threads.ToList()) { if (Thread.State < NetState.Download) { PreparingCount += 1; } else if (Thread.State == NetState.Download) { DownloadingCount += 1; } } } if (PreparingCount > DownloadingCount) continue; var NewThread = File.TryBeginThread(); if (NewThread is not null && NewThread.Source.Url.Contains("bmclapi")) Thread.Sleep(30); } if (continueWhile1) { continue; } } } catch (Exception ex) { ModBase.Log(ex, $"下载管理启动线程 {Id} 出错", ModBase.LogLevel.Assert); } }; // 0 或 1
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 若已完成，则清空
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 最大线程数检查
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 减少 BMCLAPI 请求频率（目前每分钟限制 4000 次）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 下载速度足够，无需新增
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 最大线程数检查
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 准备中的线程已多于下载中的线程，不再新增
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 减少 BMCLAPI 请求频率（目前每分钟限制 4000 次）
+                void ThreadStarter(int Id) { try { while (true) { Thread.Sleep(20); List<NetFile> AllFiles; lock (LockFiles) { if (Id == 0 && FileRemain == 0 && Files.Any()) Files.Clear(); AllFiles = Files.Values.ToList(); } var WaitingFiles = new List<NetFile>(); var OngoingFiles = new List<NetFile>(); foreach (NetFile File in AllFiles) { if (File.Uuid % 2 == Id) continue; if (File.State == NetState.WaitForDownload) { WaitingFiles.Add(File); } else if (File.State < NetState.Merge) { OngoingFiles.Add(File); } } bool continueWhile = false; foreach (NetFile File in WaitingFiles) { if (NetTaskThreadCount >= NetTaskThreadLimit) { continueWhile = true; break; } var NewThread = File.TryBeginThread(); if (NewThread is not null && NewThread.Source.Url.Contains("bmclapi")) Thread.Sleep(30); } if (continueWhile) { continue; } if (Speed >= NetTaskSpeedLimitLow) continue; bool continueWhile1 = false; foreach (NetFile File in OngoingFiles) { if (NetTaskThreadCount >= NetTaskThreadLimit) { continueWhile1 = true; break; } int PreparingCount = 0; int DownloadingCount = 0; if (File.Threads is not null) { foreach (NetThread Thread in File.Threads.ToList()) { if (Thread.State < NetState.Download) { PreparingCount += 1; } else if (Thread.State == NetState.Download) { DownloadingCount += 1; } } } if (PreparingCount > DownloadingCount) continue; var NewThread = File.TryBeginThread(); if (NewThread is not null && NewThread.Source.Url.Contains("bmclapi")) Thread.Sleep(30); } if (continueWhile1) { continue; } } } catch (Exception ex) { ModBase.Log(ex, $"下载管理启动线程 {Id} 出错", ModBase.LogLevel.Assert); } }
+                ; // 0 或 1
+                  // 若已完成，则清空
+                  // 最大线程数检查
+                  // 减少 BMCLAPI 请求频率（目前每分钟限制 4000 次）
+                  // 下载速度足够，无需新增
+                  // 最大线程数检查
+                  // 准备中的线程已多于下载中的线程，不再新增
+                  // 减少 BMCLAPI 请求频率（目前每分钟限制 4000 次）
                 ModBase.RunInNewThread(() => ThreadStarter(0), "NetManager ThreadStarter 0");
                 ModBase.RunInNewThread(() => ThreadStarter(1), "NetManager ThreadStarter 1");
                 // 增加限速余量
@@ -2479,8 +2527,8 @@ namespace PCL
             // Public FileRemainList As New List(Of String)
             private bool IsDownloadCacheCleared = false;
             /// <summary>
-        /// 开始一个下载任务。
-        /// </summary>
+            /// 开始一个下载任务。
+            /// </summary>
             public void Start(LoaderDownload Task)
             {
                 StartManager();
@@ -2552,8 +2600,8 @@ namespace PCL
         }
 
         /// <summary>
-    /// 是否有正在进行中、需要在下载管理页面显示的下载任务？
-    /// </summary>
+        /// 是否有正在进行中、需要在下载管理页面显示的下载任务？
+        /// </summary>
         public static bool HasDownloadingTask(bool IgnoreCustomDownload = false)
         {
             foreach (var Task in ModLoader.LoaderTaskbar.ToList())
