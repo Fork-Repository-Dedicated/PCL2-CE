@@ -295,15 +295,6 @@ namespace PCL
             this.Path = Path;
             this.IgnoreCase = IgnoreCase;
             this.UseMinecraftCharCheck = UseMinecraftCharCheck;
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 8912
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             PathIgnore = new DirectoryInfo(Path).EnumerateDirectories();
             IsIgnoreSameName = IgnoreSameName;
         }

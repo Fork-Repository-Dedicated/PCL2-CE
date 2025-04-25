@@ -638,9 +638,9 @@ namespace PCL
             do
             {
                 b = Operators.MultiplyObject(Operators.MultiplyObject(3, a), Operators.AddObject(Operators.AddObject(Operators.MultiplyObject(Operators.MultiplyObject(0.33333333d + x1 - x2, a), a), Operators.MultiplyObject(x2 - 2d * x1, a)), x1));
-                a += Operators.MultiplyObject(Operators.SubtractObject(x, b), 0.5d);
+                a = Operators.AddObject(a, Operators.MultiplyObject(Operators.SubtractObject(x, b), 0.5d));
             }
-            while (!Operators.ConditionalCompareObjectLess(Math.Abs(Operators.SubtractObject(b, x)), acc, false)); // 精度
+            while (!Operators.ConditionalCompareObjectLess(Math.Abs((double)Operators.SubtractObject(b, x)), acc, false)); // 精度
             return Conversions.ToDouble(Operators.MultiplyObject(Operators.MultiplyObject(3, a), Operators.AddObject(Operators.AddObject(Operators.MultiplyObject(Operators.MultiplyObject(0.33333333d + y1 - y2, a), a), Operators.MultiplyObject(y2 - 2d * y1, a)), y1)));
         }
 
@@ -1842,7 +1842,7 @@ namespace PCL
             if (LongPath.Length <= ShortenThreshold)
                 return LongPath;
             var ShortPath = new StringBuilder(260);
-            ModBase.GetShortPathName(ref LongPath, ShortPath, 260);
+            ModBase.GetShortPathName(LongPath, ShortPath, 260);
             return ShortPath.ToString();
         }
         [DllImport("kernel32", EntryPoint = "GetShortPathNameA")]
@@ -3290,8 +3290,9 @@ namespace PCL
     /// </summary>
     /// <param name="Name">参数名。</param>
     /// <param name="DefaultValue">默认值。</param>
-        public static object GetProgramArgument(string Name, object DefaultValue = "")
+        public static object GetProgramArgument(string Name, object DefaultValue = null)
         {
+            if (DefaultValue is null) DefaultValue = "";
             string[] AllArguments = Interaction.Command().Split(" ");
             for (int i = 0, loopTo = AllArguments.Length - 1; i <= loopTo; i++)
             {
@@ -3875,15 +3876,6 @@ namespace PCL
         private readonly static object LogFlushLock = new object(); // 防止外部调用 LogFlush 时同时输出多次日志
         public static void LogFlush()
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 169667
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             if (LogWritter is null)
                 return;
             string Log = null;
@@ -3910,19 +3902,6 @@ namespace PCL
     /// <param name="Title">如果要求弹窗，指定弹窗的标题。</param>
         public static void Log(string Text, LogLevel Level = LogLevel.Normal, string Title = "出现错误")
         {
-            ;
-            // 放在最后会导致无法显示极端错误下的弹窗（如无法写入日志文件）
-            // 处理错误会导致再次调用 Log() 导致无限循环
-
-            // 输出日志
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 170659
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             string AppendText = "[" + GetTimeNow() + "] " + Text + Constants.vbCrLf; // 减轻同步锁占用
             if (ModeDebug)
             {
@@ -4030,15 +4009,6 @@ namespace PCL
     /// <param name="Desc">错误描述。会在处理时在末尾加入冒号。</param>
         public static void Log(Exception Ex, string Desc, LogLevel Level = LogLevel.Debug, string Title = "出现错误")
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 174592
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             if (Ex is ThreadInterruptedException)
                 return;
 
@@ -4162,15 +4132,6 @@ namespace PCL
         // 反馈
         public static void Feedback(bool ShowMsgbox = true, bool ForceOpenLog = false)
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 179038
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             FeedbackInfo();
             if (ForceOpenLog || ShowMsgbox && ModMain.MyMsgBox("若你在汇报一个 Bug，请点击 打开文件夹 按钮，并上传 Log-CE(1~5).txt 中包含错误信息的文件。" + Constants.vbCrLf + "游戏崩溃一般与启动器无关，请不要因为游戏崩溃而提交反馈。", "反馈提交提醒", "打开文件夹", "不需要") == 1)
             {
@@ -4202,15 +4163,6 @@ namespace PCL
     /// </summary>
         public static void FeedbackInfo()
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 180305
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             Log("[System] 诊断信息：" + Constants.vbCrLf + "操作系统：" + RuntimeInformation.OSDescription + "（32 位：" + Is32BitSystem + "）" + Constants.vbCrLf + "剩余内存：" + Conversion.Int(My.MyWpfExtension.Computer.Info.AvailablePhysicalMemory / 1024d / 1024d) + " M / " + Conversion.Int(My.MyWpfExtension.Computer.Info.TotalPhysicalMemory / 1024d / 1024d) + " M" + Constants.vbCrLf + "DPI：" + DPI + "（" + Math.Round(DPI / 96d, 2) * 100d + "%）" + Constants.vbCrLf + "MC 文件夹：" + (ModMinecraft.PathMcFolder ?? "Nothing") + Constants.vbCrLf + "文件位置：" + Path);
         }
 
@@ -4377,7 +4329,7 @@ namespace PCL
                 return false;
             bool localTryParse() { bool argresult = Conversions.ToBoolean(value); var ret = bool.TryParse(value.ToString(), out argresult); value = argresult; return ret; }
 
-            return localTryParse() ? !value : false;
+            return localTryParse() ? !(bool)value : false;
         }
     }
 }

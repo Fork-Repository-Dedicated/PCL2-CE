@@ -2055,15 +2055,6 @@ namespace PCL
                     if (State == ModBase.LoadState.Loading && value >= Math.Min(10000d, Math.Max(FileRemain * 5.5d, NetTaskThreadLimit * 5.5d + 3d)))
                     {
                         ModBase.Log("[Download] 由于同加载器中失败次数过多引发强制失败：连续失败了 " + value + " 次", ModBase.LogLevel.Debug);
-                        ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-                        /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 80101
-
-
-                                                Input:
-                                                                    On Error Resume Next
-
-                                                 */
                         var ExList = new List<Exception>();
                         foreach (var File in Files)
                         {

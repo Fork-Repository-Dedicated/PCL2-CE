@@ -423,11 +423,11 @@ namespace PCL
                         var JsonObject = ModBase.GetJson(InfoString);
                         if (Conversions.ToBoolean(Operators.ConditionalCompareObjectEqual(((dynamic)JsonObject).Type, JTokenType.Array, false)))
                         {
-                            InfoObject = (JObject)JsonObject(0);
+                            InfoObject = (JObject)((JObject)JsonObject)[0];
                         }
                         else
                         {
-                            InfoObject = (JObject)JsonObject("modList")(0);
+                            InfoObject = (JObject)((JObject)JsonObject)["modList"][0];
                         }
                         // 从文件中获取 Mod 信息项
                         Name = (string)InfoObject["name"];
@@ -449,16 +449,17 @@ namespace PCL
                         {
                             foreach (string Token in Reqs)
                             {
-                                if (!string.IsNullOrEmpty(Token))
+                                var curToken = Token;
+                                if (!string.IsNullOrEmpty(curToken))
                                 {
-                                    Token = Token.Substring(Token.IndexOfF(":") + 1);
-                                    if (Token.Contains("@"))
+                                    curToken = curToken.Substring(curToken.IndexOfF(":") + 1);
+                                    if (curToken.Contains("@"))
                                     {
-                                        AddDependency(Token.Split("@")[0], Token.Split("@")[1]);
+                                        AddDependency(curToken.Split("@")[0], curToken.Split("@")[1]);
                                     }
                                     else
                                     {
-                                        AddDependency(Token);
+                                        AddDependency(curToken);
                                     }
                                 }
                             }
@@ -470,14 +471,15 @@ namespace PCL
                             {
                                 if (!string.IsNullOrEmpty(Token))
                                 {
-                                    Token = Token.Substring(Token.IndexOfF(":") + 1);
-                                    if (Token.Contains("@"))
+                                    var curToken = Token;
+                                    curToken = curToken.Substring(curToken.IndexOfF(":") + 1);
+                                    if (curToken.Contains("@"))
                                     {
-                                        AddDependency(Token.Split("@")[0], Token.Split("@")[1]);
+                                        AddDependency(curToken.Split("@")[0], curToken.Split("@")[1]);
                                     }
                                     else
                                     {
-                                        AddDependency(Token);
+                                        AddDependency(curToken);
                                     }
                                 }
                             }
@@ -578,17 +580,18 @@ namespace PCL
                         var Lines = new List<string>();
                         foreach (var Line in TomlText.Replace(Constants.vbCrLf, Constants.vbLf).Replace(Constants.vbCr, Constants.vbLf).Split(Constants.vbLf)) // 统一换行符
                         {
-                            if (Line.StartsWithF("#")) // 去除注释
+                            var curLine = Line;
+                            if (curLine.StartsWithF("#")) // 去除注释
                             {
                                 continue;
                             }
-                            else if (Line.Contains("#"))
+                            else if (curLine.Contains("#"))
                             {
-                                Line = Line.Substring(0, Line.IndexOfF("#"));
+                                curLine = curLine.Substring(0, curLine.IndexOfF("#"));
                             }
-                            Line = Line.Trim(new char[] { ' ', '\t', '　' }); // 去除头尾的空格
-                            if (Line.Any())
-                                Lines.Add(Line); // 去除空行
+                            curLine = curLine.Trim(new char[] { ' ', '\t', '　' }); // 去除头尾的空格
+                            if (curLine.Any())
+                                Lines.Add(curLine); // 去除空行
                         }
                         // 读取文件数据
                         var TomlData = new List<KeyValuePair<string, Dictionary<string, object>>>() { new KeyValuePair<string, Dictionary<string, object>>("", new Dictionary<string, object>()) };
@@ -699,7 +702,7 @@ namespace PCL
                             if ((TomlSubData.Key.ToLower() ?? "") == ($"dependencies.{ModId.ToLower()}" ?? ""))
                             {
                                 var DepEntry = TomlSubData.Value;
-                                if (Conversions.ToBoolean(DepEntry.ContainsKey("modId") && DepEntry.ContainsKey("mandatory") && DepEntry["mandatory"] && DepEntry.ContainsKey("side") && !(DepEntry["side"].ToString().ToLower() == "server")))
+                                if (DepEntry.ContainsKey("modId") && DepEntry.ContainsKey("mandatory") && DepEntry["mandatory"] is not null && DepEntry.ContainsKey("side") && !(DepEntry["side"].ToString().ToLower() == "server"))
                                 {
                                     AddDependency(Conversions.ToString(DepEntry["modId"]), Conversions.ToString(DepEntry.ContainsKey("versionRange") ? DepEntry["versionRange"] : null));
                                 }
@@ -790,14 +793,14 @@ namespace PCL
                                 {
                                     if (string.IsNullOrEmpty(Dep) || !Dep.StartsWithF("required-"))
                                         continue;
-                                    Dep = Dep.Substring(Dep.IndexOfF(":") + 1);
-                                    if (Dep.Contains("@"))
+                                    var SubDep = Dep.Substring(Dep.IndexOfF(":") + 1);
+                                    if (SubDep.Contains("@"))
                                     {
-                                        AddDependency(Dep.Split("@")[0], Dep.Split("@")[1]);
+                                        AddDependency(SubDep.Split("@")[0], SubDep.Split("@")[1]);
                                     }
                                     else
                                     {
-                                        AddDependency(Dep);
+                                        AddDependency(SubDep);
                                     }
                                 }
                             }
@@ -939,7 +942,7 @@ namespace PCL
             {
                 get
                 {
-                    return Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenFunctionModUpdate") && ChangelogUrls.Any());
+                    return !(bool)ModBase.Setup.Get("UiHiddenFunctionModUpdate") && ChangelogUrls.Any();
                 }
             }
 
@@ -1260,114 +1263,28 @@ namespace PCL
         // 步骤 1：获取 Hash 与对应的工程 ID
         try
         {
-            ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-            /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-               在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-               在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-            --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-               在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-               在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-            --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-               在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-               在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-            --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-               在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-               在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-            --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-               在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-               在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-            Input:
-                                '步骤 1：获取 Hash 与对应的工程 ID
-                                Dim ModrinthHashes = Mods.Select(Function(m) m.ModrinthHash).ToList()
-
-             */
-            ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-            /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                Input:
-                                                    Dim ModrinthVersion = CType(Global.PCL.ModBase.GetJson(Global.PCL.ModDownload.DlModRequest("https://api.modrinth.com/v2/version_files", "POST",
-                                                        $"{{""hashes"": [""{ModrinthHashes.[Join](""",""")}""], ""algorithm"": ""sha1""}}", "application/json")), Global.Newtonsoft.Json.Linq.JObject)
-
-                                 */
+            var ModrinthHashes = Mods.Select(m => m.ModrinthHash).ToList();
+            var ModrinthVersion = (JObject)ModBase.GetJson(ModDownload.DlModRequest("https://api.modrinth.com/v2/version_files", "POST",
+                                                        @$"{{""hashes"": [""{ModrinthHashes.Join(""", """)}""], ""algorithm"": ""sha1""}}", "application/json"));
             ModBase.Log($"[Mod] 从 Modrinth 获取到 {ModrinthVersion.Count} 个本地 Mod 的对应信息");
             // 步骤 2：尝试读取工程信息缓存，构建其他 Mod 的对应关系
             if (ModrinthVersion.Count == 0)
                 return;
-            ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-            /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                Input:
-                                                    Dim ModrinthMapping As New Global.System.Collections.Generic.Dictionary(Of String, Global.System.Collections.Generic.List(Of Global.PCL.ModLocalComp.LocalCompFile))
-
-                                 */
+            Dictionary<string, List<LocalCompFile>> ModrinthMapping = new();
             foreach (var Entry in Mods)
             {
                 if (!ModrinthVersion.ContainsKey(Entry.ModrinthHash))
                     continue;
-                if ((string)ModrinthVersion(Entry.ModrinthHash)("files")(0)("hashes")("sha1") != Entry.ModrinthHash)
+                if ((string)ModrinthVersion[Entry.ModrinthHash]["files"][0]["hashes"]["sha1"] != Entry.ModrinthHash)
                     continue;
-                string ProjectId = ModrinthVersion(Entry.ModrinthHash)("project_id").ToString;
+                string ProjectId = ModrinthVersion[Entry.ModrinthHash]["project_id"].ToString();
                 if (ModComp.CompProjectCache.ContainsKey(ProjectId) && Entry.Comp is null)
-                    Entry.Comp = ModComp.CompProjectCache(ProjectId); // 读取已加载的缓存，加快结果出现速度
+                    Entry.Comp = ModComp.CompProjectCache[ProjectId]; // 读取已加载的缓存，加快结果出现速度
                 if (!ModrinthMapping.ContainsKey(ProjectId))
-                    ModrinthMapping(ProjectId) = new List<LocalCompFile>();
+                    ModrinthMapping[ProjectId] = new ();
                 // 记录对应的 CompFile
-                ModrinthMapping(ProjectId).Add(Entry);
-                ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-                                                                '记录对应的 CompFile
-                                                                Dim File As New Global.PCL.ModComp.CompFile(ModrinthVersion(Entry.ModrinthHash), Global.PCL.ModComp.CompType.[Mod])
-
-                                         */
+                ModrinthMapping[ProjectId].Add(Entry);
+                ModComp.CompFile File = new((JObject)ModrinthVersion[Entry.ModrinthHash], ModComp.CompType.Mod);
                 if (Entry.CompFile is null || Entry.CompFile.ReleaseDate < File.ReleaseDate)
                     Entry.CompFile = File;
             }
@@ -1377,110 +1294,25 @@ namespace PCL
             // 步骤 3：获取工程信息
             if (!ModrinthMapping.Any())
                 return;
-            ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-            /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
+            var ModrinthProject = (JObject)ModBase.GetJson(ModDownload.DlModRequest(
+                @$"https://api.modrinth.com/v2/projects?ids=[""{ModrinthMapping.Keys.Join(""", """)}""]",
+                "GET", "", "application/json"));
 
-                                Input:
-                                                    Dim ModrinthProject = CType(Global.PCL.ModBase.GetJson(Global.PCL.ModDownload.DlModRequest(
-                                                        $"https://api.modrinth.com/v2/projects?ids=[""{ModrinthMapping.Keys.[Join](""",""")}""]",
-                                                        "GET", "", "application/json")), Global.Newtonsoft.Json.Linq.JArray)
-
-                                 */
             foreach (var ProjectJson in ModrinthProject)
             {
-                ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-                                                                Dim Project As New Global.PCL.ModComp.CompProject(ProjectJson)
-
-                                         */
-                foreach (var Entry in ModrinthMapping(Project.Id))
+                var Project = new ModComp.CompProject((JObject)ProjectJson.Value);
+                foreach (var Entry in ModrinthMapping[Project.Id])
                     Entry.Comp = Project;
             }
             // 步骤 4：获取更新信息
             ModBase.Log($"[Mod] 已从 Modrinth 获取本地 Mod 信息，继续获取更新信息");
-            ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-            /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                   在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                Input:
-                                                    '步骤 4：获取更新信息
-                                                    Dim ModrinthUpdate = CType(Global.PCL.ModBase.GetJson(Global.PCL.ModDownload.DlModRequest("https://api.modrinth.com/v2/version_files/update", "POST",
-                                                        $"{{""hashes"": [""{Global.System.Linq.Enumerable.SelectMany(OfGlobal.System.String)((CType((ModrinthMapping),Global.System.Collections.Generic.IEnumerable(OfGlobal.System.Collections.Generic.KeyValuePair(OfSystem.String,Global.System.Collections.Generic.List(OfGlobal.PCL.ModLocalComp.LocalCompFile))))),(Function(l) Global.System.Linq.Enumerable.[Select](OfGlobal.System.String)((CType((l.Value),Global.System.Collections.Generic.IEnumerable(OfGlobal.PCL.ModLocalComp.LocalCompFile))),(CType(((Function(m) m.ModrinthHash)),Global.System.Func(OfGlobal.PCL.ModLocalComp.LocalCompFile,System.String)))))).[Join](""",""")}""], ""algorithm"": ""sha1"", 
-                                                    ""loaders"": [""{ModLoaders.[Join](""",""").ToLower}""],""game_versions"": [""{McVersion}""]}}", "application/json")), Global.Newtonsoft.Json.Linq.JObject)
-
-                                 */
+            var ModrinthUpdate = (JObject)(ModBase.GetJson(ModDownload.DlModRequest("https://api.modrinth.com/v2/version_files/update", "POST",
+                @$"{{""hashes"": [""{string.Join("\",\"", ModrinthMapping.SelectMany(l => l.Value.Select(m => m.ModrinthHash)))}""], ""algorithm"": ""sha1"", ""loaders"": [""{ModLoaders.Join(""",""").ToLower()}""],""game_versions"": [""{McVersion}""]}}", "application/json")));
             foreach (var Entry in Mods)
             {
                 if (!ModrinthUpdate.ContainsKey(Entry.ModrinthHash) || Entry.CompFile is null)
                     continue;
-                ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                           在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                           在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-                                                                Dim UpdateFile As New Global.PCL.ModComp.CompFile(ModrinthUpdate(Entry.ModrinthHash), Global.PCL.ModComp.CompType.[Mod])
-
-                                         */
+                var UpdateFile = new ModComp.CompFile((JObject)ModrinthUpdate[Entry.ModrinthHash], ModComp.CompType.Mod);
                 if (!UpdateFile.Available)
                     continue;
                 if (ModBase.ModeDebug)
@@ -1490,13 +1322,13 @@ namespace PCL
                 // 设置更新日志与更新文件
                 if (Entry.UpdateFile is not null && (UpdateFile.Hash ?? "") == (Entry.UpdateFile.Hash ?? "")) // 合并
                 {
-                    Entry.ChangelogUrls.Add($"https://modrinth.com/mod/{ModrinthUpdate(Entry.ModrinthHash)("project_id")}/changelog?g={McVersion}");
+                    Entry.ChangelogUrls.Add($"https://modrinth.com/mod/{ModrinthUpdate[Entry.ModrinthHash]["project_id"]}/changelog?g={McVersion}");
                     UpdateFile.DownloadUrls.AddRange(Entry.UpdateFile.DownloadUrls); // 合并下载源
                     Entry.UpdateFile = UpdateFile; // 优先使用 Modrinth 的文件
                 }
                 else if (Entry.UpdateFile is null || UpdateFile.ReleaseDate >= Entry.UpdateFile.ReleaseDate) // 替换
                 {
-                    Entry.ChangelogUrls = new List<string>() { $"https://modrinth.com/mod/{ModrinthUpdate(Entry.ModrinthHash)("project_id")}/changelog?g={McVersion}" };
+                    Entry.ChangelogUrls = new List<string>() { $"https://modrinth.com/mod/{ModrinthUpdate[Entry.ModrinthHash]["project_id"]}/changelog?g={McVersion}" };
                     Entry.UpdateFile = UpdateFile;
                 }
             }

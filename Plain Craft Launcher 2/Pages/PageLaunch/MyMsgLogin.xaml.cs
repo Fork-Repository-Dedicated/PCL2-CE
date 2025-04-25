@@ -79,15 +79,6 @@ namespace PCL
 
         private void Drag(object sender, MouseButtonEventArgs e)
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 4204
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             if (e.GetPosition(this.ShapeLine).Y <= 2d)
                 ModMain.FrmMain.DragMove();
         }

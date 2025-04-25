@@ -143,12 +143,12 @@ namespace PCL
 
                 string argClassName = null;
                 string argWindowName = "Plain Craft Launcher Community Edition ";
-                var WindowHwnd = ModMain.FindWindow(ref argClassName, ref argWindowName);
+                var WindowHwnd = ModMain.FindWindow(argClassName, argWindowName);
                 if (WindowHwnd == IntPtr.Zero)
                 {
                     string argClassName1 = null;
                     string argWindowName1 = "Plain Craft Launcher 2 Community Edition ";
-                    ModMain.FindWindow(ref argClassName1, ref argWindowName1);
+                    ModMain.FindWindow(argClassName1, argWindowName1);
                 }
                 if (WindowHwnd != IntPtr.Zero)
                 {
@@ -209,7 +209,7 @@ namespace PCL
                 // 释放资源
                 Directory.CreateDirectory(ModBase.PathPure + "CE");
                 string arglpPathName = ModBase.PathPure + "CE";
-                Application.SetDllDirectory(ref arglpPathName);
+                Application.SetDllDirectory(arglpPathName);
                 ModBase.WriteFile(ModBase.PathPure + @"CE\" + "libwebp.dll", ModBase.GetResources("libwebp64"));
                 // 网络配置初始化
                 ServicePointManager.Expect100Continue = true;
@@ -275,15 +275,6 @@ namespace PCL
         private bool IsCritErrored = false;
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            ;
-#error Cannot convert OnErrorResumeNextStatementSyntax - see comment for details
-            /* Cannot convert OnErrorResumeNextStatementSyntax, CONVERSION ERROR: Conversion for OnErrorResumeNextStatement not implemented, please report this issue in 'On Error Resume Next' at character 12704
-
-
-                        Input:
-                                On Error Resume Next
-
-                         */
             e.Handled = true;
             if (ModBase.IsProgramEnded)
                 return;

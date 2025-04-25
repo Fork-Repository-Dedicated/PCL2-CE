@@ -28,6 +28,7 @@ namespace PCL
             #region 加载步骤
 
             InitLoader = new ModLoader.LoaderCombo<int>("HiPer 初始化", new[] { new ModLoader.LoaderTask<int, int>("检查网络环境", InitCheck) { ProgressWeight = 0.5d } });
+            #endregion
         }
 
         public PageLinkLobby()

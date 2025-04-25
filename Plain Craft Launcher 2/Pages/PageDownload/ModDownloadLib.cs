@@ -2108,37 +2108,14 @@ pause";
                 // 如果只新增 1 个文件夹，那么拷贝 Json 文件
                 if (DeltaList.Count == 1)
                 {
-                    ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                    /* Cannot convert LocalDeclarationStatementSyntax, System.NullReferenceException: 未将对象引用设置到对象的实例。
-                                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.ShouldPreferExplicitType(ExpressionSyntax exp, ITypeSymbol expConvertedType, Boolean& isNothingLiteral)
-                                                   在 ICSharpCode.CodeConverter.CSharp.CommonConversions.<SplitVariableDeclarationsAsync>d__34.MoveNext()
-                                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<SplitVariableDeclarationsAsync>d__61.MoveNext()
-                                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                                   在 ICSharpCode.CodeConverter.CSharp.MethodBodyExecutableStatementVisitor.<VisitLocalDeclarationStatement>d__31.MoveNext()
-                                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                                   在 ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                                --- 引发异常的上一位置中堆栈跟踪的末尾 ---
-                                                   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                                   在 ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                                Input:
-                                                                        '如果没有新增文件夹，那么预测的文件夹名就是正确的
-                                                                        '如果只新增 1 个文件夹，那么拷贝 Json 文件
-                                                                        Dim JsonFile As Global.System.IO.FileInfo = DeltaList(0).EnumerateFiles.First()
-
-                                                 */
+                    var JsonFile = DeltaList[0].EnumerateFiles().First();
                     ModBase.WriteFile(VersionFolder + TargetVersion + ".json", ModBase.ReadFile(JsonFile.FullName));
                     ModBase.Log($"[Download] 已拷贝新增的版本 Json 文件：{JsonFile.FullName} -> {VersionFolder}{TargetVersion}.json");
                 }
                 else if (DeltaList.Count > 1)
                 {
                     // 新增了多个文件夹
-                    ModBase.Log($"[Download] 有多个疑似的新增版本，无法确定：{Enumerable.Select<string>((IEnumerable<DirectoryInfo>)DeltaList, d => d.Name).Join(";")}");
+                    ModBase.Log($"[Download] 有多个疑似的新增版本，无法确定：{DeltaList.Select(d => d.Name).Join(";")}");
                 }
                 else
                 {

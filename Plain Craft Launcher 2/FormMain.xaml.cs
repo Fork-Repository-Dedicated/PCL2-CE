@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -486,7 +487,7 @@ namespace PCL
             ModBase.RunInNewThread(() =>
         {
             // EULA 提示
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("SystemEula")))
+            if (!(bool)ModBase.Setup.Get("SystemEula"))
             {
                 switch (ModMain.MyMsgBox("在使用 PCL 前，请同意 PCL 的用户协议与免责声明。", "协议授权", "同意", "拒绝", "查看用户协议与免责声明", Button3Action: () => ModBase.OpenWebsite("https://shimo.im/docs/rGrd8pY8xWkt6ryW")))
                 {
@@ -714,16 +715,16 @@ namespace PCL
                 var TransformPos = new TranslateTransform(0d, 0d);
                 var TransformRotate = new RotateTransform(0d);
                 var TransformScale = new ScaleTransform(1d, 1d);
-                this.PanBack.RenderTransform = new TransformGroup() { Children = new TransformCollection(new[] { TransformRotate, TransformPos, TransformScale }) };
+                this.PanBack.RenderTransform = new TransformGroup() { Children = new TransformCollection(new List<Transform> { TransformRotate, TransformPos, TransformScale }) };
                 ModAnimation.AniStart(new[] {
                     ModAnimation.AaOpacity(this, -this.Opacity, 140, 40, new ModAnimation.AniEaseOutFluent(ModAnimation.AniEasePower.Weak)),
                                         ModAnimation.AaDouble(i =>
                         {
-                        TransformScale.ScaleX = Conversions.ToDouble(TransformScale.ScaleX + i);
-                        TransformScale.ScaleY = Conversions.ToDouble(TransformScale.ScaleY + i);
+                        TransformScale.ScaleX = TransformScale.ScaleX + (double)i;
+                        TransformScale.ScaleY = TransformScale.ScaleY + (double)i;
                     }, 0.88d - TransformScale.ScaleX, 180),
-                    ModAnimation.AaDouble(i => TransformPos.Y = Conversions.ToDouble(TransformPos.Y + i), 20d - TransformPos.Y, 180, 0, new ModAnimation.AniEaseOutFluent(ModAnimation.AniEasePower.Weak)),
-                    ModAnimation.AaDouble(i => TransformRotate.Angle = Conversions.ToDouble(TransformRotate.Angle + i), 0.6d - TransformRotate.Angle, 180, 0, new ModAnimation.AniEaseInoutFluent(ModAnimation.AniEasePower.Weak)),
+                    ModAnimation.AaDouble(i => TransformPos.Y = TransformPos.Y +(double) i, 20d - TransformPos.Y, 180, 0, new ModAnimation.AniEaseOutFluent(ModAnimation.AniEasePower.Weak)),
+                    ModAnimation.AaDouble(i => TransformRotate.Angle = TransformRotate.Angle +(double) i, 0.6d - TransformRotate.Angle, 180, 0, new ModAnimation.AniEaseInoutFluent(ModAnimation.AniEasePower.Weak)),
                                         ModAnimation.AaCode(() =>
                         {
                         this.IsHitTestVisible = false;
@@ -831,7 +832,20 @@ namespace PCL
             {
                 if (e.Key == Key.Enter)
                 {
-                    ((object)this.PanMsg.Children[0]).Btn1_Click();
+                    object Msg = this.PanMsg.Children[0];
+                    Type type = Msg.GetType();
+                    if (type == typeof(MyMsgInput))
+                    {
+                        ((MyMsgInput)Msg).Btn1_Click();
+                    }
+                    else if (type == typeof(MyMsgSelect))
+                    {
+                        ((MyMsgSelect)Msg).Btn1_Click();
+                    }
+                    else if (type == typeof(MyMsgText))
+                    {
+                        ((MyMsgText)Msg).Btn1_Click();
+                    }
                     return;
                 }
                 else if (e.Key == Key.Escape)
@@ -1363,6 +1377,7 @@ namespace PCL
         /// </summary>
         public enum PageSubType
         {
+            None = -1,
             Default = 0,
             DownloadInstall = 1,
             DownloadClient = 4,
@@ -1429,7 +1444,7 @@ namespace PCL
                     }
                 case PageType.CompDetail:
                     {
-                        ModComp.CompProject Project = (ModComp.CompProject)Stack.Additional(0);
+                        ModComp.CompProject Project = (ModComp.CompProject)((object [])Stack.Additional)[0];
                         switch (Project.Type)
                         {
                             case ModComp.CompType.Mod:
@@ -1459,7 +1474,7 @@ namespace PCL
                     }
                 case PageType.HelpDetail:
                     {
-                        ModMain.HelpEntry Entry = (ModMain.HelpEntry)Stack.Additional(0);
+                        ModMain.HelpEntry Entry = (ModMain.HelpEntry)((object[])Stack.Additional)[0];
                         return Entry.Title;
                     }
 
@@ -1608,7 +1623,7 @@ namespace PCL
                 // 切换到主页面
                 PageChangeExit();
                 IsChangingPage = true; // 防止下面的勾选直接触发了 PageChangeActual
-                ((MyRadioButton)this.PanTitleSelect.Children[Stack]).SetChecked(true, true, string.IsNullOrEmpty(PageNameGet(PageCurrent)));
+                ((MyRadioButton)this.PanTitleSelect.Children[(int)Stack.Page]).SetChecked(true, true, string.IsNullOrEmpty(PageNameGet(PageCurrent)));
                 IsChangingPage = false;
                 switch (Stack.Page)
                 {
@@ -1675,7 +1690,7 @@ namespace PCL
         {
             if (IsChangingPage)
                 return;
-            PageChangeActual((PageStackData)ModBase.Val(sender.Tag));
+            PageChangeActual((PageStackData)(PageType)ModBase.Val(sender.Tag));
         }
         /// <summary>
         /// 通过点击返回按钮或手动触发返回来改变页面。
@@ -1696,7 +1711,7 @@ namespace PCL
         /// <summary>
         /// 切换现有页面的实际方法。
         /// </summary>
-        private void PageChangeActual(PageStackData Stack, PageSubType SubType = -1)
+        private void PageChangeActual(PageStackData Stack, PageSubType SubType = (PageSubType)(-1))
         {
             if (PageCurrent == Stack && (PageCurrentSub == SubType || (int)SubType == -1))
                 return;
@@ -1822,7 +1837,7 @@ namespace PCL
                         }
                     case PageType.HelpDetail: // 帮助详情
                         {
-                            PageChangeAnim(new MyPageLeft(), (FrameworkElement)Stack.Additional(1));
+                            PageChangeAnim(new MyPageLeft(), (FrameworkElement)((object[])Stack.Additional)[1]);
                             break;
                         }
                 }
