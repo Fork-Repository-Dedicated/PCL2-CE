@@ -73,7 +73,7 @@ jobs:
         cd ${{ GITHUB.WORKSPACE }}
 
     - name: Restore NuGet Packages
-      run: nuget restore "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" -PackagesDirectory "packages"
+      run: nuget restore "Plain Craft Launcher 2\Plain Craft Launcher 2.csproj" -PackagesDirectory "packages"
 
     - name: Replace Secrets and Commit Hash
       run: |
@@ -88,7 +88,7 @@ jobs:
         chcp 65001
         $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
         [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-        msbuild "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.architecture }}
+        msbuild "Plain Craft Launcher 2\Plain Craft Launcher 2.csproj" -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.architecture }}
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4
