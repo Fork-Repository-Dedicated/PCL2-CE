@@ -1396,7 +1396,7 @@ namespace PCL
                     default:
                         {
                             int MaxVersion = GameVersions.Any() ? GameVersions.Max() : 99;
-                            if (Conversions.ToBoolean(ModLoaders.Contains(CompLoaderType.Forge) && (MaxVersion < 14 || ModLoaders.Contains(CompLoaderType.Fabric)) && (MaxVersion < 20 || ModLoaders.Contains(CompLoaderType.NeoForge)) && (MaxVersion < 14 || ModLoaders.Contains(CompLoaderType.Quilt) || ModBase.Setup.Get("ToolDownloadIgnoreQuilt"))))
+                            if (Conversions.ToBoolean(ModLoaders.Contains(CompLoaderType.Forge) && (MaxVersion < 14 || ModLoaders.Contains(CompLoaderType.Fabric)) && (MaxVersion < 20 || ModLoaders.Contains(CompLoaderType.NeoForge)) && (MaxVersion < 14 || ModLoaders.Contains(CompLoaderType.Quilt) || (bool)ModBase.Setup.Get("ToolDownloadIgnoreQuilt"))))
                             {
                                 ModLoaderDescriptionFull = "任意";
                                 ModLoaderDescriptionPart = "";

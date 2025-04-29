@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.CompilerServices;
+using static PCL.FormMain;
 
 namespace PCL
 {
@@ -15,13 +16,13 @@ namespace PCL
         {
             // 是否处于隐藏的子页面
             bool IsHiddenPage = false;
-            if (Conversions.ToBoolean(this.ItemLaunch.Checked && ModBase.Setup.Get("UiHiddenSetupLaunch")))
+            if (this.ItemLaunch.Checked && (bool)ModBase.Setup.Get("UiHiddenSetupLaunch"))
                 IsHiddenPage = true;
-            if (Conversions.ToBoolean(this.ItemUI.Checked && ModBase.Setup.Get("UiHiddenSetupUi")))
+            if (this.ItemUI.Checked && (bool)ModBase.Setup.Get("UiHiddenSetupUi"))
                 IsHiddenPage = true;
-            if (Conversions.ToBoolean(this.ItemSystem.Checked && ModBase.Setup.Get("UiHiddenSetupSystem")))
+            if (this.ItemSystem.Checked && (bool)ModBase.Setup.Get("UiHiddenSetupSystem"))
                 IsHiddenPage = true;
-            if (Conversions.ToBoolean(this.ItemLink.Checked && ModBase.Setup.Get("UiHiddenSetupLink")))
+            if (this.ItemLink.Checked && (bool)ModBase.Setup.Get("UiHiddenSetupLink"))
                 IsHiddenPage = true;
             if (PageSetupUI.HiddenForceShow)
                 IsHiddenPage = false;
@@ -34,19 +35,19 @@ namespace PCL
             // 选择第一个未被禁用的子页面
             if (IsPageSwitched)
                 return;
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupLaunch")))
+            if (!(bool)ModBase.Setup.Get("UiHiddenSetupLaunch"))
             {
                 this.ItemLaunch.SetChecked(true, false, false);
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupUi")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenSetupUi"))
             {
                 this.ItemUI.SetChecked(true, false, false);
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupSystem")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenSetupSystem"))
             {
                 this.ItemSystem.SetChecked(true, false, false);
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupLink")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenSetupLink"))
             {
                 this.ItemLink.SetChecked(true, false, false);
             }
@@ -70,19 +71,19 @@ namespace PCL
         {
             this.InitializeComponent();
             // 选择第一个未被禁用的子页面
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupLaunch")))
+            if (!(bool)ModBase.Setup.Get("UiHiddenSetupLaunch"))
             {
                 PageID = FormMain.PageSubType.SetupLaunch;
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupUi")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenSetupUi"))
             {
                 PageID = FormMain.PageSubType.SetupUI;
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupSystem")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenSetupSystem"))
             {
                 PageID = FormMain.PageSubType.SetupSystem;
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenSetupLink")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenSetupLink"))
             {
                 PageID = FormMain.PageSubType.SetupLink;
             }
@@ -109,7 +110,7 @@ namespace PCL
         /// <summary>
     /// 获取当前导航指定的右页面。
     /// </summary>
-        public object PageGet(FormMain.PageSubType ID = -1)
+        public object PageGet(FormMain.PageSubType ID = (PageSubType)(-1))
         {
             if ((int)ID == -1)
                 ID = PageID;

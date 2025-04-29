@@ -92,7 +92,7 @@ namespace PCL
                     Border DoubleStack = null;
                     foreach (Border stack in FrmMain.PanHint.Children)
                     {
-                        if (Conversions.ToBoolean(stack.Tag(0) && (((TextBlock)stack.Child).Text ?? "") == (CurrentHint.Text ?? "")))
+                        if (Conversions.ToBoolean(stack.Tag[0] && (((TextBlock)stack.Child).Text ?? "") == (CurrentHint.Text ?? "")))
                             DoubleStack = stack;
                     }
                     // 获取渐变颜色
@@ -134,14 +134,14 @@ namespace PCL
                             ModAnimation.AaX(DoubleStack, -8, 50, 150, new ModAnimation.AniEaseInFluent()),
                             ModAnimation.AaDouble(i =>
                                 {
-                                         Percent = Conversions.ToDouble(Percent + i);
+                                         Percent = Conversions.ToDouble(Percent + (double) i);
                                          LinearGradientBrush Gradient = (LinearGradientBrush)DoubleStack.Background;
                                          Gradient.GradientStops[0].Color = TargetColor0 * Percent + new ModBase.MyColor(255d, 255d, 255d) * (1d - Percent);
                                          Gradient.GradientStops[1].Color = TargetColor1 * Percent + new ModBase.MyColor(255d, 255d, 255d) * (1d - Percent);
                                      }, 0.7d, 250),
                             ModAnimation.AaX(DoubleStack, -50, 200, (int)Math.Round(Delay), new ModAnimation.AniEaseInFluent()),
                             ModAnimation.AaOpacity(DoubleStack, -1, 150, (int)Math.Round(Delay)),
-                            ModAnimation.AaCode(() => DoubleStack.Tag(0) = false, (int)Math.Round(Delay)),
+                            ModAnimation.AaCode(() => DoubleStack.Tag[0] = false, (int)Math.Round(Delay)),
                             ModAnimation.AaHeight(DoubleStack, -26, 100, Ease: new ModAnimation.AniEaseOutFluent(), After: true),
                             ModAnimation.AaCode(() => FrmMain.PanHint.Children.Remove(DoubleStack), After: true)
                       }, Conversions.ToString(Operators.ConcatenateObject("Hint Hide ", DoubleStack.Tag(1))));
@@ -174,7 +174,7 @@ namespace PCL
                         ModAnimation.AaOpacity(NewHintControl, 1d, 100),
                         ModAnimation.AaDouble(i =>
                             {
-                                     Percent = Conversions.ToDouble(Percent + i);
+                                     Percent = Conversions.ToDouble(Percent + (double)i);
                                      LinearGradientBrush Gradient = (LinearGradientBrush)NewHintControl.Background;
                                      Gradient.GradientStops[0].Color = TargetColor0 * Percent + new ModBase.MyColor(255d, 255d, 255d) * (1d - Percent);
                                      Gradient.GradientStops[1].Color = TargetColor1 * Percent + new ModBase.MyColor(255d, 255d, 255d) * (1d - Percent);

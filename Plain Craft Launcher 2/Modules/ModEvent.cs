@@ -59,7 +59,7 @@ namespace PCL
                         }
                         else
                         {
-                            if (Conversions.ToBoolean(!ModBase.Setup.Get("HintCustomCommand")))
+                            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("HintCustomCommand")))
                             {
                                 switch (ModMain.MyMsgBox("即将执行：" + Location + (Data.Length >= 2 ? " " + Data[1] : "") + Constants.vbCrLf + "请在确认该操作没有安全隐患后继续。", "执行确认", "继续", "继续且今后不再要求确认", "取消"))
                                 {

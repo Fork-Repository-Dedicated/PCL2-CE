@@ -255,7 +255,7 @@ namespace PCL
                 Loader.Output = new DlClientListResult() { IsOfficial = true, SourceName = "Mojang 官方源", Value = Json };
                 // 解析更新提示（Release）
                 string Version = (string)Json["latest"]["release"];
-                if (Conversions.ToBoolean(ModBase.Setup.Get("ToolUpdateRelease") && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateReleaseLast"), "", false) && Version is not null && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateReleaseLast"), Version, false)))
+                if (((bool)ModBase.Setup.Get("ToolUpdateRelease")) && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateReleaseLast"), "", false) && Version is not null && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateReleaseLast"), Version, false))
                 {
                     ModMinecraft.McDownloadClientUpdateHint(Version, Json);
                     IsNewClientVersionHinted = true;
@@ -264,7 +264,7 @@ namespace PCL
                 ModBase.Setup.Set("ToolUpdateReleaseLast", Version);
                 // 解析更新提示（Snapshot）
                 Version = (string)Json["latest"]["snapshot"];
-                if (Conversions.ToBoolean(ModBase.Setup.Get("ToolUpdateSnapshot") && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateSnapshotLast"), "", false) && Version is not null && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateSnapshotLast"), Version, false) && !IsNewClientVersionHinted))
+                if (((bool)ModBase.Setup.Get("ToolUpdateSnapshot") && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateSnapshotLast"), "", false)) && Version is not null && !Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("ToolUpdateSnapshotLast"), Version, false) && !IsNewClientVersionHinted)
                 {
                     ModMinecraft.McDownloadClientUpdateHint(Version, Json);
                 }

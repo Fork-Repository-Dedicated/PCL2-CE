@@ -890,7 +890,7 @@ namespace PCL
             }
             else if (ModMinecraft.McVersionCurrent is null)
             {
-                if (Conversions.ToBoolean(ModBase.Setup.Get("UiHiddenPageDownload") && !PageSetupUI.HiddenForceShow))
+                if ((bool)ModBase.Setup.Get("UiHiddenPageDownload") && !PageSetupUI.HiddenForceShow)
                 {
                     CurrentState = 1;
                 }
@@ -956,7 +956,7 @@ namespace PCL
             ;
 
             // 功能隐藏
-            ModMain.FrmLaunchLeft.BtnVersion.Visibility = Conversions.ToBoolean(!PageSetupUI.HiddenForceShow && ModBase.Setup.Get("UiHiddenFunctionSelect")) ? Visibility.Collapsed : Visibility.Visible;
+            ModMain.FrmLaunchLeft.BtnVersion.Visibility = !PageSetupUI.HiddenForceShow && (bool)ModBase.Setup.Get("UiHiddenFunctionSelect") ? Visibility.Collapsed : Visibility.Visible;
             if (CurrentState == 3)
             {
                 ModMain.FrmLaunchLeft.BtnMore.Visibility = ModMain.FrmLaunchLeft.BtnVersion.Visibility;

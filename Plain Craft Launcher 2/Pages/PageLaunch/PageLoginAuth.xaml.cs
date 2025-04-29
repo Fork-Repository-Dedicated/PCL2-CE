@@ -90,7 +90,7 @@ namespace PCL
         }
         private void ComboName_SelectionChanged(MyComboBox sender, SelectionChangedEventArgs e)
         {
-            if (Conversions.ToBoolean(sender.SelectedIndex == -1 || !ModBase.Setup.Get("LoginRemember")))
+            if (Conversions.ToBoolean(sender.SelectedIndex == -1 || !(bool)ModBase.Setup.Get("LoginRemember")))
             {
                 this.TextPass.Password = "";
             }

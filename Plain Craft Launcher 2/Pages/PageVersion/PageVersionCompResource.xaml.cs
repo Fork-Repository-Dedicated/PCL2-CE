@@ -1063,7 +1063,7 @@ namespace PCL
         public void UpdateResource(IEnumerable<ModLocalComp.LocalCompFile> ModList)
         {
             // 更新前警告
-            if (Conversions.ToBoolean(CurrentCompType == ModComp.CompType.Mod && (!ModBase.Setup.Get("HintUpdateMod") || ModList.Count() >= 15)))
+            if (Conversions.ToBoolean(CurrentCompType == ModComp.CompType.Mod && (!(bool)ModBase.Setup.Get("HintUpdateMod") || ModList.Count() >= 15)))
             {
                 if (ModMain.MyMsgBox($"新版本 Mod 可能不兼容旧存档或者其他 Mod，这可能导致游戏崩溃，甚至永久损坏存档！{Constants.vbCrLf}如果你在游玩整合包，请千万不要自行更新 Mod！{Constants.vbCrLf}{Constants.vbCrLf}在更新前，请先备份存档，并检查 Mod 的更新日志。{Constants.vbCrLf}如果更新后出现问题，你也可以在回收站找回更新前的 Mod。", "Mod 更新警告", "我已了解风险，继续更新", "取消", IsWarn: true) == 1)
                 {

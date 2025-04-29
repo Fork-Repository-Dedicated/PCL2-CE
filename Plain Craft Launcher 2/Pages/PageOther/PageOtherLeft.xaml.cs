@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.CompilerServices;
+using static PCL.FormMain;
 
 namespace PCL
 {
@@ -15,11 +16,11 @@ namespace PCL
         {
             // 是否处于隐藏的子页面
             bool IsHiddenPage = false;
-            if (Conversions.ToBoolean(this.ItemHelp.Checked && ModBase.Setup.Get("UiHiddenOtherHelp")))
+            if (this.ItemHelp.Checked && (bool)ModBase.Setup.Get("UiHiddenOtherHelp"))
                 IsHiddenPage = true;
-            if (Conversions.ToBoolean(this.ItemAbout.Checked && ModBase.Setup.Get("UiHiddenOtherAbout")))
+            if (this.ItemAbout.Checked && (bool)ModBase.Setup.Get("UiHiddenOtherAbout"))
                 IsHiddenPage = true;
-            if (Conversions.ToBoolean(this.ItemTest.Checked && ModBase.Setup.Get("UiHiddenOtherTest")))
+            if (this.ItemTest.Checked && (bool)ModBase.Setup.Get("UiHiddenOtherTest"))
                 IsHiddenPage = true;
             if (PageSetupUI.HiddenForceShow)
                 IsHiddenPage = false;
@@ -32,11 +33,11 @@ namespace PCL
             // 选择第一个未被禁用的子页面
             if (IsPageSwitched)
                 return;
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherHelp")))
+            if (!(bool)ModBase.Setup.Get("UiHiddenOtherHelp"))
             {
                 this.ItemHelp.SetChecked(true, false, false);
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherAbout")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenOtherAbout"))
             {
                 this.ItemAbout.SetChecked(true, false, false);
             }
@@ -60,11 +61,11 @@ namespace PCL
         {
             this.InitializeComponent();
             // 选择第一个未被禁用的子页面
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherHelp")))
+            if (!(bool)ModBase.Setup.Get("UiHiddenOtherHelp"))
             {
                 PageID = FormMain.PageSubType.OtherHelp;
             }
-            else if (Conversions.ToBoolean(!ModBase.Setup.Get("UiHiddenOtherAbout")))
+            else if (!(bool)ModBase.Setup.Get("UiHiddenOtherAbout"))
             {
                 PageID = FormMain.PageSubType.OtherAbout;
             }
@@ -88,7 +89,7 @@ namespace PCL
                 PageChange((FormMain.PageSubType)Math.Round(ModBase.Val(sender.Tag)));
         }
 
-        public object PageGet(FormMain.PageSubType ID = -1)
+        public object PageGet(FormMain.PageSubType ID = (PageSubType)(-1))
         {
             if ((int)ID == -1)
                 ID = PageID;

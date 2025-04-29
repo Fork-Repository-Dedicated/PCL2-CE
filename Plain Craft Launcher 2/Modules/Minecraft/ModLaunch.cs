@@ -327,7 +327,7 @@ namespace PCL
             *//* TODO ERROR: Skipped EndIfDirectiveTrivia
             #End If
             */        // 正版购买提示
-            if (Conversions.ToBoolean(CurrentLaunchOptions?.SaveBatch is null && !ModBase.Setup.Get("HintBuy") && Operators.ConditionalCompareObjectNotEqual(ModBase.Setup.Get("LoginType"), McLoginType.Ms, false))) // 保存脚本时不提示
+            if (Conversions.ToBoolean(CurrentLaunchOptions?.SaveBatch is null && !(bool)ModBase.Setup.Get("HintBuy") && Operators.ConditionalCompareObjectNotEqual(ModBase.Setup.Get("LoginType"), McLoginType.Ms, false))) // 保存脚本时不提示
             {
                 if (ModBase.IsSystemLanguageChinese())
                 {
@@ -797,7 +797,7 @@ namespace PCL
             bool NeedRefresh = false;
             bool WasRefreshed = false;
             string LogUsername = Input.UserName;
-            if (Conversions.ToBoolean(LogUsername.Contains("@") && ModBase.Setup.Get("UiLauncherEmail")))
+            if (LogUsername.Contains("@") && (bool)ModBase.Setup.Get("UiLauncherEmail"))
             {
                 LogUsername = ModMinecraft.AccountFilter(LogUsername);
             }
@@ -1915,7 +1915,7 @@ namespace PCL
             }
 
             // 添加 Java Wrapper 作为主 Jar
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("LaunchAdvanceDisableJLW") && !ModBase.Setup.Get("VersionAdvanceDisableJLW", ModMinecraft.McVersionCurrent)))
+            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("LaunchAdvanceDisableJLW") && !(bool)ModBase.Setup.Get("VersionAdvanceDisableJLW", ModMinecraft.McVersionCurrent)))
             {
                 if (McLaunchJavaSelected.VersionCode >= 9)
                     DataList.Add("--add-exports cpw.mods.bootstraplauncher/cpw.mods.bootstraplauncher=ALL-UNNAMED");
@@ -1999,7 +1999,7 @@ namespace PCL
             }
 
             // 添加 Java Wrapper 作为主 Jar
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("LaunchAdvanceDisableJLW") && !ModBase.Setup.Get("VersionAdvanceDisableJLW", ModMinecraft.McVersionCurrent)))
+            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("LaunchAdvanceDisableJLW") && !(bool)ModBase.Setup.Get("VersionAdvanceDisableJLW", ModMinecraft.McVersionCurrent)))
             {
                 if (McLaunchJavaSelected.VersionCode >= 9)
                     DataList.Add("--add-exports cpw.mods.bootstraplauncher/cpw.mods.bootstraplauncher=ALL-UNNAMED");
@@ -2567,7 +2567,7 @@ namespace PCL
             }
 
             // 离线皮肤 Alex 警告
-            if (Conversions.ToBoolean(ModMinecraft.McVersionCurrent.Version.McCodeMain <= 7 && ModMinecraft.McVersionCurrent.Version.McCodeMain >= 2 && McLoginLoader.Input.Type == McLoginType.Legacy && (Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("LaunchSkinType"), 2, false) || Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("LaunchSkinType"), 4, false) && ModBase.Setup.Get("LaunchSkinSlim")))) // 1.2 ~ 1.7
+            if (Conversions.ToBoolean(ModMinecraft.McVersionCurrent.Version.McCodeMain <= 7 && ModMinecraft.McVersionCurrent.Version.McCodeMain >= 2 && McLoginLoader.Input.Type == McLoginType.Legacy && (Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("LaunchSkinType"), 2, false) || Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("LaunchSkinType"), 4, false) && (bool)ModBase.Setup.Get("LaunchSkinSlim")))) // 1.2 ~ 1.7
                                                                                                                                                                                                                                                                                                                                                                                                                                       // 离线登录
                                                                                                                                                                                                                                                                                                                                                                                                                                       // 强制 Alex
                                                                                                                                                                                                                                                                                                                                                                                                                                       // 或选用 Alex 皮肤

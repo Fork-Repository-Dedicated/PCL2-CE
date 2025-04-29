@@ -314,11 +314,11 @@ namespace PCL
                     {
                         // 微软
                         JObject MsJson = (JObject)ModBase.GetJson(Conversions.ToString(ModBase.Setup.Get("LoginMsJson")));
-                        MsJson.Remove(Conversions.ToString(((dynamic)sender).Tag));
+                        MsJson.Remove(((MyIconButton)sender).Tag.ToString());
                         ModBase.Setup.Set("LoginMsJson", MsJson.ToString(Newtonsoft.Json.Formatting.None));
-                        if (object.ReferenceEquals(ModMain.FrmLoginMs.ComboAccounts.SelectedItem, ((dynamic)sender).Parent))
+                        if (object.ReferenceEquals(ModMain.FrmLoginMs.ComboAccounts.SelectedItem, ((MyIconButton)sender).Parent))
                             ModMain.FrmLoginMs.ComboAccounts.SelectedIndex = 0;
-                        ModMain.FrmLoginMs.ComboAccounts.Items.Remove(((dynamic)sender).Parent);
+                        ModMain.FrmLoginMs.ComboAccounts.Items.Remove(((MyIconButton)sender).Parent);
                         break;
                     }
                 case var case1 when Operators.ConditionalCompareObjectEqual(case1, ModLaunch.McLoginType.Legacy, false):

@@ -191,7 +191,7 @@ namespace PCL
                     {
                         foreach (var Loader in Version.ModLoaders)
                         {
-                            if (Conversions.ToBoolean(Loader == ModComp.CompLoaderType.Quilt && ModBase.Setup.Get("ToolDownloadIgnoreQuilt")))
+                            if (Conversions.ToBoolean(Loader == ModComp.CompLoaderType.Quilt && (bool)ModBase.Setup.Get("ToolDownloadIgnoreQuilt")))
                                 continue;
                             if (SupportedLoaders.Contains((int)Loader))
                                 Loaders.Add(Loader.ToString() + " ");
@@ -472,7 +472,7 @@ namespace PCL
                         AllowForge = default(bool?);
                         AllowFabric = default(bool?);
                     }
-                    ModBase.Log(Conversions.ToString(Operators.ConcatenateObject(Operators.ConcatenateObject(Operators.ConcatenateObject("[Comp] 允许 Forge：", AllowForge ?? "未知"), "，允许 Fabric："), AllowFabric ?? "未知")));
+                    ModBase.Log(Conversions.ToString(Operators.ConcatenateObject(Operators.ConcatenateObject(Operators.ConcatenateObject("[Comp] 允许 Forge：", AllowForge), "，允许 Fabric："), AllowFabric)));
                     // 判断某个版本是否符合 Mod 要求
                     IsVersionSuitable = new Func<ModMinecraft.McVersion, bool>(Version =>
         {

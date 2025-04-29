@@ -104,7 +104,7 @@ namespace PCL
                 // 改为隐藏
                 try
                 {
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("HintHide")))
+                    if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("HintHide")))
                     {
                         if (ModMain.MyMsgBox("确认要从版本列表中隐藏该版本吗？隐藏该版本后，它将不再出现于 PCL 显示的版本列表中。" + Constants.vbCrLf + "此后，在版本列表页面按下 F11 才可以查看被隐藏的版本。", "隐藏版本提示", Button2: "取消") != 1)
                         {

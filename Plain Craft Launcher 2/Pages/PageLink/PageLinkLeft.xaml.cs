@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json.Linq;
+using static PCL.FormMain;
 
 namespace PCL
 {
@@ -49,7 +50,7 @@ namespace PCL
                 PageChange((FormMain.PageSubType)Math.Round(ModBase.Val(sender.Tag)));
         }
 
-        public object PageGet(FormMain.PageSubType ID = -1)
+        public object PageGet(FormMain.PageSubType ID = (PageSubType)(-1))
         {
             if ((int)ID == -1)
                 ID = PageID;

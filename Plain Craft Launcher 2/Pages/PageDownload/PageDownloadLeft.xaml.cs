@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.CompilerServices;
+using static PCL.FormMain;
 
 namespace PCL
 {
@@ -29,7 +30,7 @@ namespace PCL
                 PageChange((FormMain.PageSubType)Math.Round(ModBase.Val(sender.Tag)));
         }
 
-        public object PageGet(FormMain.PageSubType ID = -1)
+        public object PageGet(FormMain.PageSubType ID = (PageSubType)(-1))
         {
             if ((int)ID == -1)
                 ID = PageID;
@@ -319,7 +320,7 @@ namespace PCL
                 return;
             e.Handled = true;
             ModAnimation.AniControlEnabled += 1;
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("HintHandInstall")))
+            if (!(bool)ModBase.Setup.Get("HintHandInstall"))
             {
                 ModBase.Setup.Set("HintHandInstall", true);
                 if (ModMain.MyMsgBox("手动安装包功能提供了 OptiFine、Forge 等组件的 .jar 安装文件下载，但无法自动安装。" + Constants.vbCrLf + "在自动安装页面先选择 MC 版本，然后就可以选择 OptiFine、Forge 等组件，让 PCL 自动进行安装了。", "自动安装提示", "返回自动安装", "继续下载手动安装包") == 1)

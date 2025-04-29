@@ -92,7 +92,7 @@ namespace PCL
         }
         private void Skin_Click()
         {
-            if (Conversions.ToBoolean((ModBase.Setup.Get("UiHiddenPageSetup") || ModBase.Setup.Get("UiHiddenSetupLaunch")) && !PageSetupUI.HiddenForceShow))
+            if (((bool)ModBase.Setup.Get("UiHiddenPageSetup") || (bool)ModBase.Setup.Get("UiHiddenSetupLaunch") && !PageSetupUI.HiddenForceShow))
             {
                 ModMain.Hint("启动设置已被禁用！", ModMain.HintType.Critical);
             }

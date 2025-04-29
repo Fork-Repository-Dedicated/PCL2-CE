@@ -99,7 +99,7 @@ namespace PCL
             this.CardQSL.IsSwaped = true;
             this.CardOptiFabric.IsSwaped = true;
 
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("HintInstallBack")))
+            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("HintInstallBack")))
             {
                 ModBase.Setup.Set("HintInstallBack", true);
                 ModMain.Hint("点击 Minecraft 项即可返回游戏主版本选择页面！");
@@ -1085,7 +1085,7 @@ namespace PCL
         }
 
         // 检查某个 OptiFine 是否与某个 Forge 兼容
-        private object IsOptiFineSuitForForge(ModDownload.DlOptiFineListEntry OptiFine, ModDownload.DlForgeVersionEntry Forge)
+        private bool IsOptiFineSuitForForge(ModDownload.DlOptiFineListEntry OptiFine, ModDownload.DlForgeVersionEntry Forge)
         {
             if ((Forge.Inherit ?? "") != (OptiFine.Inherit ?? ""))
                 return false; // 不是同一个大版本

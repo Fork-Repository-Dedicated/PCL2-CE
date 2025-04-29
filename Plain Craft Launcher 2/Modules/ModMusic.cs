@@ -343,7 +343,7 @@ namespace PCL
                 ModBase.Log("[SMTC] 当前系统不支持 SMTC 控件，不进行 SMTC 控件初始化");
                 return;
             }
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("UiMusicSMTC")))
+            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("UiMusicSMTC")))
             {
                 ModBase.Log("[SMTC] 用户已关闭 SMTC 支持，不进行初始化");
                 return;
@@ -573,7 +573,7 @@ namespace PCL
                 CurrentWave.Init(Reader);
                 CurrentWave.Play();
                 // 第一次打开的暂停
-                if (Conversions.ToBoolean(IsFirstLoad && !ModBase.Setup.Get("UiMusicAuto")))
+                if (Conversions.ToBoolean(IsFirstLoad && !(bool)ModBase.Setup.Get("UiMusicAuto")))
                 {
                     CurrentWave.Pause();
                     EnableSMTCSupport(); // 启用 SMTC 支持
@@ -596,14 +596,14 @@ namespace PCL
                     double Percent = Reader.CurrentTime.TotalMilliseconds / Reader.TotalTime.TotalMilliseconds;
                     ModBase.RunInUi(() => ModMain.FrmMain.BtnExtraMusic.Progress = Percent);
                     // 检查 SMTC 状态
-                    if (Conversions.ToBoolean(ModBase.Setup.Get("UiMusicSMTC") && _smtc is null))
+                    if ((bool)ModBase.Setup.Get("UiMusicSMTC") && _smtc is null)
                     {
                         EnableSMTCSupport();
                         UpdateSMTCInfo();
                         SetSMTCStatus();
                         SMTCTimelineUpdater(CurrentWave, Reader);
                     }
-                    if (Conversions.ToBoolean(!ModBase.Setup.Get("UiMusicSMTC") && _smtc is not null))
+                    if (!(bool)ModBase.Setup.Get("UiMusicSMTC") && _smtc is not null)
                         DisableSMTCSupport();
                     Thread.Sleep(100);
                 }

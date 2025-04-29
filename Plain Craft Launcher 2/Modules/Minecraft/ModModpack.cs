@@ -296,7 +296,7 @@ namespace PCL
             string NeoForgeVersion = null;
             string FabricVersion = null;
             string QuiltVersion = null;
-            foreach (var Entry in Json["minecraft"]["modLoaders"] ?? Array.Empty<JToken>())
+            foreach (var Entry in Json["minecraft"]["modLoaders"])
             {
                 string Id = (Entry["id"] ?? "").ToString().ToLower();
                 if (Id.StartsWithF("forge-"))
@@ -378,7 +378,7 @@ namespace PCL
             // 获取 Mod 列表
             var ModList = new List<int>();
             var ModOptionalList = new List<int>();
-            foreach (var ModEntry in Json["files"] ?? Array.Empty<JToken>())
+            foreach (var ModEntry in Json["files"])
             {
                 if (ModEntry["projectID"] is null || ModEntry["fileID"] is null)
                 {
@@ -554,7 +554,7 @@ namespace PCL
             string NeoForgeVersion = null;
             string FabricVersion = null;
             string QuiltVersion = null;
-            foreach (JProperty Entry in Json["dependencies"] ?? Array.Empty<JToken>())
+            foreach (JProperty Entry in Json["dependencies"])
             {
                 switch (Entry.Name.ToLower() ?? "")
                 {
@@ -640,7 +640,7 @@ namespace PCL
             }); // 每 6M 需要 1s
                 // 获取下载文件列表
             var FileList = new List<ModNet.NetFile>();
-            foreach (var File in Json["files"] ?? Array.Empty<JToken>())
+            foreach (var File in Json["files"])
             {
                 // 检查是否需要该文件
                 if (File["env"] is not null)

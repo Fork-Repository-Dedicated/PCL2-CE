@@ -104,7 +104,7 @@ namespace PCL
             this.CardQSL.IsSwaped = true;
             this.CardOptiFabric.IsSwaped = true;
 
-            if (Conversions.ToBoolean(!ModBase.Setup.Get("HintInstallBack")))
+            if (Conversions.ToBoolean(!(bool)ModBase.Setup.Get("HintInstallBack")))
             {
                 ModBase.Setup.Set("HintInstallBack", true);
                 ModMain.Hint("点击 Minecraft 项即可返回游戏主版本选择页面！");
@@ -1113,7 +1113,7 @@ namespace PCL
             if (this.LoadOptiFine is null || this.LoadOptiFine.State.LoadingState == MyLoading.MyLoadingState.Run)
                 return "正在获取版本列表……";
             if (this.LoadOptiFine.State.LoadingState == MyLoading.MyLoadingState.Error)
-                return Conversions.ToString(Operators.ConcatenateObject("获取版本列表失败：", ((object)this.LoadOptiFine.State).Error.Message));
+                return Conversions.ToString(Operators.ConcatenateObject("获取版本列表失败：", this.LoadOptiFine.State.Error.Message));
             // 检查 Forge 1.13 - 1.14.3：全部不兼容
             if (SelectedLoaderName == "Forge" && ModMinecraft.VersionSortInteger(SelectedMinecraftId, "1.13") >= 0 && ModMinecraft.VersionSortInteger("1.14.3", SelectedMinecraftId) >= 0)
             {
@@ -1153,7 +1153,7 @@ namespace PCL
         }
 
         // 检查某个 OptiFine 是否与某个 Forge 兼容（最低 Forge 版本是否达到需求）
-        private object IsOptiFineSuitForForge(ModDownload.DlOptiFineListEntry OptiFine, ModDownload.DlForgeVersionEntry Forge)
+        private bool IsOptiFineSuitForForge(ModDownload.DlOptiFineListEntry OptiFine, ModDownload.DlForgeVersionEntry Forge)
         {
             if ((Forge.Inherit ?? "") != (OptiFine.Inherit ?? ""))
                 return false; // 不是同一个大版本
@@ -1211,7 +1211,7 @@ namespace PCL
                 // 可视化
                 this.PanOptiFine.Children.Clear();
                 foreach (var Version in Versions)
-                    this.PanOptiFine.Children.Add(ModDownloadLib.OptiFineDownloadListItem(Version, (_, __) => this.OptiFine_Selected(), false));
+                    this.PanOptiFine.Children.Add(ModDownloadLib.OptiFineDownloadListItem(Version, (sender, args) => this.OptiFine_Selected((MyListItem)sender, args), false));
             }
             catch (Exception ex)
             {
@@ -1220,7 +1220,7 @@ namespace PCL
         }
 
         // 选择与清除
-        private void OptiFine_Selected(MyListItem sender, EventArgs e)
+        private void OptiFine_Selected(MyListItem sender, MouseButtonEventArgs e)
         {
             SelectedOptiFine = (ModDownload.DlOptiFineListEntry)sender.Tag;
             if (Conversions.ToBoolean(SelectedForge is not null && !IsOptiFineSuitForForge(SelectedOptiFine, SelectedForge)))
@@ -1882,7 +1882,7 @@ namespace PCL
                 this.PanQuilt.Children.Clear();
                 this.PanQuilt.Tag = Versions;
                 this.CardQuilt.SwapControl = this.PanQuilt;
-                this.CardQuilt.InstallMethod = new Action<StackPanel>((Stack) => { foreach (var item in (IEnumerable)Stack.Tag) Stack.Children.Add(ModDownloadLib.QuiltDownloadListItem((JObject)item, (_, __) => ModMain.FrmVersionInstall.Quilt_Selected())); });
+                this.CardQuilt.InstallMethod = new Action<StackPanel>((Stack) => { foreach (var item in (IEnumerable)Stack.Tag) Stack.Children.Add(ModDownloadLib.QuiltDownloadListItem((JObject)item, ModMain.FrmVersionInstall.Quilt_Selected)); });
             }
             catch (Exception ex)
             {
@@ -1891,7 +1891,7 @@ namespace PCL
         }
 
         // 选择与清除
-        public void Quilt_Selected(MyListItem sender, EventArgs e)
+        public void Quilt_Selected(MyListItem sender, MouseButtonEventArgs e)
         {
             SelectedQuilt = sender.Tag("version").ToString();
             SelectedLoaderName = "Quilt";
@@ -2009,7 +2009,7 @@ namespace PCL
                 {
                     if (!IsSuitableQSL(Version.GameVersions, SelectedMinecraftId))
                         continue;
-                    this.PanQSL.Children.Add(ModDownloadLib.QSLDownloadListItem(Version, (_, __) => this.QSL_Selected()));
+                    this.PanQSL.Children.Add(ModDownloadLib.QSLDownloadListItem(Version, this.QSL_Selected));
                 }
                 // 自动选择 QSL
                 if (!AutoSelectedQSL)
@@ -2026,7 +2026,7 @@ namespace PCL
         }
 
         // 选择与清除
-        private void QSL_Selected(MyListItem sender, EventArgs e)
+        private void QSL_Selected(MyListItem sender, MouseButtonEventArgs e)
         {
             SelectedQSL = (ModComp.CompFile)sender.Tag;
             SelectedAPIName = "QFAPI / QSL";

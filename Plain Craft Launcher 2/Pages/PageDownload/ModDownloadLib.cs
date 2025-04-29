@@ -1672,7 +1672,6 @@ pause";
             catch
             {
             }
-            return (object)null;
         };
                         process.ErrorDataReceived += (sender, e) =>
         {
@@ -1708,7 +1707,6 @@ pause";
             catch
             {
             }
-            return (object)null;
         };
                         process.Start();
                         process.BeginOutputReadLine();

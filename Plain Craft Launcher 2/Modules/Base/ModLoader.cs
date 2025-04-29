@@ -125,7 +125,7 @@ namespace PCL
                     if (_State == value)
                         return;
                     var OldState = _State;
-                    if (Conversions.ToBoolean(value == ModBase.LoadState.Finished && ModBase.Setup.Get("SystemDebugDelay")))
+                    if (Conversions.ToBoolean(value == ModBase.LoadState.Finished && (bool)ModBase.Setup.Get("SystemDebugDelay")))
                         Thread.Sleep(ModBase.RandomInteger(100, 2000));
                     _State = value;
                     ModBase.Log("[Loader] 加载器 " + Name + " 状态改变：" + ModBase.GetStringFromEnum(value));

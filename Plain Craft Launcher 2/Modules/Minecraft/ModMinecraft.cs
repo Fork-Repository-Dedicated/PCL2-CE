@@ -939,7 +939,9 @@ namespace PCL
 
                         default:
                             {
-                                string RealJson = (JsonObject ?? JsonText).ToString();
+                                string RealJson = JsonObject is not null?
+                                    JsonObject.ToString():
+                                    JsonText;
                                 // 愚人节与快照版本
                                 if ((JsonObject["type"] ?? "").ToString() == "fool" || !string.IsNullOrEmpty(GetMcFoolName(Version.McName)))
                                 {
@@ -2852,9 +2854,9 @@ namespace PCL
         /// <summary>
     /// 检查设置，是否应当忽略文件检查？
     /// </summary>
-        public static object ShouldIgnoreFileCheck(McVersion Version)
+        public static bool ShouldIgnoreFileCheck(McVersion Version)
         {
-            return ModBase.Setup.Get("VersionAdvanceAssetsV2", Version: Version) || Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("VersionAdvanceAssets", Version: Version), 2, false);
+            return (bool)ModBase.Setup.Get("VersionAdvanceAssetsV2", Version: Version) || Operators.ConditionalCompareObjectEqual(ModBase.Setup.Get("VersionAdvanceAssets", Version: Version), 2, false);
         }
 
         #endregion
